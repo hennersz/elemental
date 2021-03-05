@@ -1,0 +1,77 @@
+{ config, lib, pkgs, ... }:
+with lib;
+{
+  config = mkIf (config.elemental.user == "henry") {
+    elemental.home = {
+      program = {
+        shell.fish.enable = true;
+        networking.nmap.enable = true;
+
+        dev = {
+          bat.enable = true;
+          git = {
+            enable = true;
+
+            userEmail = "henry@morti.net";
+            userName = "hennersz";
+          };
+        };
+      };
+    };
+
+    # Install packages
+    home.packages = with pkgs; [
+      # Rust CLI Tools
+      bat
+      exa
+
+      # Utils
+      neovim
+      nmap
+      jq
+      yq
+      tldr
+
+      # Common CLI tools
+      gnupg
+      gnutar
+
+      # Development
+      direnv
+      dive
+      git
+      gnumake
+      go
+      kubernetes-helm
+      kubectl
+      nodejs
+      python38Full
+      python38Packages.poetry
+      ruby_2_7
+      rustup
+      skopeo
+      vagrant
+      yarn
+
+      # Files and networking
+      unzip
+      whois
+
+      # Media
+      youtube-dl
+      imagemagick
+      powerline-fonts
+
+      # Overview
+      htop
+      neofetch
+
+      # Jokes
+      cowsay
+      fortune
+      figlet
+      lolcat
+      nms
+    ];
+  };
+}

@@ -2,5 +2,6 @@
 {
   imports = [
     ./darwin-laptop/default.nix
+    ./linux-vm/default.nix
   ];
 }

@@ -48,7 +48,7 @@ in
           };
         };
         # Pull behaviour
-        pull.rebase = false;
+        pull.rebase = true;
       };
       # Aliases
       aliases = {

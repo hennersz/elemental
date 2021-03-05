@@ -1,5 +1,0 @@
-{
-  imports = [
-    ./osmium/default.nix
-  ];
-}

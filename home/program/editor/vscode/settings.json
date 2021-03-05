@@ -1,0 +1,57 @@
+{
+    "editor.tabSize": 2,
+    "editor.fontFamily": "'Space Mono', Menlo, Monaco, 'Courier New', monospace",
+    "workbench.colorTheme": "Solarized Light",
+    "gitlens.advanced.messages": {
+        "suppressShowKeyBindingsNotice": true
+    },
+    "workbench.iconTheme": "material-icon-theme",
+    "terminal.integrated.fontFamily": "Ubuntu Mono derivative Powerline",
+    "explorer.confirmDelete": false,
+    "window.zoomLevel": 1,
+    "vsicons.dontShowNewVersionMessage": true,
+    "explorer.confirmDragAndDrop": false,
+    "editor.suggestSelection": "first",
+    "vsintellicode.modify.editor.suggestSelection": "automaticallyOverrodeDefaultValue",
+    "[javascript]": {
+        "editor.defaultFormatter": "esbenp.prettier-vscode"
+    },
+    "javascript.updateImportsOnFileMove.enabled": "always",
+    "prettier.eslintIntegration": true,
+    "prettier.printWidth": 120,
+    "prettier.singleQuote": true,
+    "[json]": {
+        "editor.defaultFormatter": "esbenp.prettier-vscode"
+    },
+    "git.confirmSync": false,
+    "javascript.validate.enable": false,
+    "editor.acceptSuggestionOnEnter": "off",
+    "yaml.schemas": {
+    
+    },
+    "yaml.schemaStore.enable": false,
+    "go.testOnSave": true,
+    "go.coverOnSave": true,
+    "go.coverageDecorator": {
+        "uncoveredHighlightColor": "rgba(211,54,130,0.20)",
+        "coveredHighlightColor": "rgba(253,246,227,0.0)",
+        "type": "highlight"
+    },
+    "go.autocompleteUnimportedPackages": true,
+    "go.useLanguageServer": true,
+    "go.lintTool": "golangci-lint",
+    "go.buildOnSave": "workspace",
+    "go.useCodeSnippetsOnFunctionSuggest": true,
+    "go.vetOnSave": "off",
+    "go.testFlags": [
+        "-v"
+    ],
+    "go.lintFlags": [
+        "--fast"
+    ],
+    "go.lintOnSave": "file",
+    "settingsSync.ignoredExtensions": [
+    
+    ],
+    "terminal.integrated.shell.linux": "/home/vagrant/.nix-profile/bin/fish"
+}

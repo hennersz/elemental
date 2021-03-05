@@ -1,5 +1,5 @@
 {
   imports = [
-    ./x/default.nix
+    ./henry/default.nix
   ];
 }
