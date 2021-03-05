@@ -11,9 +11,7 @@ lib;
 
     home.activation = {
       codeUseConfDir = lib.hm.dag.entryAfter ["linkCode"] ''
-        $DRY_RUN_CMD ln -sf $VERBOSE_ARG  \ 
-          ${config.xdg.configHome}/Code/User \
-          ~/Library/Application Support/Code/User
+        $DRY_RUN_CMD ln -sf $VERBOSE_ARG ${config.xdg.configHome}/Code/User ~/Library/Application Support/Code
       '';
     };
 

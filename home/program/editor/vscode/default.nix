@@ -24,7 +24,7 @@ in
 
     home.activation = { 
       linkCode = lib.hm.dag.entryAfter ["writeBoundary"] ''
-        $DRY_RUN_CMD mkdir -p $VERBOSE_ARG ${config.xdg.configHome}/Code && \
+        $DRY_RUN_CMD mkdir -p $VERBOSE_ARG ${config.xdg.configHome}/Code/User && \
           ln -sf $VERBOSE_ARG \
           ${builtins.toString ./settings.json} \
           ${config.xdg.configHome}/Code/User/settings.json && \

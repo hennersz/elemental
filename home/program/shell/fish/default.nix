@@ -82,7 +82,7 @@ in
     home.activation = { 
       linkFish = lib.hm.dag.entryAfter ["writeBoundary"] ''
         $DRY_RUN_CMD sudo ln -sf $VERBOSE_ARG \
-          ${pkgs.fish} /usr/local/bin/fish
+          ${pkgs.fish}/bin/fish /usr/local/bin/
       '';
 
       # echoFile = lib.hm.dag.entryAfter ["writeBoundary"] ''
