@@ -6,7 +6,7 @@ lib;
   config = mkIf (config.elemental.role == "linux-vm") {
     # Environment
     home.sessionVariables = {
-      EDITOR = "neovim";
+      EDITOR = "nvim";
     };
 
     home.packages = with pkgs; [
