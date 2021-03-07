@@ -26,9 +26,6 @@
     "git.confirmSync": false,
     "javascript.validate.enable": false,
     "editor.acceptSuggestionOnEnter": "off",
-    "yaml.schemas": {
-    
-    },
     "yaml.schemaStore.enable": false,
     "go.testOnSave": true,
     "go.coverOnSave": true,
@@ -50,8 +47,6 @@
         "--fast"
     ],
     "go.lintOnSave": "file",
-    "settingsSync.ignoredExtensions": [
-    
-    ],
-    "terminal.integrated.shell.linux": "/home/vagrant/.nix-profile/bin/fish"
+    "terminal.integrated.shell.linux": "/home/vagrant/.nix-profile/bin/fish",
+    "shellcheck.customArgs": ["-x"]
 }
