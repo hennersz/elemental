@@ -15,8 +15,6 @@ lib;
       '';
     };
 
-    nixpkgs.config.allowUnfree = true;
-
     # Environment
     home.sessionVariables = {
       EDITOR = "code";
