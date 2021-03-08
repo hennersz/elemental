@@ -4,6 +4,7 @@ set -e
 
 os=$(uname)
 if [ "$os" = "Darwin" ]; then 
+  /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
   . ./vercomp.sh
   ver=$(sw_vers -productVersion)
   vercomp "$ver" "10.14"
