@@ -9,12 +9,6 @@ with lib;
 
         dev = {
           bat.enable = true;
-          git = {
-            enable = true;
-
-            userEmail = "henry@morti.net";
-            userName = "hennersz";
-          };
         };
       };
     };
@@ -27,7 +21,6 @@ with lib;
 
       # Utils
       neovim
-      nmap
       jq
       yq
       tldr
@@ -42,6 +35,7 @@ with lib;
       git
       gnumake
       go
+      golangci-lint
       kubernetes-helm
       kubectl
       nodejs

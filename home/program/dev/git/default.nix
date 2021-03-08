@@ -30,6 +30,12 @@ in
       description = "Whether to gpg sign by default";
       default = false;
     };
+
+    extraConfig = lib.mkOption {
+      type =  types.attrs;
+      description = "extra git config";
+      default = {};
+    };
   };
 
   config = lib.mkIf cfg.enable {
@@ -43,7 +49,7 @@ in
       extraConfig = {
         # Pull behaviour
         pull.rebase = true;
-      };
+      } // cfg.extraConfig;
       # Aliases
       aliases = {
         "s" = "status";
