@@ -10,12 +10,10 @@ in
 
   config = mkIf cfg.enable {
 
-    home.file = {
-      extensions = {
-        source = ./extensions.list;
-        target = ".config/Code/extensions.list";
-        onChange = "cat ~/.config/Code/extensions.list | grep -v '^#' | xargs -L1 code --install-extension";
-      };
+    home.file.extensions = {
+      source = ./extensions.list;
+      target = ".config/Code/extensions.list";
+      onChange = "cat ~/.config/Code/extensions.list | grep -v '^#' | xargs -L1 code --install-extension";
     };
 
     home.packages = with pkgs; [
