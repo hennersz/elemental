@@ -8,6 +8,12 @@ with lib;
         networking.nmap.enable = true;
 
         dev = {
+          git = {
+            enable = true;
+            extraConfig = {
+              pull.rebase = true;
+            };
+          };
           bat.enable = true;
         };
       };
