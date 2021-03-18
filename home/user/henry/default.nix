@@ -37,6 +37,8 @@ with lib;
       gnutar
 
       # Development
+      clang
+      clangStdenv
       direnv
       dive
       git
@@ -74,5 +76,10 @@ with lib;
       lolcat
       nms
     ];
+
+    home.sessionVariables = {
+      CC = "clang";
+      CXX = "clang++";
+    };
   };
 }
