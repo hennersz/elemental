@@ -36,7 +36,7 @@ in
         cat = "bat";
         ls = "exa";
         l = "exa -l";
-        ll = "exa -laguUmh";
+        ll = "exa -laaguUmh";
         lt = "exa -lRT";
       };
 
@@ -81,15 +81,11 @@ in
 
     home.activation = { 
       linkFish = lib.hm.dag.entryAfter ["writeBoundary"] ''
-        $DRY_RUN_CMD sudo ln -sf $VERBOSE_ARG \
-          ${pkgs.fish}/bin/fish /usr/local/bin/fish
+        $DRY_RUN_CMD bash -c 'if [[ "$(readlink -f /usr/local/bin/fish)" != "${pkgs.fish}/bin/fish" ]];
+          then
+            sudo ln -sf $VERBOSE_ARG ${pkgs.fish}/bin/fish /usr/local/bin/fish
+        fi'
       '';
-
-      # echoFile = lib.hm.dag.entryAfter ["writeBoundary"] ''
-      #   $DRY_RUN_CMD cat $VERBOSE_ARG \
-      #     ${builtins.toFile "default.nix" (builtins.readFile ./default.nix)}
-      # '';
-
     };
   };
 }
