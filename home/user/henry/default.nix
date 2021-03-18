@@ -10,6 +10,7 @@ with lib;
         dev = {
           git = {
             enable = true;
+            userName = "Henry Mortimer";
             extraConfig = {
               pull.rebase = true;
             };

@@ -6,7 +6,6 @@ with lib;
       enable = true;
 
       userEmail = "henry@morti.net";
-      userName = "hennersz";
       extraConfig =  {
         url = {
           "git@github.com:" = {
