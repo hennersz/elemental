@@ -6,7 +6,7 @@
         "suppressShowKeyBindingsNotice": true
     },
     "workbench.iconTheme": "material-icon-theme",
-    "terminal.integrated.fontFamily": "Ubuntu Mono derivative Powerline",
+    "terminal.integrated.fontFamily": "SpaceMono nerd font",
     "explorer.confirmDelete": false,
     "window.zoomLevel": 1,
     "vsicons.dontShowNewVersionMessage": true,
@@ -47,6 +47,16 @@
         "--fast"
     ],
     "go.lintOnSave": "file",
-    "terminal.integrated.shell.linux": "/home/vagrant/.nix-profile/bin/fish",
-    "shellcheck.customArgs": ["-x"]
+    "terminal.integrated.shell.linux": "/usr/local/bin/fish",
+    "terminal.integrated.shell.osx": "/usr/local/bin/fish",
+    "go.coverageOptions": "showUncoveredCodeOnly",
+    "go.gopath": "",
+    "remote.SSH.useLocalServer": true,
+    "remote.SSH.remotePlatform": {
+        "vm": "linux"
+    },
+    "shellcheck.customArgs": [
+        "-x"
+    ],
+    "terminal.integrated.cursorBlinking": true,
 }

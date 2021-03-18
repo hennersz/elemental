@@ -1,6 +1,7 @@
 766b.go-outliner
 aaron-bond.better-comments
 afractal.node-essentials
+ahebrank.yaml2json
 bbenoist.Nix
 bbenoist.vagrant
 be5invis.vscode-icontheme-nomo-dark
@@ -40,6 +41,7 @@ msyrus.go-doc
 octref.vetur
 Orta.vscode-jest
 PKief.material-icon-theme
+plex.vscode-regolint
 premparihar.gotestexplorer
 redhat.fabric8-analytics
 redhat.vscode-commons
@@ -49,7 +51,9 @@ rust-lang.rust
 ryanluker.vscode-coverage-gutters
 shinnn.stylelint
 skyapps.fish-vscode
+streetsidesoftware.code-spell-checker
 timonwong.shellcheck
+tsandall.opa
 VisualStudioExptTeam.vscodeintellicode
 vscode-icons-team.vscode-icons
 vscodevim.vim
