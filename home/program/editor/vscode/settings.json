@@ -6,7 +6,7 @@
         "suppressShowKeyBindingsNotice": true
     },
     "workbench.iconTheme": "material-icon-theme",
-    "terminal.integrated.fontFamily": "SpaceMono nerd font",
+    "terminal.integrated.fontFamily": "SpaceMono nerd font mono",
     "explorer.confirmDelete": false,
     "window.zoomLevel": 1,
     "vsicons.dontShowNewVersionMessage": true,
