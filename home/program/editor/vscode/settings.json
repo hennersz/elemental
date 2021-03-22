@@ -51,7 +51,6 @@
     "terminal.integrated.shell.osx": "/usr/local/bin/fish",
     "go.coverageOptions": "showUncoveredCodeOnly",
     "go.gopath": "",
-    "remote.SSH.useLocalServer": true,
     "remote.SSH.remotePlatform": {
         "vm": "linux"
     },
