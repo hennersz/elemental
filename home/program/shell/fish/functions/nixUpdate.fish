@@ -1,4 +1,4 @@
-function updateConfig
+function nixUpdate
   set originalDir (pwd)
   cd ~/.config/nixpkgs
   and git pull
