@@ -20,6 +20,12 @@ with lib;
       };
     };
 
+    nixpkgs.overlays = [ (self: super: {
+      kubernetes = super.kubernetes.override {
+        components = [];
+      };
+    } ) ];
+
     # Install packages
     home.packages = with pkgs; [
       # Rust CLI Tools
