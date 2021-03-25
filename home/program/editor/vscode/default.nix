@@ -9,6 +9,7 @@ in
   };
 
   config = mkIf cfg.enable {
+    elemental.home.program.dev.git.extraConfig.core.editor = "code --wait --reuse-window";
 
     home.file.extensions = {
       source = ./extensions.list;
@@ -16,13 +17,9 @@ in
       onChange = "cat ~/.config/Code/extensions.list | grep -v '^#' | xargs -L1 code --install-extension";
     };
 
-    home.packages = with pkgs; [
-      vscode
-    ];
-
     home.activation = { 
       linkCode = lib.hm.dag.entryAfter ["writeBoundary"] ''
-        $DRY_RUN_CMD mkdir -p $VERBOSE_ARG ${config.xdg.configHome}/Code/User && \
+        $DRY_RUN_CMD mkdir -p $VERBOSE_ARG ${config.xdg.configHome}/Code && \
           ln -sf $VERBOSE_ARG \
           ${builtins.toString ./settings.json} \
           ${config.xdg.configHome}/Code/User/settings.json && \
