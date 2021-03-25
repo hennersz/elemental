@@ -9,13 +9,17 @@ in
   };
 
   config = mkIf cfg.enable {
-    home.activation = { 
-      linkIterm2 = lib.hm.dag.entryAfter ["writeBoundary"] ''
-        $DRY_RUN_CMD mkdir -p $VERBOSE_ARG ${config.xdg.configHome}/iterm2 && \
-          ln -sf $VERBOSE_ARG \
-          ${builtins.toString ./com.googlecode.iterm2.plist} \
-          ${config.xdg.configHome}/iterm2/com.googlecode.iterm2.plist
-      '';
+    home.file.itermConfig = {
+      source = ./com.googlecode.iterm2.plist;
+      target = ".config/iterm2/com.googlecode.iterm2.plist.source";
+      onChange = "cp ~/.config/iterm2/com.googlecode.iterm2.plist.source ~/.config/iterm2/com.googlecode.iterm2.plist";
+    };
+
+    xdg.configFile = {
+      "fish/functions/syncItermConfig.fish" = {
+        source = ./syncItermConfig.fish;
+        executable = false;
+      };
     };
   };
 
