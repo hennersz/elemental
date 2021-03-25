@@ -7,7 +7,7 @@ if [ "$os" = "Darwin" ]; then
   /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
   . ./vercomp.sh
   ver=$(sw_vers -productVersion)
-  vercomp "$ver" "10.14"
+  (vercomp "$ver" "10.14") && true
   if [ $? = 1 ]; then 
     sh <(curl -L https://nixos.org/nix/install) --darwin-use-unencrypted-nix-store-volume
   else
@@ -25,6 +25,6 @@ nix-channel --update
 nix-shell '<home-manager>' -A install
 home-manager switch
 
-echo "/usr/local/bin/fish" | sudo tee -a /etc/shells
-chsh --shell /usr/local/bin/fish
+echo "/usr/local/bin/fish" | sudo tee -a /etc/shells > /dev/null
+chsh -s /usr/local/bin/fish
 fish
