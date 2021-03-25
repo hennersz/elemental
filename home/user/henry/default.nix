@@ -64,6 +64,7 @@ with lib;
       youtube-dl
       imagemagick
       powerline-fonts
+      nerdfonts
 
       # Overview
       htop
