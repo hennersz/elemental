@@ -8,7 +8,6 @@
     "workbench.iconTheme": "material-icon-theme",
     "terminal.integrated.fontFamily": "SpaceMono Nerd Font",
     "explorer.confirmDelete": false,
-    "window.zoomLevel": 1,
     "vsicons.dontShowNewVersionMessage": true,
     "explorer.confirmDragAndDrop": false,
     "editor.suggestSelection": "first",
@@ -58,4 +57,6 @@
         "-x"
     ],
     "terminal.integrated.cursorBlinking": true,
+    "terminal.integrated.fontSize": 13,
+    "editor.fontSize": 13,
 }
