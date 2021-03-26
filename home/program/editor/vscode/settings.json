@@ -34,7 +34,6 @@
         "type": "highlight"
     },
     "go.autocompleteUnimportedPackages": true,
-    "go.useLanguageServer": true,
     "go.lintTool": "golangci-lint",
     "go.buildOnSave": "workspace",
     "go.useCodeSnippetsOnFunctionSuggest": true,
@@ -59,4 +58,5 @@
     "terminal.integrated.cursorBlinking": true,
     "terminal.integrated.fontSize": 13,
     "editor.fontSize": 13,
+    "redhat.telemetry.enabled": false,
 }
