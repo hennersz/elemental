@@ -45,6 +45,7 @@ with lib;
       gnumake
       go
       golangci-lint
+      kind
       kubernetes-helm
       kubectl
       nodejs
