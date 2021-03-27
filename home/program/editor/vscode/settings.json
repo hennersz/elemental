@@ -1,6 +1,6 @@
 {
     "editor.tabSize": 2,
-    "editor.fontFamily": "'Space Mono', Menlo, Monaco, 'Courier New', monospace",
+    "editor.fontFamily": "'SpaceMono Nerd Font', SpaceMono, Menlo, Monaco, 'Courier New', monospace",
     "workbench.colorTheme": "Solarized Light",
     "gitlens.advanced.messages": {
         "suppressShowKeyBindingsNotice": true
