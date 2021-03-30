@@ -1,5 +1,6 @@
 {
   imports = [
+    ./credentials/default.nix
     ./dev/git/default.nix
     ./dev/bat/default.nix
     ./editor/vscode/default.nix

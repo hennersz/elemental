@@ -1,0 +1,5 @@
+{
+  imports = [
+    ./gpg/default.nix
+  ];
+}

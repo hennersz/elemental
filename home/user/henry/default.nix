@@ -33,7 +33,6 @@ with lib;
       tldr
 
       # Common CLI tools
-      gnupg
       gnutar
 
       # Development
