@@ -17,7 +17,7 @@ lib;
 
     # Environment
     home.sessionVariables = {
-      EDITOR = "code";
+      EDITOR = "code --wait";
       BROWSER = "firefox";
       TERMINAL = "iterm2";
     };
