@@ -59,4 +59,10 @@
     "terminal.integrated.fontSize": 13,
     "editor.fontSize": 13,
     "redhat.telemetry.enabled": false,
+    "workbench.editorAssociations": [
+        {
+            "viewType": "jupyter.notebook.ipynb",
+            "filenamePattern": "*.ipynb"
+        }
+    ],
 }

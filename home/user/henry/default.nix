@@ -77,6 +77,8 @@ with lib;
       lolcat
       nms
     ];
+    
+    programs.password-store.package = pkgs.pass.withExtensions (exts: [ exts.pass-import ]);
 
     home.sessionVariables = {
       CC = "clang";

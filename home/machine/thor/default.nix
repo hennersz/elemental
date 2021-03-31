@@ -5,8 +5,11 @@
     home.sessionVariables = {
       ELEMENTAL_SOURCE_DIR = "/Users/henry/.config/nixpkgs";
     };
-    programs.password-store.settings = {
-      PASSWORD_STORE_DIR = "/Users/henry/Credentials/passwords";
+    programs.password-store = {
+      enable = true;
+      settings = {
+        PASSWORD_STORE_DIR = "/Users/henry/Credentials/passwords";
+      };
     };
   };
 } 
