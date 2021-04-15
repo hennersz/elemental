@@ -21,10 +21,5 @@ lib;
       BROWSER = "firefox";
       TERMINAL = "iterm2";
     };
-
-
-    programs.gpg = {
-      enable = true;
-    };
   };
 }

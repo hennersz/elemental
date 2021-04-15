@@ -6,6 +6,8 @@ with lib;
       enable = true;
 
       userEmail = "henry@morti.net";
+      gpgKey = "0xE80F01751AE0A7CE";
+      signByDefault = true;
       extraConfig =  {
         url = {
           "git@github.com:" = {
