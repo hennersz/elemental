@@ -34,6 +34,7 @@ with lib;
 
       # Common CLI tools
       gnutar
+      coreutils-full
 
       # Development
       clang
