@@ -45,6 +45,7 @@ in
       shellInit = cfg.preShellInit + ''
         bass source $HOME/.nix-profile/etc/profile.d/nix.sh
         direnv hook fish | source
+        set fish_complete_path $HOME/.nix-profile/share/fish/vendor_completions.d $fish_complete_path
       '';
 
       plugins = [
