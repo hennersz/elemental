@@ -37,6 +37,8 @@ with lib;
       coreutils-full
 
       # Development
+      ansible
+      ansible-lint
       clang
       clangStdenv
       direnv
