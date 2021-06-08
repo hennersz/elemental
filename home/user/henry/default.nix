@@ -31,6 +31,7 @@ with lib;
       jq
       yq
       tldr
+      vault
 
       # Common CLI tools
       gnutar
