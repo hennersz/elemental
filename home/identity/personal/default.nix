@@ -4,5 +4,6 @@
     ./git.nix
     ./gpg.nix
     ./pass.nix
+    ./vault.nix
   ];
 }
