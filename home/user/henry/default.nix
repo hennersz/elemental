@@ -38,6 +38,7 @@ with lib;
       coreutils-full
 
       # Development
+      adoptopenjdk-hotspot-bin-16
       ansible
       ansible-lint
       clang
@@ -88,6 +89,15 @@ with lib;
     home.sessionVariables = {
       CC = "clang";
       CXX = "clang++";
+      JAVA_HOME = pkgs.adoptopenjdk-hotspot-bin-16;
+    };
+
+    home.activation = {
+      linkJava = lib.hm.dag.entryAfter ["writeBoundary"] ''
+        $DRY_RUN_CMD ln -sTf $VERBOSE_ARG \
+          ${pkgs.adoptopenjdk-hotspot-bin-16} \
+          $HOME/.java
+      '';
     };
   };
 }
