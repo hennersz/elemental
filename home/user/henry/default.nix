@@ -39,7 +39,7 @@ with lib;
 
       # Development
       adoptopenjdk-hotspot-bin-16
-      ansible
+      ansible_2_10
       ansible-lint
       clang
       clangStdenv

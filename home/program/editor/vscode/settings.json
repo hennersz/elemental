@@ -61,10 +61,6 @@
     "redhat.telemetry.enabled": false,
     "workbench.editorAssociations": [
         {
-            "viewType": "jupyter.notebook.ipynb",
-            "filenamePattern": "*.ipynb"
-        },
-        {
             "viewType": "jupyter-notebook",
             "filenamePattern": "*.ipynb"
         }
