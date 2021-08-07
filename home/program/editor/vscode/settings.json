@@ -65,4 +65,8 @@
             "filenamePattern": "*.ipynb"
         }
     ],
+    "yaml.customTags": [
+        "!encrypted/pkcs1-oaep scalar",
+        "!vault scalar"
+    ],
 }
