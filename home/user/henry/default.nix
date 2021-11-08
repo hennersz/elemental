@@ -55,8 +55,8 @@ with lib;
       kubectl
       nodejs
       packer
-      python38Full
-      python38Packages.poetry
+      python39
+      python39Packages.poetry
       ruby_2_7
       rustup
       skopeo
