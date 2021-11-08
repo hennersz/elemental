@@ -59,14 +59,14 @@
     "terminal.integrated.fontSize": 13,
     "editor.fontSize": 13,
     "redhat.telemetry.enabled": false,
-    "workbench.editorAssociations": [
-        {
-            "viewType": "jupyter-notebook",
-            "filenamePattern": "*.ipynb"
-        }
-    ],
+    "workbench.editorAssociations": {
+        "*.ipynb": "jupyter-notebook"
+    },
     "yaml.customTags": [
         "!encrypted/pkcs1-oaep scalar",
         "!vault scalar"
+    ],
+    "cSpell.userWords": [
+        "hennersz"
     ],
 }
