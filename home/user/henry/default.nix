@@ -54,6 +54,7 @@ with lib;
       kubernetes-helm
       kubectl
       nodejs
+      packer
       python38Full
       python38Packages.poetry
       ruby_2_7
