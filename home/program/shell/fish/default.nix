@@ -6,8 +6,8 @@ let
   promptSource = pkgs.fetchFromGitHub {
     owner = "kobanyan";
     repo = "bullet-train-fish-theme";
-    rev = "4fe9235eac27da257d543821afb0233537d8650a";
-    sha256 = "17g1h88j2zkwnjadxv8k162p2z66wpdfk362dp4y9f44i3sgczrl";
+    rev = "32d30ddee555a4b91c41dd6e05b335b285af1dd7";
+    sha256 = "1g3jlkica47z3by1jhkcn6ywj1mxzal38fg3fw6carz6b725gxmw";
   };
 
 
@@ -40,7 +40,7 @@ in
         lt = "exa -lRT";
       };
 
-      promptInit = builtins.readFile "${promptSource}/fish_prompt.fish";
+      interactiveShellInit = builtins.readFile "${promptSource}/functions/fish_prompt.fish";
 
       shellInit = cfg.preShellInit + ''
         bass source $HOME/.nix-profile/etc/profile.d/nix.sh
