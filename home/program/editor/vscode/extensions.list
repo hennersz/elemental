@@ -42,6 +42,7 @@ Orta.vscode-jest
 PKief.material-icon-theme
 plex.vscode-regolint
 premparihar.gotestexplorer
+redhat.ansible
 redhat.fabric8-analytics
 redhat.vscode-commons
 redhat.vscode-yaml
@@ -58,4 +59,3 @@ vscodevim.vim
 WallabyJs.quokka-vscode
 wix.vscode-import-cost
 xabikos.JavaScriptSnippets
-zbr.vscode-ansible

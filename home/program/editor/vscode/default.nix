@@ -14,7 +14,7 @@ in
     home.file.extensions = {
       source = ./extensions.list;
       target = ".config/Code/extensions.list";
-      onChange = "cat ~/.config/Code/extensions.list | grep -v '^#' | xargs -L1 code --install-extension";
+      onChange = "cat ~/.config/Code/extensions.list | grep -v '^#' | xargs -L1 code --install-extension --force";
     };
 
     home.activation = { 
