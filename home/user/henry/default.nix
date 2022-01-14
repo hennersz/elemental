@@ -66,6 +66,7 @@ with lib;
       # Files and networking
       unzip
       whois
+      dogdns
 
       # Media
       youtube-dl

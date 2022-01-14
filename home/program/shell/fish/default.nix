@@ -34,6 +34,7 @@ in
 
       shellAliases = {
         cat = "bat";
+        dig = "dog";
         ls = "exa";
         l = "exa -l";
         ll = "exa -laaguUmh";
