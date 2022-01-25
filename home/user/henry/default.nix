@@ -53,7 +53,7 @@ with lib;
       kind
       kubernetes-helm
       kubectl
-      nodejs
+      nodejs-16_x
       packer
       python39
       python39Packages.poetry
