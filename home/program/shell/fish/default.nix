@@ -4,10 +4,10 @@ lib;
 let
   cfg = config.elemental.home.program.shell.fish;
   promptSource = pkgs.fetchFromGitHub {
-    owner = "kobanyan";
+    owner = "hennersz";
     repo = "bullet-train-fish-theme";
-    rev = "32d30ddee555a4b91c41dd6e05b335b285af1dd7";
-    sha256 = "1g3jlkica47z3by1jhkcn6ywj1mxzal38fg3fw6carz6b725gxmw";
+    rev = "c17f9e320d71caa321133fc875e8553273fdf84e";
+    sha256 = "0wndiys9bc2fwqs7aa3cw4mjy6cy6y99zdj61yry00d3xaax6ax0";
   };
 
 
