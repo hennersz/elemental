@@ -49,6 +49,7 @@ in
       extraConfig = {
         # Pull behaviour
         pull.rebase = true;
+        init.defaultBranch = "main";
       } // cfg.extraConfig;
       # Aliases
       aliases = {
