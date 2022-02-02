@@ -6,8 +6,8 @@ let
   promptSource = pkgs.fetchFromGitHub {
     owner = "hennersz";
     repo = "bullet-train-fish-theme";
-    rev = "c17f9e320d71caa321133fc875e8553273fdf84e";
-    sha256 = "0wndiys9bc2fwqs7aa3cw4mjy6cy6y99zdj61yry00d3xaax6ax0";
+    rev = "f8f09064f84df4c5dc274b2d5c8ac024106ecb52";
+    sha256 = "1fsvf9h7mzamhxxflk2dp6lvgsj5xhd5scpvygjjhkdqfj3ddsb5";
   };
 
 
