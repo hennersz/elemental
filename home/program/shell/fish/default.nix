@@ -44,6 +44,7 @@ in
       interactiveShellInit = builtins.readFile "${promptSource}/functions/fish_prompt.fish";
 
       shellInit = cfg.preShellInit + ''
+        set -g fish_greeting
         bass source $HOME/.nix-profile/etc/profile.d/nix.sh
         direnv hook fish | source
         set fish_complete_path $HOME/.nix-profile/etc/fish/completions /nix/var/nix/profiles/default/etc/fish/completions $HOME/.nix-profile/share/fish/vendor_completions.d /nix/var/nix/profiles/default/share/fish/vendor_completions.d  $fish_complete_path
