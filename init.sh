@@ -22,6 +22,7 @@ fi
 nix-channel --add https://github.com/nix-community/home-manager/archive/master.tar.gz home-manager
 nix-channel --update
 
+export NIX_PATH=home-manager=${HOME}/.nix-defexpr/channels/home-manager:nixpkgs=${HOME}/.nix-defexpr/channels/nixpkgs
 nix-shell '<home-manager>' -A install
 home-manager switch
 
