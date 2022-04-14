@@ -33,6 +33,13 @@ with lib;
       tldr
       vault
 
+      # Communication
+      keybase
+
+      # Cloud CLI Tools
+      awscli2
+      eksctl
+
       # Common CLI tools
       gnutar
       coreutils-full
@@ -60,6 +67,7 @@ with lib;
       ruby_2_7
       rustup
       skopeo
+      terraform
       vagrant
       yarn
 
@@ -69,21 +77,15 @@ with lib;
       dogdns
 
       # Media
-      youtube-dl
-      imagemagick
-      powerline-fonts
       nerdfonts
 
       # Overview
       htop
       neofetch
 
-      # Jokes
-      cowsay
-      fortune
-      figlet
-      lolcat
-      nms
+      #yubikey
+      yubikey-personalization
+      yubikey-manager
     ];
     
     programs.password-store.package = pkgs.pass.withExtensions (exts: [ exts.pass-import ]);
@@ -101,5 +103,11 @@ with lib;
           $HOME/.java
       '';
     };
+
+    nix.package = pkgs.nix;
+    nix.settings = {
+      experimental-features = "nix-command flakes";
+    };
   };
+
 }

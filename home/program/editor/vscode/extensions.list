@@ -10,7 +10,6 @@ christian-kohler.path-intellisense
 coolbear.systemd-unit-file
 DavidAnson.vscode-markdownlint
 dbaeumer.vscode-eslint
-denoland.vscode-deno
 donjayamanne.githistory
 eamodio.gitlens
 EditorConfig.EditorConfig
@@ -18,6 +17,7 @@ eg2.vscode-npm-script
 esbenp.prettier-vscode
 felipecaputo.git-project-manager
 golang.go
+HashiCorp.terraform
 ionutvmi.path-autocomplete
 leizongmin.node-module-intellisense
 mgmcdermott.vscode-language-babel
@@ -46,7 +46,6 @@ redhat.ansible
 redhat.fabric8-analytics
 redhat.vscode-commons
 redhat.vscode-yaml
-robinbentley.sass-indented
 rust-lang.rust
 ryanluker.vscode-coverage-gutters
 skyapps.fish-vscode
