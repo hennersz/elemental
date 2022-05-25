@@ -14,6 +14,9 @@ in
   };
 
   config = mkIf cfg.enable {
+    home.sessionVariables = {
+      OP_ACCOUNT = cfg.account;
+    };
     xdg.configFile = {
       "fish/conf.d/opLogin.fish" = {
         source = ./opLogin.fish;
