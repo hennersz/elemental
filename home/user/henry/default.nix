@@ -27,6 +27,7 @@ with lib;
       exa
 
       # Utils
+      grpcurl
       neovim
       jq
       yq
@@ -39,6 +40,7 @@ with lib;
       # Cloud CLI Tools
       awscli2
       eksctl
+      google-cloud-sdk
 
       # Common CLI tools
       gnutar
@@ -46,7 +48,7 @@ with lib;
 
       # Development
       adoptopenjdk-hotspot-bin-16
-      ansible_2_11
+      ansible_2_12
       ansible-lint
       clang
       clangStdenv
@@ -56,11 +58,13 @@ with lib;
       gnumake
       go
       golangci-lint
+      istioctl
       k9s
       kind
       kubernetes-helm
       kubectl
       nodejs-16_x
+      operator-sdk
       packer
       python39
       python39Packages.poetry
