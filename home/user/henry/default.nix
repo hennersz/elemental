@@ -57,7 +57,7 @@ with lib;
       git
       gnumake
       go
-      golangci-lint
+      # golangci-lint
       istioctl
       k9s
       kind
