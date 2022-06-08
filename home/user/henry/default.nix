@@ -48,7 +48,7 @@ with lib;
 
       # Development
       adoptopenjdk-hotspot-bin-16
-      ansible_2_12
+      ansible_2_11
       ansible-lint
       clang
       clangStdenv
@@ -106,11 +106,6 @@ with lib;
           ${pkgs.adoptopenjdk-hotspot-bin-16} \
           $HOME/.java
       '';
-    };
-
-    nix.package = pkgs.nix;
-    nix.settings = {
-      experimental-features = "nix-command flakes";
     };
   };
 
