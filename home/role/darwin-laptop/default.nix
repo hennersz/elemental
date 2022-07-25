@@ -21,5 +21,9 @@ lib;
       BROWSER = "firefox";
       TERMINAL = "iterm2";
     };
+
+    home.packages = with pkgs; [
+      vagrant
+    ];
   };
 }

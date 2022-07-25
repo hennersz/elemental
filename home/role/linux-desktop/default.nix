@@ -16,7 +16,9 @@ lib;
     home.packages = with pkgs; [
       buildah
       docker
+      docker-compose
       podman
+      slack
       vscode
       pdfarranger
     ];

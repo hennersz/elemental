@@ -72,7 +72,6 @@ with lib;
       rustup
       skopeo
       terraform
-      vagrant
       yarn
 
       # Files and networking
