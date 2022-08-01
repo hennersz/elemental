@@ -97,6 +97,7 @@ with lib;
       CC = "clang";
       CXX = "clang++";
       JAVA_HOME = pkgs.adoptopenjdk-hotspot-bin-16;
+      TERRAFORM_TEMPLATE_DIR = "$HOME/Projects/Infrastructure/Terraform/templates";
     };
 
     home.activation = {
