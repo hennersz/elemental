@@ -20,6 +20,7 @@ golang.go
 HashiCorp.terraform
 ionutvmi.path-autocomplete
 leizongmin.node-module-intellisense
+jetmartin.bats
 mgmcdermott.vscode-language-babel
 mikestead.dotenv
 mrmlnc.vscode-scss
