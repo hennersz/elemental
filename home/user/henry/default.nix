@@ -1,4 +1,7 @@
 { config, lib, pkgs, ... }:
+let
+  unstable = import <nixpkgs-unstable> { config = { allowUnfree = true; }; };
+in
 with lib;
 {
   config = mkIf (config.elemental.user == "henry") {
@@ -27,6 +30,7 @@ with lib;
       exa
 
       # Utils
+      asciinema
       grpcurl
       neovim
       jq
@@ -39,6 +43,7 @@ with lib;
 
       # Cloud CLI Tools
       awscli2
+      unstable.nodePackages.aws-cdk
       eksctl
       google-cloud-sdk
 
@@ -75,6 +80,7 @@ with lib;
       yarn
 
       # Files and networking
+      traceroute
       unzip
       whois
       dogdns
