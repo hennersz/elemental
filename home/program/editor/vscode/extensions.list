@@ -60,3 +60,5 @@ vscodevim.vim
 WallabyJs.quokka-vscode
 wix.vscode-import-cost
 xabikos.JavaScriptSnippets
+vscjava.vscode-java-pack
+vscjava.vscode-gradle
