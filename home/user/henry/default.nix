@@ -62,6 +62,7 @@ with lib;
       git
       gnumake
       go
+      gradle
       # golangci-lint
       istioctl
       k9s
