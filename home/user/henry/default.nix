@@ -80,7 +80,6 @@ with lib;
       yarn
 
       # Files and networking
-      traceroute
       unzip
       whois
       dogdns

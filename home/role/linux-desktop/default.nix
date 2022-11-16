@@ -19,6 +19,7 @@ lib;
       docker-compose
       podman
       slack
+      traceroute
       vscode
       pdfarranger
     ];

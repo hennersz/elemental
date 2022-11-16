@@ -13,6 +13,7 @@ lib;
       buildah
       docker
       podman
+      traceroute
     ];
   };
 }
