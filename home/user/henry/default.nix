@@ -52,7 +52,8 @@ with lib;
       coreutils-full
 
       # Development
-      adoptopenjdk-hotspot-bin-16
+      # adoptopenjdk-hotspot-bin-17
+      jdk11
       ansible_2_12
       ansible-lint
       clang
@@ -70,6 +71,7 @@ with lib;
       kubernetes-helm
       kubectl
       nodejs-16_x
+      open-policy-agent
       operator-sdk
       packer
       python39
@@ -102,14 +104,14 @@ with lib;
     home.sessionVariables = {
       CC = "clang";
       CXX = "clang++";
-      JAVA_HOME = pkgs.adoptopenjdk-hotspot-bin-16;
+      JAVA_HOME = pkgs.jdk11;
       TERRAFORM_TEMPLATE_DIR = "$HOME/Projects/Infrastructure/Terraform/templates";
     };
 
     home.activation = {
       linkJava = lib.hm.dag.entryAfter ["writeBoundary"] ''
         $DRY_RUN_CMD ln -sTf $VERBOSE_ARG \
-          ${pkgs.adoptopenjdk-hotspot-bin-16} \
+          ${pkgs.jdk11} \
           $HOME/.java
       '';
     };
