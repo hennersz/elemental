@@ -72,4 +72,6 @@
         "hennersz",
         "minimisation"
     ],
+    "terminal.integrated.enableMultiLinePasteWarning": false,
+    "go.toolsManagement.autoUpdate": true,
 }
