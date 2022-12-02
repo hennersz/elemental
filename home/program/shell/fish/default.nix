@@ -82,6 +82,7 @@ in
         (builtins.readDir ./functions)
     );
 
+    home.emptyActivationPath = false;
     home.activation = { 
       linkFish = lib.hm.dag.entryAfter ["writeBoundary"] ''
         $DRY_RUN_CMD bash -c 'if [[ "$(readlink -f /usr/local/bin/fish)" != "${pkgs.fish}/bin/fish" ]];
