@@ -35,6 +35,7 @@ with lib;
       neovim
       jq
       yq
+      paperkey
       tldr
       vault
 
@@ -60,6 +61,7 @@ with lib;
       clangStdenv
       direnv
       dive
+      ghc
       git
       gnumake
       go
