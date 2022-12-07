@@ -40,7 +40,7 @@ with lib;
       vault
 
       # Communication
-      keybase
+      # keybase
 
       # Cloud CLI Tools
       awscli2
