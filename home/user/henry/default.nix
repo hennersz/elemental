@@ -67,6 +67,7 @@ with lib;
       go
       gradle
       # golangci-lint
+      hadolint
       istioctl
       k9s
       kind
