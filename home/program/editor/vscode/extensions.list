@@ -15,6 +15,7 @@ eamodio.gitlens
 EditorConfig.EditorConfig
 eg2.vscode-npm-script
 esbenp.prettier-vscode
+exiasr.hadolint
 felipecaputo.git-project-manager
 foxundermoon.shell-format
 golang.go

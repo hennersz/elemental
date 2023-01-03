@@ -74,4 +74,5 @@
     ],
     "terminal.integrated.enableMultiLinePasteWarning": false,
     "go.toolsManagement.autoUpdate": true,
+    "hadolint.hadolintPath": "/home/henry/.nix-profile/bin/hadolint",
 }
