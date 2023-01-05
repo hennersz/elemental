@@ -34,7 +34,7 @@ with lib;
       grpcurl
       neovim
       jq
-      yq
+      yq-go
       paperkey
       tldr
       vault
