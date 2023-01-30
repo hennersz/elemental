@@ -23,10 +23,5 @@ lib;
       vscode
       pdfarranger
     ];
-
-    programs.fish.shellAliases = {
-      kyverno = "sudo docker run --rm -v (pwd):/mount -u 1000 -w /mount ghcr.io/kyverno/kyverno-cli:1.8-dev-latest";
-      # kyverno = "sudo docker run --rm -v (pwd):/mount -u 1000 -w /mount --entrypoint /kyverno ghcr.io/kyverno/kyverno-cli:v1.7.4";
-    };
   };
 }

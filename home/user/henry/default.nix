@@ -73,6 +73,7 @@ with lib;
       kind
       kubernetes-helm
       kubectl
+      kyverno
       nodejs-16_x
       open-policy-agent
       operator-sdk
