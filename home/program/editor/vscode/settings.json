@@ -70,7 +70,8 @@
         "containerised",
         "Distroless",
         "hennersz",
-        "minimisation"
+        "minimisation",
+        "Quickstart"
     ],
     "terminal.integrated.enableMultiLinePasteWarning": false,
     "go.toolsManagement.autoUpdate": true,
