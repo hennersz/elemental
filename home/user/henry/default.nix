@@ -85,7 +85,7 @@ with lib;
       rustup
       skopeo
       terraform
-      tflint
+      unstable.tflint
       yarn
       yamllint
 
