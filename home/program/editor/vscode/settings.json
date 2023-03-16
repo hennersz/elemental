@@ -68,9 +68,13 @@
     ],
     "cSpell.userWords": [
         "containerised",
+        "crossplane",
         "Distroless",
         "hennersz",
+        "kyverno",
         "minimisation",
+        "organisations",
+        "OSCAL",
         "Quickstart"
     ],
     "terminal.integrated.enableMultiLinePasteWarning": false,
