@@ -85,6 +85,7 @@ with lib;
       rustup
       skopeo
       terraform
+      tflint
       yarn
       yamllint
 
