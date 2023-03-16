@@ -85,6 +85,7 @@ with lib;
       skopeo
       terraform
       yarn
+      yamllint
 
       # Files and networking
       unzip
