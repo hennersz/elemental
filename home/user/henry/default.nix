@@ -54,6 +54,7 @@ with lib;
 
       # Development
       # adoptopenjdk-hotspot-bin-17
+      act
       jdk11
       ansible_2_12
       ansible-lint
