@@ -50,6 +50,7 @@ in
         # Pull behaviour
         pull.rebase = true;
         init.defaultBranch = "main";
+        push.autoSetupRemote = true;
       } // cfg.extraConfig;
       # Aliases
       aliases = {
