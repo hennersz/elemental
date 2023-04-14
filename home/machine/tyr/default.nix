@@ -5,6 +5,11 @@ with lib;
     home.sessionVariables = {
       ELEMENTAL_SOURCE_DIR = "/home/henry/.config/nixpkgs";
     };
+
+    elemental.home.program.shell.fish.extraAliases = {
+      docker = "sudo docker";
+    };
+
     programs.password-store = {
       enable = true;
       settings = {

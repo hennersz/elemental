@@ -21,6 +21,12 @@ in
       default = "";
       description = "Prepend to the shell init script";
     };
+
+    extraAliases = mkOption {
+      type = types.attrs;
+      default = {};
+      description = "Extra aliases for fish";
+    };
   };
 
   config = mkIf cfg.enable {
@@ -32,14 +38,14 @@ in
         k = "kubectl";
       };
 
-      shellAliases = {
+      shellAliases = mkMerge [{
         cat = "bat";
         dig = "dog";
         ls = "exa";
         l = "exa -l";
         ll = "exa -laaguUmh";
         lt = "exa -lRT";
-      };
+      } cfg.extraAliases ];
 
       interactiveShellInit = builtins.readFile "${promptSource}/functions/fish_prompt.fish";
 
