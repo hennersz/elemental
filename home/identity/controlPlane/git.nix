@@ -6,7 +6,7 @@ with lib;
       enable = true;
 
       userEmail = "henry.mortimer@control-plane.io";
-      gpgKey = "0x0DE5BA892DE1EA3A";
+      gpgKey = "0xBB7595459BC43FAC";
       signByDefault = true;
       extraConfig =  {
         url = {
