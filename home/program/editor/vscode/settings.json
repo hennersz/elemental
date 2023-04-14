@@ -67,6 +67,7 @@
         "!vault scalar"
     ],
     "cSpell.userWords": [
+        "automations",
         "containerised",
         "crossplane",
         "Distroless",
@@ -74,11 +75,17 @@
         "kyverno",
         "minimisation",
         "organisations",
+        "Organised",
         "OSCAL",
-        "Quickstart"
+        "proxied",
+        "Quickstart",
+        "unauthorised"
     ],
     "terminal.integrated.enableMultiLinePasteWarning": false,
     "go.toolsManagement.autoUpdate": true,
     "hadolint.hadolintPath": "/home/henry/.nix-profile/bin/hadolint",
     "editor.largeFileOptimizations": false,
+    "[markdown]": {
+        "editor.defaultFormatter": "yzhang.markdown-all-in-one"
+    },
 }
