@@ -25,6 +25,9 @@ with lib;
 
     # Install packages
     home.packages = with pkgs; [
+
+      tea 
+
       # Rust CLI Tools
       bat
       exa
@@ -55,6 +58,7 @@ with lib;
       # Development
       # adoptopenjdk-hotspot-bin-17
       act
+      unstable.argocd
       jdk11
       ansible_2_12
       ansible-lint
@@ -79,12 +83,13 @@ with lib;
       open-policy-agent
       operator-sdk
       packer
+      parallel
       python39
       python39Packages.poetry
       ruby_2_7
       rustup
       skopeo
-      terraform
+      unstable.terraform
       unstable.tflint
       yarn
       yamllint
