@@ -88,4 +88,5 @@
     "[markdown]": {
         "editor.defaultFormatter": "yzhang.markdown-all-in-one"
     },
+    "window.zoomLevel": 1,
 }
