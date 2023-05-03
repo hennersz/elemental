@@ -41,6 +41,7 @@ with lib;
       paperkey
       tldr
       vault
+      unstable.trufflehog
 
       # Communication
       # keybase
@@ -78,7 +79,7 @@ with lib;
       kind
       kubernetes-helm
       kubectl
-      kyverno
+      unstable.kyverno
       nodejs-16_x
       open-policy-agent
       operator-sdk
