@@ -1,0 +1,87 @@
+name: CI
+on: push
+jobs:
+  flake-test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - uses: cachix/install-nix-action@v20
+      - run: |
+          ARCH=$1
+          DISTRO=$2
+          COMMANDS=$3
+          COMMANDS="${COMMANDS//[$'\t\r\n']+/;}" #Replace newline with ;
+          ADDITIONAL_ARGS=$4
+          DEBIAN_FRONTEND=noninteractive
+          # Install support for new archs via qemu
+          # Platforms: linux/amd64, linux/arm64, linux/riscv64, linux/ppc64le, linux/s390x, linux/386, linux/arm/v7, linux/arm/v6
+          sudo apt-get update -q -y && sudo apt-get install -q -y qemu-system-aarch64 qemu-efi binfmt-support qemu-user-static
+          mkdir -p ~/.config/nix
+          sudo bash -c "echo system-features = aarch64-linux arm-linux >> /etc/nix/nix.conf"
+          sudo bash -c "echo experimental-features = nix-command flakes >> /etc/nix/nix.conf"
+          sudo update-binfmts --display
+      - name: check flake
+        run: nix --extra-platforms aarch64-linux flake check 
+  lock-test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - name: check lock file
+        uses: docker://nixos/nix:2.15.0
+        with:
+          entrypoint: /root/.nix-profile/bin/nix
+          args: --extra-experimental-features "nix-command flakes" flake lock --no-update-lock-file
+  build-test-arm:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - uses: cachix/install-nix-action@v20
+      - run: |
+          ARCH=$1
+          DISTRO=$2
+          COMMANDS=$3
+          COMMANDS="${COMMANDS//[$'\t\r\n']+/;}" #Replace newline with ;
+          ADDITIONAL_ARGS=$4
+          DEBIAN_FRONTEND=noninteractive
+          # Install support for new archs via qemu
+          # Platforms: linux/amd64, linux/arm64, linux/riscv64, linux/ppc64le, linux/s390x, linux/386, linux/arm/v7, linux/arm/v6
+          sudo apt-get update -q -y && sudo apt-get install -q -y qemu-system-aarch64 qemu-efi binfmt-support qemu-user-static
+          mkdir -p ~/.config/nix
+          sudo bash -c "echo system-features = aarch64-linux arm-linux >> /etc/nix/nix.conf"
+          sudo bash -c "echo experimental-features = nix-command flakes >> /etc/nix/nix.conf"
+          sudo update-binfmts --display
+      - name: check config builds
+        run: |
+          nix build .#nixosConfigurations.eir.config.system.build.toplevel -j4 --option system aarch64-linux --option sandbox false --extra-platforms aarch64-linux
+  build-test:
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        module:
+          - hel
+    steps:
+      - uses: actions/checkout@v3
+      - uses: cachix/install-nix-action@v20
+      - run: |
+          mkdir -p ~/.config/nix
+          sudo bash -c "echo experimental-features = nix-command flakes >> /etc/nix/nix.conf"
+      - name: check config builds
+        run: |
+          nix build .#nixosConfigurations.${{ matrix.module }}.config.system.build.toplevel
+
+  home-build-test:
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        module:
+          - henry@hel
+          - henry@tyr
+    steps:
+      - uses: actions/checkout@v3
+      - uses: cachix/install-nix-action@v20
+      - run: |
+          mkdir -p ~/.config/nix
+          sudo bash -c "echo experimental-features = nix-command flakes >> /etc/nix/nix.conf"
+      - name: check config builds
+        run: |
+          nix build .#homeConfigurations."${{ matrix.module }}".activationPackage
