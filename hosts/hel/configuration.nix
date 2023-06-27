@@ -7,6 +7,7 @@
     mixins-vpn
     mixins-audio
     mixins-gnome
+    mixins-libvirt
     users-henry
   ];
 
@@ -20,11 +21,9 @@
     vim 
     firefox
     alacritty
-    vscode
     git
     gnupg
     pinentry-curses
-    pass
   ];
 
   fonts.fonts = with pkgs; [
