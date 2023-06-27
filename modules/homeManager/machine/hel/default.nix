@@ -13,10 +13,11 @@ with lib;
       spotify
       slack
       vagrant
-      firefox
       alacritty
       vlc
       neofetch
+      chromium
+      firefox-devedition
     ];
     gtk = {
       enable = true;
