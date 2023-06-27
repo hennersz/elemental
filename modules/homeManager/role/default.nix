@@ -1,8 +1,8 @@
 { config, lib, stdenv, ... }:
 {
   imports = [
-    ./darwin-laptop/default.nix
+    ./darwin-workstation/default.nix
     ./linux-vm/default.nix
-    ./linux-desktop/default.nix
+    ./linux-workstation/default.nix
   ];
 }

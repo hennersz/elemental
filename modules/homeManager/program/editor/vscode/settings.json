@@ -45,7 +45,6 @@
         "--fast"
     ],
     "go.lintOnSave": "file",
-    "terminal.integrated.shell.linux": "/usr/local/bin/fish",
     "terminal.integrated.shell.osx": "/usr/local/bin/fish",
     "go.coverageOptions": "showUncoveredCodeOnly",
     "go.gopath": "",

@@ -28,6 +28,10 @@ in
           ${config.xdg.configHome}/Code/User/keybindings.json && \
       '';
     };
+
+    home.packages = with pkgs; [
+      vscode
+    ];
   };
 
 }
