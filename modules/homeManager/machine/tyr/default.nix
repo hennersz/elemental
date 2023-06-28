@@ -1,4 +1,4 @@
-{ config, lib, ... }:
+{ config, lib, pkgs, ... }:
 with lib;
 {
   config = lib.mkIf (config.elemental.machine == "tyr") {
