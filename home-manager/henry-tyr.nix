@@ -15,7 +15,7 @@
     outputs.homeManagerModules.modules
   ];
 
-  elemental.role = "linux-desktop";
+  elemental.role = "linux-workstation";
   elemental.user = "henry";
   elemental.machine = "tyr";
   elemental.identity = "controlPlane";

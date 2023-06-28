@@ -11,6 +11,15 @@ with lib;
       kind = "sudo kind";
     };
 
+    home.packages = with pkgs; [
+      spotify
+      slack
+      vagrant
+      neofetch
+      chromium
+      firefox-devedition
+    ];
+
     programs.password-store = {
       enable = true;
       settings = {
