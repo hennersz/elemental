@@ -18,6 +18,7 @@ with lib;
       neofetch
       chromium
       firefox-devedition
+      nerdfonts
     ];
 
     programs.password-store = {
