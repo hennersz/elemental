@@ -2,7 +2,7 @@
 {
   environment.systemPackages = [ pkgs.tailscale ];
   services.tailscale.enable = true;
-  networking.firewall.checkReversePath = "loose";
+  services.tailscale.useRoutingFeatures = "both";
   networking.firewall = {
     # enable the firewall
     enable = true;
@@ -12,9 +12,4 @@
 
     # allow the Tailscale UDP port through the firewall
     allowedUDPPorts = [ config.services.tailscale.port ];
-
-    # allow you to SSH in over the public internet
-    allowedTCPPorts = [ 22 ];
-  };
-
 }
