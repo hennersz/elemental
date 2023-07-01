@@ -16,5 +16,6 @@
     # allow you to SSH in over the public internet
     allowedTCPPorts = [ 22 ];
   };
-
+  boot.kernel.sysctl."net.ipv4.ip_forward" = 1;
+  boot.kernel.sysctl."net.ipv6.ip_forward" = 1;
 }
