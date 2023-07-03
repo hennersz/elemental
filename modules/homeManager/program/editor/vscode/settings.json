@@ -88,4 +88,5 @@
         "editor.defaultFormatter": "yzhang.markdown-all-in-one"
     },
     "window.zoomLevel": 1,
+    "remote.SSH.useLocalServer": false
 }
