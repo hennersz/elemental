@@ -10,6 +10,8 @@ in
     mixins-selfupdate
     mixins-vpn
     mixins-metrics-server
+    mixins-dashboard-server
+    mixins-logging-server
   ];
 
   documentation.man.generateCaches = false;
