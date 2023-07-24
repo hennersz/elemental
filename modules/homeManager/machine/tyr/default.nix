@@ -9,6 +9,7 @@ with lib;
     elemental.home.program.shell.fish.extraAliases = {
       docker = "sudo docker";
       kind = "sudo kind";
+      docker-compose = "sudo docker-compose";
     };
 
     home.packages = with pkgs; [
@@ -19,6 +20,10 @@ with lib;
       chromium
       firefox-devedition
       nerdfonts
+      podman
+      dive
+      kind
+      docker-compose
     ];
 
     programs.password-store = {
