@@ -22,19 +22,26 @@ in {
     };
 
     systemd.services."update" = {
+      stopIfChanged = false;
+      restartIfChanged = false;
       script = ''
         set -eu
         cd /etc/nixos
-        count="$(nix flake update 2>&1 | grep Updated -c || true)"
-        if [ "$count" != "0" ]; then
-          nixos-rebuild switch --flake '/etc/nixos#${cfg.hostname}'
+        if update=$(nix flake update 2>&1); then
+          count=$(echo "$update" | grep Updated || true)
+          if [ "$count" != "0" ]; then
+            nixos-rebuild switch --flake '/etc/nixos#${cfg.hostname}'
+          fi
+        else 
+          echo "$update"
+          exit 1
         fi
       '';
       serviceConfig = {
         Type = "oneshot";
         User= "root";
       };
-      path = with pkgs; [ coreutils gnugrep nix nixos-rebuild ];
+      path = with pkgs; [ coreutils gnugrep nix nixos-rebuild git ];
     };
   };
 }
