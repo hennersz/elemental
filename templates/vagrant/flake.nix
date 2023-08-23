@@ -15,10 +15,11 @@
         home-manager.nixosModules.home-manager {
           home-manager.useGlobalPkgs = true;
           home-manager.useUserPackages = true;
-          home-manager.users.vagrant = elemental.homeManagerModules.configs.henry-vm;
+          home-manager.users.vagrant = elemental.homeManagerModules.configs.vagrant-vm;
           home-manager.extraSpecialArgs = {
             inputs = elemental.inputs;
             outputs = elemental.outputs;
+            identity = "personal";
           };
         }
       ];

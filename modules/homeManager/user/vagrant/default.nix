@@ -1,7 +1,7 @@
 { config, lib, pkgs, ... }:
 with lib;
 {
-  config = mkIf (config.elemental.user == "henry") {
+  config = mkIf (config.elemental.user == "vagrant") {
     elemental.home = {
       program = {
         shell.fish.enable = true;
@@ -20,8 +20,8 @@ with lib;
     };
 
     home = {
-      username = "henry";
-      homeDirectory = "/home/henry";
+      username = "vagrant";
+      homeDirectory = "/home/vagrant";
       packages = with pkgs; [
         # Rust CLI Tools
         bat
