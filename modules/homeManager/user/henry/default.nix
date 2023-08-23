@@ -20,8 +20,8 @@ with lib;
     };
 
     home = {
-      username = "henry";
-      homeDirectory = "/home/henry";
+      # username = "henry";
+      # homeDirectory = "/home/henry";
       packages = with pkgs; [
         # Rust CLI Tools
         bat

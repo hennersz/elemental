@@ -7,7 +7,6 @@ in
     mixins-common 
     mixins-vpn
     users-vagrant
-    users-henry
   ];
 
   system.stateVersion = "22.11";
@@ -47,7 +46,7 @@ in
     nfs-utils
     rsync
     vim
-    go
+    git
   ];
 
   security.sudo.extraConfig =
