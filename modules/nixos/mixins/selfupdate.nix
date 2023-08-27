@@ -28,7 +28,7 @@ in {
         set -eu
         cd /etc/nixos
         if update=$(nix flake update 2>&1); then
-          count=$(echo "$update" | grep Updated || true)
+          count=$(echo "$update" | grep -c Updated || true)
           if [ "$count" != "0" ]; then
             nixos-rebuild switch --flake '/etc/nixos#${cfg.hostname}'
           fi
