@@ -37,6 +37,7 @@ with lib;
 
         # Common CLI tools
         gnutar
+        gnumake
         coreutils-full
         direnv
         git
