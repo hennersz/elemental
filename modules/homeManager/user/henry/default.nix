@@ -16,6 +16,7 @@ with lib;
           };
           bat.enable = true;
         };
+        editor.nvim.enable = true;
       };
     };
 
@@ -44,7 +45,7 @@ with lib;
         dogdns
 
         # Overview
-        htop
+        btop
       ];
     };
   };

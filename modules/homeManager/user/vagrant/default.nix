@@ -44,7 +44,7 @@ with lib;
         dogdns
 
         # Overview
-        htop
+        btop
       ];
     };
   };
