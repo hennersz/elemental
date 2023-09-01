@@ -51,6 +51,7 @@ in
         l = "exa -l";
         ll = "exa -laaguUmh";
         lt = "exa -lRT";
+        top = "btop";
       } cfg.extraAliases ];
 
       interactiveShellInit = builtins.readFile "${promptSource}/functions/fish_prompt.fish";
