@@ -19,7 +19,13 @@ with lib;
       chromium
       firefox-devedition
       jdk
+      jetbrains.idea-community
     ];
+
+    home.sessionVariables = {
+      JAVA_HOME = "${pkgs.jdk}/lib/openjdk";
+    };
+
     gtk = {
       enable = true;
       theme = {
