@@ -6,6 +6,7 @@ jobs:
     steps:
       - uses: actions/checkout@v3
       - uses: cachix/install-nix-action@v22
+      - uses: DeterminateSystems/magic-nix-cache-action@main
       - run: |
           ARCH=$1
           DISTRO=$2
@@ -27,6 +28,7 @@ jobs:
     steps:
       - uses: actions/checkout@v3
       - uses: cachix/install-nix-action@v22
+      - uses: DeterminateSystems/magic-nix-cache-action@main
       - name: check lock file
         run:
           nix flake lock --no-update-lock-file
@@ -35,6 +37,7 @@ jobs:
     steps:
       - uses: actions/checkout@v3
       - uses: cachix/install-nix-action@v22
+      - uses: DeterminateSystems/magic-nix-cache-action@main
       - run: |
           ARCH=$1
           DISTRO=$2
@@ -61,6 +64,7 @@ jobs:
     steps:
       - uses: actions/checkout@v3
       - uses: cachix/install-nix-action@v22
+      - uses: DeterminateSystems/magic-nix-cache-action@main
       - run: |
           mkdir -p ~/.config/nix
           sudo bash -c "echo experimental-features = nix-command flakes >> /etc/nix/nix.conf"
@@ -78,6 +82,7 @@ jobs:
     steps:
       - uses: actions/checkout@v3
       - uses: cachix/install-nix-action@v22
+      - uses: DeterminateSystems/magic-nix-cache-action@main
       - run: |
           mkdir -p ~/.config/nix
           sudo bash -c "echo experimental-features = nix-command flakes >> /etc/nix/nix.conf"
