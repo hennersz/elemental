@@ -5,7 +5,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
-      - uses: cachix/install-nix-action@v20
+      - uses: cachix/install-nix-action@v22
       - run: |
           ARCH=$1
           DISTRO=$2
@@ -26,16 +26,15 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
+      - uses: cachix/install-nix-action@v22
       - name: check lock file
-        uses: docker://nixos/nix:2.15.0
-        with:
-          entrypoint: /root/.nix-profile/bin/nix
-          args: --extra-experimental-features "nix-command flakes" flake lock --no-update-lock-file
+        run:
+          nix flake lock --no-update-lock-file
   build-test-arm:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
-      - uses: cachix/install-nix-action@v20
+      - uses: cachix/install-nix-action@v22
       - run: |
           ARCH=$1
           DISTRO=$2
@@ -61,7 +60,7 @@ jobs:
           - hel
     steps:
       - uses: actions/checkout@v3
-      - uses: cachix/install-nix-action@v20
+      - uses: cachix/install-nix-action@v22
       - run: |
           mkdir -p ~/.config/nix
           sudo bash -c "echo experimental-features = nix-command flakes >> /etc/nix/nix.conf"
@@ -78,7 +77,7 @@ jobs:
           - henry@tyr
     steps:
       - uses: actions/checkout@v3
-      - uses: cachix/install-nix-action@v20
+      - uses: cachix/install-nix-action@v22
       - run: |
           mkdir -p ~/.config/nix
           sudo bash -c "echo experimental-features = nix-command flakes >> /etc/nix/nix.conf"
