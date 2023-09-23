@@ -30,7 +30,6 @@ with lib;
 
         # Utils
         asciinema
-        neovim
         jq
         yq-go
         tldr
@@ -38,6 +37,7 @@ with lib;
         # Common CLI tools
         gnutar
         gnumake
+        clang
         coreutils-full
         direnv
         git

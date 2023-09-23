@@ -6,11 +6,19 @@
     vscode-server.url = "github:nix-community/nixos-vscode-server";
     home-manager.url = "github:nix-community/home-manager/release-23.05";
     home-manager.inputs.nixpkgs.follows = "nixpkgs";
+    nixneovim.url = "github:nixneovim/nixneovim";
+    nixneovimplugins.url = "github:NixNeovim/NixNeovimPlugins";
   };
   description = "A flake defining the configuration for my systems";
 
-  outputs = { self, nixpkgs, nixos-hardware, home-manager, vscode-server, ... }@inputs: 
+  outputs = { self, nixpkgs, nixos-hardware, home-manager, vscode-server, nixneovim, nixneovimplugins, ... }@inputs: 
   let
+    overlays = ({...}: {
+      nixpkgs.overlays = [ 
+        nixneovim.overlays.default
+        nixneovimplugins.overlays.default
+      ];
+    });
     nixosModules = import ./modules/nixos { lib = nixpkgs.lib; };
     inherit (self) outputs;
   in
@@ -60,6 +68,8 @@
       pkgs = nixpkgs.legacyPackages.x86_64-linux;
       extraSpecialArgs = { inherit inputs outputs; };
       modules = [
+        overlays
+        nixneovim.nixosModules.homeManager-22-11
         ./home-manager/henry-hel.nix
       ];
     };
