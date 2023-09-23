@@ -1,8 +1,9 @@
 function nixUpdate
-  set originalDir (pwd)
-  cd ~/.config/nixpkgs
-  and git pull
-  and nix-channel --update
-  and home-manager switch
-  and cd $originalDir
+  if test -e /etc/nixos/flake.nix
+    sudo nix flake update /etc/nixos && sudo nixos-rebuild switch
+  end
+
+  if test -e ~/.config/home-manager/flake.nix
+    nix flake update ~/.config/home-manager && home-manager switch
+  end
 end
