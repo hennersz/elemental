@@ -6,10 +6,11 @@
     vscode-server.url = "github:nix-community/nixos-vscode-server";
     home-manager.url = "github:nix-community/home-manager/release-23.05";
     home-manager.inputs.nixpkgs.follows = "nixpkgs";
+    devenv.url = "github:cachix/devenv/v0.6.3";
   };
   description = "A flake defining the configuration for my systems";
 
-  outputs = { self, nixpkgs, nixos-hardware, home-manager, vscode-server, ... }@inputs: 
+  outputs = { self, nixpkgs, nixos-hardware, home-manager, vscode-server, devenv, ... }@inputs: 
   let
     nixosModules = import ./modules/nixos { lib = nixpkgs.lib; };
     inherit (self) outputs;
@@ -77,6 +78,12 @@
         description = "Starter for vagrant boxes";
         path = ./templates/vagrant;
       };
+      baseDevEnv = {
+        description = "basic development environment with no preinstalled tools";
+        path = ./templates/devEnvs/base;
+      };
     };
+
+    lib = import ./lib { inherit inputs; };
   };
 }
