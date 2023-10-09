@@ -3,7 +3,7 @@
   services.prometheus = {
     enable = true;
     port = 9001;
-    stateDir = "metrics-data/prometheus";
+    stateDir = "app-data/prometheus";
     exporters = {
       node = {
         enable = true;

@@ -12,7 +12,7 @@
     };
     port = 2342;
     addr = "127.0.0.1";
-    dataDir = "/var/lib/metrics-data/grafana";
+    dataDir = "/var/lib/app-data/grafana";
   };
 
   services.nginx.enable = true;

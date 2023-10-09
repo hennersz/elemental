@@ -38,14 +38,14 @@
 
       storage_config = {
         boltdb_shipper = {
-          active_index_directory = "/var/lib/metrics-data/loki/boltdb-shipper-active";
-          cache_location = "/var/lib/metrics-data/loki/boltdb-shipper-cache";
+          active_index_directory = "/var/lib/app-data/loki/boltdb-shipper-active";
+          cache_location = "/var/lib/app-data/loki/boltdb-shipper-cache";
           cache_ttl = "24h";
           shared_store = "filesystem";
         };
 
         filesystem = {
-          directory = "/var/lib/metrics-data/loki/chunks";
+          directory = "/var/lib/app-data/loki/chunks";
         };
       };
 
@@ -64,7 +64,7 @@
       };
 
       compactor = {
-        working_directory = "/var/lib/metrics-data/loki";
+        working_directory = "/var/lib/app-data/loki";
         shared_store = "filesystem";
         compactor_ring = {
           kvstore = {
