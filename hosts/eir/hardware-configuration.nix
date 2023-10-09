@@ -22,27 +22,21 @@
       fsType = "ext4";
       options = [ "noatime" ];
     };
-  };
 
-  fileSystems = {
     "/nix" = {
       device = "/dev/disk/by-label/nixos-store";
       fsType = "ext4";
       options = [ "noatime" ];
     };
-  };
 
-  fileSystems = {
-    "/var/lib/app-data" = {
-      device = "/dev/disk/by-label/app-data";
+    "/home" = {
+      device = "/dev/disk/by-label/home";
       fsType = "ext4";
       options = [ "noatime" ];
     };
-  };
 
-  fileSystems = {
-    "/home" = {
-      device = "/dev/disk/by-label/home";
+    "/var/lib/app-data" = {
+      device = "/dev/disk/by-label/app-data";
       fsType = "ext4";
       options = [ "noatime" ];
     };
