@@ -33,14 +33,6 @@
   };
 
   fileSystems = {
-    "/var/lib/metrics-data" = {
-      device = "/dev/disk/by-label/prometheus-data";
-      fsType = "ext4";
-      options = [ "noatime" ];
-    };
-  };
-
-  fileSystems = {
     "/var/lib/app-data" = {
       device = "/dev/disk/by-label/app-data";
       fsType = "ext4";
