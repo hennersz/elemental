@@ -35,7 +35,7 @@ in
           ];
 
           window = {
-            padding.x = 10;
+            padding.x = 0;
             padding.y = 10;
             decorations = "full";
             opacity = 1;
