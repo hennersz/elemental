@@ -15,9 +15,6 @@
     dataDir = "/var/lib/app-data/grafana";
   };
 
-  services.nginx.enable = true;
-  services.nginx.recommendedProxySettings = true;
-  networking.firewall.allowedTCPPorts = [ 80 443 ];
   services.nginx.virtualHosts.${config.elemental.domainName} = {
     locations."/grafana/" = {
         proxyPass = "http://127.0.0.1:${toString config.services.grafana.port}";
