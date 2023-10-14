@@ -1,4 +1,4 @@
-{ config, pkgs, inputs, ... }:
+{ pkgs, inputs, ... }:
 {
   imports = with inputs.self.nixosModules.modules; [
     ./hardware-configuration.nix
