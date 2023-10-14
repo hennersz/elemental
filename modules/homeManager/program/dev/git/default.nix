@@ -32,9 +32,9 @@ in
     };
 
     extraConfig = lib.mkOption {
-      type =  types.attrs;
+      type = types.attrs;
       description = "extra git config";
-      default = {};
+      default = { };
     };
   };
 

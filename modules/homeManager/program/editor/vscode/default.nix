@@ -1,6 +1,6 @@
-{ config, lib, pkgs, ...}:
+{ config, lib, pkgs, ... }:
 with lib;
-let 
+let
   cfg = config.elemental.home.program.editor.vscode;
 in
 {
@@ -17,8 +17,8 @@ in
       onChange = "cat ~/.config/Code/extensions.list | grep -v '^#' | xargs -L1 code --force --install-extension ";
     };
 
-    home.activation = { 
-      linkCode = lib.hm.dag.entryAfter ["writeBoundary"] ''
+    home.activation = {
+      linkCode = lib.hm.dag.entryAfter [ "writeBoundary" ] ''
         $DRY_RUN_CMD mkdir -p $VERBOSE_ARG ${config.xdg.configHome}/Code && \
           ln -sf $VERBOSE_ARG \
           ${builtins.toString ./settings.json} \

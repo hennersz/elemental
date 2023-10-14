@@ -24,7 +24,7 @@ in
 
     extraAliases = mkOption {
       type = types.attrs;
-      default = {};
+      default = { };
       description = "Extra aliases for fish";
     };
   };
@@ -52,7 +52,8 @@ in
         ll = "exa -laaguUmh";
         lt = "exa -lRT";
         top = "btop";
-      } cfg.extraAliases ];
+      }
+        cfg.extraAliases];
 
       interactiveShellInit = builtins.readFile "${promptSource}/functions/fish_prompt.fish";
 
@@ -80,20 +81,20 @@ in
     };
 
     xdg.configFile = (
-      mapAttrs' 
-        (name: _: 
-          nameValuePair 
+      mapAttrs'
+        (name: _:
+          nameValuePair
             ("fish/conf.d/${name}")
             { source = (./config + "/${name}"); executable = false; }
-        ) 
+        )
         (builtins.readDir ./config)
     ) // (
-      mapAttrs' 
-        (name: _: 
-          nameValuePair 
+      mapAttrs'
+        (name: _:
+          nameValuePair
             ("fish/functions/${name}")
             { source = (./functions + "/${name}"); executable = false; }
-        ) 
+        )
         (builtins.readDir ./functions)
     );
 

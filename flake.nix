@@ -11,100 +11,101 @@
   };
   description = "A flake defining the configuration for my systems";
 
-  outputs = { self, nixpkgs, nixos-hardware, home-manager, vscode-server, flake-utils, std-dev-env, ... }@inputs: 
-  let
-    nixosModules = import ./modules/nixos { lib = nixpkgs.lib; };
-    inherit (self) outputs;
-  in
+  outputs = { self, nixpkgs, nixos-hardware, home-manager, vscode-server, flake-utils, std-dev-env, ... }@inputs:
+    let
+      nixosModules = import ./modules/nixos { lib = nixpkgs.lib; };
+      inherit (self) outputs;
+    in
     flake-utils.lib.eachDefaultSystem
-    (system:
-      let
-        pkgs = import nixpkgs {
-          inherit system;
-        };
-      in
-      {
-        devShells.default = std-dev-env.lib.base {
-          inherit pkgs inputs;
-          packages = with pkgs; [
-            nixVersions.nix_2_17
-            statix
-            nil
-            nixpkgs-fmt
+      (system:
+        let
+          pkgs = import nixpkgs {
+            inherit system;
+          };
+        in
+        {
+          devShells.default = std-dev-env.lib.base {
+            inherit pkgs inputs;
+            packages = with pkgs; [
+              nixVersions.nix_2_17
+              statix
+              nil
+              nixpkgs-fmt
+            ];
+            scripts.lint.exec = ''
+              shopt -s globstar
+              statix check "$DEVENV_ROOT"
+              nixpkgs-fmt --check "$DEVENV_ROOT"/**/*.nix
+            '';
+            scripts.format.exec = ''
+              shopt -s globstar
+              nixpkgs-fmt "$DEVENV_ROOT"/**/*.nix
+            '';
+          };
+        }) // {
+      nixosModules.modules = nixosModules;
+      nixosModules.archetypes = import ./archetypes;
+      homeManagerModules.modules = import ./modules/homeManager;
+      homeManagerModules.configs = import ./home-manager;
+
+      nixosConfigurations = {
+        eir = nixpkgs.lib.nixosSystem {
+          system = "aarch64-linux";
+          specialArgs = { inherit inputs; }; # Pass flake inputs to our config
+          modules = [
+            ./hosts/eir/configuration.nix
+            nixos-hardware.nixosModules.raspberry-pi-4
+            vscode-server.nixosModules.default
+            ({ config, pkgs, ... }: {
+              services.vscode-server.enable = true;
+            })
+            home-manager.nixosModules.home-manager
+            {
+              home-manager.useGlobalPkgs = true;
+              home-manager.useUserPackages = true;
+              home-manager.users.henry = self.homeManagerModules.configs.henry-eir;
+              home-manager.extraSpecialArgs = {
+                inputs = inputs;
+                outputs = self.outputs;
+              };
+            }
           ];
-          scripts.lint.exec = ''
-            shopt -s globstar
-            statix check "$DEVENV_ROOT"
-            nixpkgs-fmt --check "$DEVENV_ROOT"/**/*.nix
-          '';
-          scripts.format.exec = ''
-            shopt -s globstar
-            nixpkgs-fmt "$DEVENV_ROOT"/**/*.nix
-          '';
         };
-    }) // {
-    nixosModules.modules = nixosModules;
-    nixosModules.archetypes = import ./archetypes ;
-    homeManagerModules.modules = import ./modules/homeManager;
-    homeManagerModules.configs = import ./home-manager;
 
-    nixosConfigurations = {
-      eir = nixpkgs.lib.nixosSystem {
-        system = "aarch64-linux";
-        specialArgs = { inherit inputs; }; # Pass flake inputs to our config
-        modules = [ 
-          ./hosts/eir/configuration.nix
-          nixos-hardware.nixosModules.raspberry-pi-4
-          vscode-server.nixosModules.default
-          ({ config, pkgs, ... }: {
-            services.vscode-server.enable = true;
-          })
-          home-manager.nixosModules.home-manager {
-            home-manager.useGlobalPkgs = true;
-            home-manager.useUserPackages = true;
-            home-manager.users.henry = self.homeManagerModules.configs.henry-eir;
-            home-manager.extraSpecialArgs = {
-              inputs = inputs;
-              outputs = self.outputs;
-            };
-          }
+        hel = nixpkgs.lib.nixosSystem {
+          system = "x86_64-linux";
+          specialArgs = { inherit inputs; }; # Pass flake inputs to our config
+          modules = [
+            ./hosts/hel/configuration.nix
+            vscode-server.nixosModules.default
+            ({ config, pkgs, ... }: {
+              services.vscode-server.enable = true;
+            })
+          ];
+        };
+      };
+
+      homeConfigurations."henry@hel" = home-manager.lib.homeManagerConfiguration {
+        pkgs = nixpkgs.legacyPackages.x86_64-linux;
+        extraSpecialArgs = { inherit inputs outputs; };
+        modules = [
+          ./home-manager/henry-hel.nix
         ];
       };
 
-      hel = nixpkgs.lib.nixosSystem {
-        system = "x86_64-linux";
-        specialArgs = { inherit inputs ; }; # Pass flake inputs to our config
-        modules = [ 
-          ./hosts/hel/configuration.nix
-          vscode-server.nixosModules.default
-          ({ config, pkgs, ... }: {
-            services.vscode-server.enable = true;
-          })
+      homeConfigurations."henry@tyr" = home-manager.lib.homeManagerConfiguration {
+        pkgs = nixpkgs.legacyPackages.x86_64-linux;
+        extraSpecialArgs = { inherit inputs outputs; };
+        modules = [
+          ./home-manager/henry-tyr.nix
         ];
       };
-    };
 
-    homeConfigurations."henry@hel" = home-manager.lib.homeManagerConfiguration {
-      pkgs = nixpkgs.legacyPackages.x86_64-linux;
-      extraSpecialArgs = { inherit inputs outputs; };
-      modules = [
-        ./home-manager/henry-hel.nix
-      ];
-    };
-
-    homeConfigurations."henry@tyr" = home-manager.lib.homeManagerConfiguration {
-      pkgs = nixpkgs.legacyPackages.x86_64-linux;
-      extraSpecialArgs = { inherit inputs outputs; };
-      modules = [
-        ./home-manager/henry-tyr.nix
-      ];
-    };
-
-    templates = {
-      vagrant = {
-        description = "Starter for vagrant boxes";
-        path = ./templates/vagrant;
+      templates = {
+        vagrant = {
+          description = "Starter for vagrant boxes";
+          path = ./templates/vagrant;
+        };
       };
     };
-  };
 }

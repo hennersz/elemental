@@ -24,7 +24,7 @@ in
 
     extraAliases = mkOption {
       type = types.attrs;
-      default = {};
+      default = { };
       description = "Extra aliases for fish";
     };
   };
@@ -45,7 +45,8 @@ in
         l = "exa -l";
         ll = "exa -laaguUmh";
         lt = "exa -lRT";
-      } cfg.extraAliases ];
+      }
+        cfg.extraAliases];
 
       interactiveShellInit = builtins.readFile "${promptSource}/functions/fish_prompt.fish";
 
@@ -71,26 +72,26 @@ in
     };
 
     xdg.configFile = (
-      mapAttrs' 
-        (name: _: 
-          nameValuePair 
+      mapAttrs'
+        (name: _:
+          nameValuePair
             ("fish/conf.d/${name}")
             { source = (./config + "/${name}"); executable = false; }
-        ) 
+        )
         (builtins.readDir ./config)
     ) // (
-      mapAttrs' 
-        (name: _: 
-          nameValuePair 
+      mapAttrs'
+        (name: _:
+          nameValuePair
             ("fish/functions/${name}")
             { source = (./functions + "/${name}"); executable = false; }
-        ) 
+        )
         (builtins.readDir ./functions)
     );
 
     home.emptyActivationPath = false;
-    home.activation = { 
-      linkFish = lib.hm.dag.entryAfter ["writeBoundary"] ''
+    home.activation = {
+      linkFish = lib.hm.dag.entryAfter [ "writeBoundary" ] ''
         $DRY_RUN_CMD bash -c 'if [[ "$(readlink -f /usr/local/bin/fish)" != "${pkgs.fish}/bin/fish" ]];
           then
             sudo ln -sf $VERBOSE_ARG ${pkgs.fish}/bin/fish /usr/local/bin/fish

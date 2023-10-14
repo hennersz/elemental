@@ -1,6 +1,6 @@
-{ config, lib, ...}:
+{ config, lib, ... }:
 with lib;
-let 
+let
   cfg = config.elemental.home.program.terminal.iterm2;
 in
 {

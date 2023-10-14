@@ -10,7 +10,7 @@ lib;
     };
 
     home.activation = {
-      codeUseConfDir = lib.hm.dag.entryAfter ["linkCode"] ''
+      codeUseConfDir = lib.hm.dag.entryAfter [ "linkCode" ] ''
         $DRY_RUN_CMD ln -sfn $VERBOSE_ARG ${config.xdg.configHome}/Code/User ~/Library/Application\ Support/Code/User
       '';
     };

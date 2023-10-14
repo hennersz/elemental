@@ -8,10 +8,12 @@ let
     then "${key} ${value}"
     else optionalString value key;
 
-  cfgText = generators.toKeyValue {
-    inherit mkKeyValue;
-    listsAsDuplicateKeys = true;
-  } cfg.settings;
+  cfgText = generators.toKeyValue
+    {
+      inherit mkKeyValue;
+      listsAsDuplicateKeys = true;
+    }
+    cfg.settings;
 
   primitiveType = types.oneOf [ types.str types.bool ];
 

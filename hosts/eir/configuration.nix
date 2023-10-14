@@ -1,4 +1,4 @@
-{ config, pkgs, inputs, lib,  ...}:
+{ config, pkgs, inputs, lib, ... }:
 let
   hostname = "eir";
   ip = "192.168.1.2";

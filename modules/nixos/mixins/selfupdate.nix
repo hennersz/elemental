@@ -2,7 +2,8 @@
 with lib;
 let
   cfg = config.mixins.selfupdate;
-in {
+in
+{
 
   options.mixins.selfupdate = {
     enable = mkEnableOption "self update service";
@@ -14,11 +15,11 @@ in {
   config = mkIf cfg.enable {
     systemd.timers."update" = {
       wantedBy = [ "timers.target" ];
-        timerConfig = {
-          OnBootSec = "5m";
-          OnUnitActiveSec = "5m";
-          Unit = "update.service";
-        };
+      timerConfig = {
+        OnBootSec = "5m";
+        OnUnitActiveSec = "5m";
+        Unit = "update.service";
+      };
     };
 
     systemd.services."update" = {
@@ -39,7 +40,7 @@ in {
       '';
       serviceConfig = {
         Type = "oneshot";
-        User= "root";
+        User = "root";
       };
       path = with pkgs; [ coreutils gnugrep nix nixos-rebuild git ];
     };
