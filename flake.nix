@@ -6,16 +6,43 @@
     vscode-server.url = "github:nix-community/nixos-vscode-server";
     home-manager.url = "github:nix-community/home-manager/release-23.05";
     home-manager.inputs.nixpkgs.follows = "nixpkgs";
-    devenv.url = "github:cachix/devenv/v0.6.3";
+    flake-utils.url = "github:numtide/flake-utils";
+    std-dev-env.url = "github:hennersz/std-dev-env";
   };
   description = "A flake defining the configuration for my systems";
 
-  outputs = { self, nixpkgs, nixos-hardware, home-manager, vscode-server, devenv, ... }@inputs: 
+  outputs = { self, nixpkgs, nixos-hardware, home-manager, vscode-server, flake-utils, std-dev-env, ... }@inputs: 
   let
     nixosModules = import ./modules/nixos { lib = nixpkgs.lib; };
     inherit (self) outputs;
   in
-  {
+    flake-utils.lib.eachDefaultSystem
+    (system:
+      let
+        pkgs = import nixpkgs {
+          inherit system;
+        };
+      in
+      {
+        devShells.default = std-dev-env.lib.base {
+          inherit pkgs inputs;
+          packages = with pkgs; [
+            nixVersions.nix_2_17
+            statix
+            nil
+            nixpkgs-fmt
+          ];
+          scripts.lint.exec = ''
+            shopt -s globstar
+            statix check "$DEVENV_ROOT"
+            nixpkgs-fmt --check "$DEVENV_ROOT"/**/*.nix
+          '';
+          scripts.format.exec = ''
+            shopt -s globstar
+            nixpkgs-fmt "$DEVENV_ROOT"/**/*.nix
+          '';
+        };
+    }) // {
     nixosModules.modules = nixosModules;
     nixosModules.archetypes = import ./archetypes ;
     homeManagerModules.modules = import ./modules/homeManager;
@@ -78,12 +105,6 @@
         description = "Starter for vagrant boxes";
         path = ./templates/vagrant;
       };
-      baseDevEnv = {
-        description = "basic development environment with no preinstalled tools";
-        path = ./templates/devEnvs/base;
-      };
     };
-
-    lib = import ./lib { inherit inputs; };
   };
 }

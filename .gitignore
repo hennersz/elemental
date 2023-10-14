@@ -1,3 +1,5 @@
 home.nix
 .vscode
 .DS_Store
+.devenv
+.direnv
