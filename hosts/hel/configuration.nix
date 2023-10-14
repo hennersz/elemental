@@ -8,6 +8,7 @@
     mixins-audio
     mixins-gnome
     mixins-libvirt
+    mixins-containers
     users-henry
   ];
 
