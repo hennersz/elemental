@@ -1,4 +1,18 @@
 { pkgs, lib, config, ... }:
+let
+  conditionalForwardingConfig = pkgs.writeText "conditionalForwarding.conf" (
+    lib.strings.concatStringsSep "" (
+      map
+        (revServer:
+          lib.generators.toKeyValue { listsAsDuplicateKeys = true; } {
+            rev-server = "${revServer.localNetworkCIDR},${revServer.dnsServer}";
+            server = [ "/${revServer.localDomain}/${revServer.dnsServer}" "//${revServer.dnsServer}" ];
+          }
+        )
+        config.elemental.pi-hole.revServers
+    )
+  );
+in
 {
   options.elemental.pi-hole = with lib; {
     image = mkOption {
@@ -34,6 +48,11 @@
     hostIP = mkOption {
       type = types.str;
     };
+
+    revServers = mkOption {
+      type = types.listOf types.attrs;
+      default = [{ }];
+    };
   };
 
   config = {
@@ -58,8 +77,9 @@
       };
       volumes = [
         "${config.elemental.pi-hole.dataDir}/pi-hole/etc:/etc/pihole"
-        "${config.elemental.pi-hole.dataDir}/pi-hole/dnsmasq:/etc/dnsmasq.d"
+        "${config.elemental.pi-hole.dataDir}/pi-hole/dnsmasq:/etc/dnsmasq.d:rshared"
         "${config.elemental.pi-hole.dataDir}/pi-hole/log:/var/log"
+        "${conditionalForwardingConfig}:/etc/dnsmasq.d/conditionalForwarding.conf"
       ];
     };
 

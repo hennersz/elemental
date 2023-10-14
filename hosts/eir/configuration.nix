@@ -51,7 +51,21 @@ in
   };
 
   services.openssh.enable = true;
-  elemental.pi-hole.interfaces = [ "end0" "tailscale0" ];
-  elemental.pi-hole.domain = config.networking.hostName;
-  elemental.pi-hole.hostIP = ip;
+  elemental.pi-hole = {
+    interfaces = [ "end0" "tailscale0" ];
+    domain = config.networking.hostName;
+    hostIP = ip;
+    revServers = [
+      {
+        localNetworkCIDR = "192.168.1.0/24";
+        dnsServer = "192.168.1.1";
+        localDomain = "lan.morti.net";
+      }
+      {
+        localNetworkCIDR = "100.64.0.0/10";
+        dnsServer = "100.100.100.100";
+        localDomain = "koi-boa.ts.net";
+      }
+    ];
+  };
 }
