@@ -12,14 +12,14 @@ let
       );
       allNixFiles = findSuffix ".nix" folder;
       allModuleNames = map (removeSuffix ".nix") (map baseNameOf allNixFiles);
-      zippedList = (zipListsWith (x: y: nameValuePair (prefix + "-" + x) (import y)) allModuleNames allNixFiles);
+      zippedList = zipListsWith (x: y: nameValuePair (prefix + "-" + x) (import y)) allModuleNames allNixFiles;
     in
     listToAttrs zippedList;
   generateModulesAuto = root:
     let
       moduleFolderNames = attrNames (filterAttrs (n: v: v == "directory") (readDir (toString root)));
       moduleFolderPaths = map (x: (toString root) + "/" + x) moduleFolderNames;
-      zippedList = listToAttrs (zipListsWith (x: y: nameValuePair x y) moduleFolderNames moduleFolderPaths);
+      zippedList = listToAttrs (zipListsWith nameValuePair moduleFolderNames moduleFolderPaths);
     in
     foldAttrs (item: acc: item)
       { }

@@ -75,16 +75,16 @@ in
       mapAttrs'
         (name: _:
           nameValuePair
-            ("fish/conf.d/${name}")
-            { source = (./config + "/${name}"); executable = false; }
+            "fish/conf.d/${name}"
+            { source = ./config + "/${name}"; executable = false; }
         )
         (builtins.readDir ./config)
     ) // (
       mapAttrs'
         (name: _:
           nameValuePair
-            ("fish/functions/${name}")
-            { source = (./functions + "/${name}"); executable = false; }
+            "fish/functions/${name}"
+            { source = ./functions + "/${name}"; executable = false; }
         )
         (builtins.readDir ./functions)
     );

@@ -69,6 +69,6 @@ in
 
     home.packages = [ pkgs.gnupg ];
     home.file."${optionsFile}".text = cfgText;
-    home.sessionVariables.GNUPGHOME = (if cfg.home != "" then cfg.home else "~/.gnupg");
+    home.sessionVariables.GNUPGHOME = if cfg.home != "" then cfg.home else "~/.gnupg";
   };
 }

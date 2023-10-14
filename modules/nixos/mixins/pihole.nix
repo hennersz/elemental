@@ -38,7 +38,7 @@
 
   config = {
     virtualisation.oci-containers.containers.pi-hole = {
-      image = config.elemental.pi-hole.image;
+      inherit (config.elemental.pi-hole) image;
       extraOptions = [
         "--network=host"
         "--dns=127.0.0.1"

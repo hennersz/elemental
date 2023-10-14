@@ -18,8 +18,7 @@
             home-manager.useUserPackages = true;
             home-manager.users.vagrant = elemental.homeManagerModules.configs.vagrant-vm;
             home-manager.extraSpecialArgs = {
-              inputs = elemental.inputs;
-              outputs = elemental.outputs;
+              inherit (elemental) inputs outputs;
               identity = "personal";
             };
           }

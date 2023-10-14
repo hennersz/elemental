@@ -1,4 +1,4 @@
-{ config, pkgs, inputs, lib, ... }:
+{ config, inputs, ... }:
 let
   hostname = "eir";
   ip = "192.168.1.2";
@@ -24,12 +24,12 @@ in
   elemental.domainName = "eir.lan.morti.net";
 
   mixins.selfupdate = {
+    inherit hostname;
     enable = true;
-    hostname = hostname;
   };
 
   networking = {
-    hostName = hostname;
+    inherit hostname;
     networkmanager.enable = true;
     defaultGateway = {
       address = "192.168.1.1";

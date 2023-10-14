@@ -13,7 +13,7 @@
 
   outputs = { self, nixpkgs, nixos-hardware, home-manager, vscode-server, flake-utils, std-dev-env, ... }@inputs:
     let
-      nixosModules = import ./modules/nixos { lib = nixpkgs.lib; };
+      nixosModules = import ./modules/nixos { inherit (nixpkgs) lib; };
       inherit (self) outputs;
     in
     flake-utils.lib.eachDefaultSystem
@@ -65,8 +65,7 @@
               home-manager.useUserPackages = true;
               home-manager.users.henry = self.homeManagerModules.configs.henry-eir;
               home-manager.extraSpecialArgs = {
-                inputs = inputs;
-                outputs = self.outputs;
+                inherit inputs outputs;
               };
             }
           ];
