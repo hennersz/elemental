@@ -20,6 +20,7 @@ with lib;
       firefox-devedition
       jdk
       jetbrains.idea-community
+      discord
     ];
 
     home.sessionVariables = {
