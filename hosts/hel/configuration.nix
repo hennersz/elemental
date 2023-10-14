@@ -19,7 +19,7 @@
   # List packages installed in system profile. To search, run:
   # $ nix search wget
   environment.systemPackages = with pkgs; [
-    vim 
+    vim
     firefox
     alacritty
     git
@@ -33,9 +33,9 @@
 
   services.pcscd.enable = true;
   programs.gnupg.agent = {
-     enable = true;
-     pinentryFlavor = "curses";
-     enableSSHSupport = true;
+    enable = true;
+    pinentryFlavor = "curses";
+    enableSSHSupport = true;
   };
   system.stateVersion = "22.05";
 }

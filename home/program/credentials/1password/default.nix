@@ -1,6 +1,6 @@
-{ config, lib, pkgs, ...}:
+{ config, lib, pkgs, ... }:
 with lib;
-let 
+let
   cfg = config.elemental.home.program.credentials.onePassword;
 in
 {

@@ -26,7 +26,7 @@ with lib;
     # Install packages
     home.packages = with pkgs; [
 
-      tea 
+      tea
 
       # Rust CLI Tools
       bat
@@ -111,7 +111,7 @@ with lib;
       yubikey-personalization
       yubikey-manager
     ];
-    
+
     programs.password-store.package = pkgs.pass.withExtensions (exts: [ exts.pass-import ]);
 
     home.sessionVariables = {
@@ -122,7 +122,7 @@ with lib;
     };
 
     home.activation = {
-      linkJava = lib.hm.dag.entryAfter ["writeBoundary"] ''
+      linkJava = lib.hm.dag.entryAfter [ "writeBoundary" ] ''
         $DRY_RUN_CMD ln -sTf $VERBOSE_ARG \
           ${pkgs.jdk11} \
           $HOME/.java

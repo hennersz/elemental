@@ -18,7 +18,7 @@
 
     interfaces = mkOption {
       type = types.listOf types.str;
-      default = ["eth0"];
+      default = [ "eth0" ];
     };
 
     upstreams = mkOption {
@@ -38,7 +38,7 @@
 
   config = {
     virtualisation.oci-containers.containers.pi-hole = {
-      image = config.elemental.pi-hole.image;
+      inherit (config.elemental.pi-hole) image;
       extraOptions = [
         "--network=host"
         "--dns=127.0.0.1"
@@ -75,8 +75,8 @@
 
     services.nginx.virtualHosts."${config.elemental.pi-hole.domain}" = {
       locations."/" = {
-          proxyPass = "http://127.0.0.1:${builtins.toString config.elemental.pi-hole.port}";
-          proxyWebsockets = true;
+        proxyPass = "http://127.0.0.1:${builtins.toString config.elemental.pi-hole.port}";
+        proxyWebsockets = true;
       };
     };
   };

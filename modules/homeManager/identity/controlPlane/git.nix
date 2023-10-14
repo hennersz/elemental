@@ -8,7 +8,7 @@ with lib;
       userEmail = "henry.mortimer@control-plane.io";
       gpgKey = "0xBB7595459BC43FAC";
       signByDefault = true;
-      extraConfig =  {
+      extraConfig = {
         url = {
           "git@github.com:" = {
             insteadOf = "https://github.com/";

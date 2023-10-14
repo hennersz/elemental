@@ -4,7 +4,7 @@ let
 in
 {
   imports = with modules; [
-    mixins-common 
+    mixins-common
     mixins-vpn
     users-vagrant
   ];
@@ -30,7 +30,7 @@ in
     '';
 
   # Enable DBus
-  services.dbus.enable    = true;
+  services.dbus.enable = true;
 
   # Replace ntpd by timesyncd
   services.timesyncd.enable = true;

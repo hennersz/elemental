@@ -1,4 +1,4 @@
-{ config, pkgs, ... }: 
+{ config, pkgs, ... }:
 {
   # grafana configuration
   services.grafana = {
@@ -17,8 +17,8 @@
 
   services.nginx.virtualHosts.${config.elemental.domainName} = {
     locations."/grafana/" = {
-        proxyPass = "http://127.0.0.1:${toString config.services.grafana.port}";
-        proxyWebsockets = true;
+      proxyPass = "http://127.0.0.1:${toString config.services.grafana.port}";
+      proxyWebsockets = true;
     };
   };
-}  
+}

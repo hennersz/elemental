@@ -1,6 +1,6 @@
-{ config, pkgs, ...}:
+{ config, pkgs, ... }:
 {
-    services.loki = {
+  services.loki = {
     enable = true;
     configuration = {
       server.http_listen_port = 3030;

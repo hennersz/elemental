@@ -11,7 +11,7 @@ jobs:
           sudo apt-get update -q -y && sudo apt-get install -q -y qemu-system-aarch64 qemu-efi binfmt-support qemu-user-static
           sudo update-binfmts --display
       - name: check flake
-        run: nix --extra-platforms aarch64-linux flake check 
+        run: nix --extra-platforms aarch64-linux flake check --impure
   lock-test:
     runs-on: ubuntu-latest
     steps:

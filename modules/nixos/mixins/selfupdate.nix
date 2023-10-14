@@ -2,11 +2,12 @@
 with lib;
 let
   cfg = config.mixins.selfupdate;
-in {
+in
+{
 
   options.mixins.selfupdate = {
     enable = mkEnableOption "self update service";
-    hostname = mkOption {
+    hostName = mkOption {
       type = types.str;
     };
   };
@@ -14,11 +15,11 @@ in {
   config = mkIf cfg.enable {
     systemd.timers."update" = {
       wantedBy = [ "timers.target" ];
-        timerConfig = {
-          OnBootSec = "5m";
-          OnUnitActiveSec = "5m";
-          Unit = "update.service";
-        };
+      timerConfig = {
+        OnBootSec = "5m";
+        OnUnitActiveSec = "5m";
+        Unit = "update.service";
+      };
     };
 
     systemd.services."update" = {
@@ -30,7 +31,7 @@ in {
         if update=$(nix flake update 2>&1); then
           count=$(echo "$update" | grep -c Updated || true)
           if [ "$count" != "0" ]; then
-            nixos-rebuild switch --flake '/etc/nixos#${cfg.hostname}'
+            nixos-rebuild switch --flake '/etc/nixos#${cfg.hostName}'
           fi
         else 
           echo "$update"
@@ -39,7 +40,7 @@ in {
       '';
       serviceConfig = {
         Type = "oneshot";
-        User= "root";
+        User = "root";
       };
       path = with pkgs; [ coreutils gnugrep nix nixos-rebuild git ];
     };

@@ -25,7 +25,7 @@ in
     programs.alacritty = {
       enable = true;
       settings = lib.attrsets.recursiveUpdate
-        ({
+        {
           env = {
             "TERM" = "xterm-256color";
           };
@@ -50,7 +50,7 @@ in
           };
 
           cursor.style = "Underline";
-        })
+        }
         cfg.settingOverrides;
     };
   };
