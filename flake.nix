@@ -27,7 +27,7 @@
           devShells.default = std-dev-env.lib.base {
             inherit pkgs inputs;
             packages = with pkgs; [
-              nixVersions.nix_2_17
+              nixVersions.stable
               statix
               nil
               nixpkgs-fmt
