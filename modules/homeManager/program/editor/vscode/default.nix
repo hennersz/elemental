@@ -17,17 +17,8 @@ in
       onChange = "cat ~/.config/Code/extensions.list | grep -v '^#' | xargs -L1 code --force --install-extension ";
     };
 
-    home.activation = {
-      linkCode = lib.hm.dag.entryAfter [ "writeBoundary" ] ''
-        $DRY_RUN_CMD mkdir -p $VERBOSE_ARG ${config.xdg.configHome}/Code && \
-          ln -sf $VERBOSE_ARG \
-          ${builtins.toString ./settings.json} \
-          ${config.xdg.configHome}/Code/User/settings.json && \
-          ln -sf $VERBOSE_ARG \
-          ${builtins.toString ./keybindings.json} \
-          ${config.xdg.configHome}/Code/User/keybindings.json && \
-      '';
-    };
+    xdg.configFile."Code/User/keybindings.json".source = ./keybindings.json;
+    xdg.configFile."Code/User/settings.json".source = ./settings.json;
 
     home.packages = with pkgs; [
       vscode
