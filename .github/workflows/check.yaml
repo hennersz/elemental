@@ -5,22 +5,24 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
-      - uses: cachix/install-nix-action@v22
+      - uses: DeterminateSystems/nix-installer-action@main
       - uses: DeterminateSystems/magic-nix-cache-action@main
       - run: |
           sudo apt-get update -q -y && sudo apt-get install -q -y qemu-system-aarch64 qemu-efi binfmt-support qemu-user-static
           sudo update-binfmts --display
       - name: check flake
         run: nix --extra-platforms aarch64-linux flake check --impure
+
   lock-test:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
-      - uses: cachix/install-nix-action@v22
+      - uses: DeterminateSystems/nix-installer-action@main
       - uses: DeterminateSystems/magic-nix-cache-action@main
       - name: check lock file
         run:
           nix flake lock --no-update-lock-file
+
   lint:
     runs-on: ubuntu-latest
     steps:
@@ -30,11 +32,12 @@ jobs:
       - name: Lint code
         run: |
           nix develop --impure --command lint
+
   build-test-arm:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
-      - uses: cachix/install-nix-action@v22
+      - uses: DeterminateSystems/nix-installer-action@main
       - uses: DeterminateSystems/magic-nix-cache-action@main
       - run: |
           sudo apt-get update -q -y && sudo apt-get install -q -y qemu-system-aarch64 qemu-efi binfmt-support qemu-user-static
@@ -42,6 +45,7 @@ jobs:
       - name: check config builds
         run: |
           nix build .#nixosConfigurations.eir.config.system.build.toplevel -j4 --option system aarch64-linux --option sandbox false --extra-platforms aarch64-linux
+
   build-test:
     runs-on: ubuntu-latest
     strategy:
@@ -50,7 +54,7 @@ jobs:
           - hel
     steps:
       - uses: actions/checkout@v3
-      - uses: cachix/install-nix-action@v22
+      - uses: DeterminateSystems/nix-installer-action@main
       - uses: DeterminateSystems/magic-nix-cache-action@main
       - name: check config builds
         run: |
@@ -65,7 +69,7 @@ jobs:
           - henry@tyr
     steps:
       - uses: actions/checkout@v3
-      - uses: cachix/install-nix-action@v22
+      - uses: DeterminateSystems/nix-installer-action@main
       - uses: DeterminateSystems/magic-nix-cache-action@main
       - name: check config builds
         run: |

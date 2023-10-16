@@ -10,10 +10,9 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
-      - uses: cachix/install-nix-action@v20
+      - uses: DeterminateSystems/nix-installer-action@main
       - name: update flake
         run: |
-          sudo bash -c "echo experimental-features = nix-command flakes >> /etc/nix/nix.conf"
           nix flake update
       - uses: tibdex/github-app-token@v1
         id: generate-token
