@@ -67,5 +67,21 @@ in
         localDomain = "koi-boa.ts.net";
       }
     ];
+    cnames = [
+      {
+        domain = "grafana.morti.net";
+        target = "pi.hole";
+      }
+      {
+        domain = "pihole.morti.net";
+        target = "pi.hole";
+      }
+      {
+        domain = "eir.lan.morti.net";
+        target = "pi.hole";
+      }
+    ];
   };
+
+  elemental.grafana.domain = "grafana.morti.net";
 }
