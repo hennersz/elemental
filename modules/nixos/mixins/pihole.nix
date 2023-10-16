@@ -62,7 +62,7 @@ in
 
     cnames = mkOption {
       type = types.listOf types.attrs;
-      default = [{}];
+      default = [{ }];
     };
   };
 

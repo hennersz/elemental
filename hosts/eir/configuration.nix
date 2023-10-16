@@ -67,5 +67,11 @@ in
         localDomain = "koi-boa.ts.net";
       }
     ];
+    cnames = [
+      {
+        domain = "test.morti.net";
+        target = "pi.hole";
+      }
+    ];
   };
 }
