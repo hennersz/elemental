@@ -12,6 +12,12 @@ let
         config.elemental.pi-hole.revServers
     )
   );
+
+  cnamesConfig = pkgs.writeText "cnamesConfig.conf" (
+    lib.generators.toKeyValue { listsAsDuplicateKeys = true; } {
+      cname = map (cname: "${cname.domain},${cname.target}") config.elemental.pi-hole.cnames;
+    }
+  );
 in
 {
   options.elemental.pi-hole = with lib; {
@@ -53,6 +59,11 @@ in
       type = types.listOf types.attrs;
       default = [{ }];
     };
+
+    cnames = mkOption {
+      type = types.listOf types.attrs;
+      default = [{}];
+    };
   };
 
   config = {
@@ -80,6 +91,7 @@ in
         "${config.elemental.pi-hole.dataDir}/pi-hole/dnsmasq:/etc/dnsmasq.d:rshared"
         "${config.elemental.pi-hole.dataDir}/pi-hole/log:/var/log"
         "${conditionalForwardingConfig}:/etc/dnsmasq.d/conditionalForwarding.conf"
+        "${cnamesConfig}:/etc/dnsmasq.d/cnames.conf"
       ];
     };
 
