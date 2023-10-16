@@ -11,7 +11,7 @@
   };
   description = "A flake defining the configuration for my systems";
 
-  outputs = { self, nixpkgs, nixos-hardware, home-manager, vscode-server, flake-utils, std-dev-env, ... }@inputs:
+  outputs = { self, nixpkgs, nixpkgs-unstable, nixos-hardware, home-manager, vscode-server, flake-utils, std-dev-env, ... }@inputs:
     let
       nixosModules = import ./modules/nixos { inherit (nixpkgs) lib; };
       inherit (self) outputs;
@@ -20,6 +20,9 @@
       (system:
         let
           pkgs = import nixpkgs {
+            inherit system;
+          };
+          pkgs-unstable = import nixpkgs-unstable {
             inherit system;
           };
         in
@@ -31,6 +34,7 @@
               statix
               nil
               nixpkgs-fmt
+              pkgs-unstable.act
             ];
             scripts.lint.exec = ''
               shopt -s globstar
