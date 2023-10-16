@@ -88,7 +88,7 @@ in
       };
       volumes = [
         "${config.elemental.pi-hole.dataDir}/pi-hole/etc:/etc/pihole"
-        "${config.elemental.pi-hole.dataDir}/pi-hole/dnsmasq:/etc/dnsmasq.d:rshared"
+        "${config.elemental.pi-hole.dataDir}/pi-hole/dnsmasq:/etc/dnsmasq.d"
         "${config.elemental.pi-hole.dataDir}/pi-hole/log:/var/log"
         "${conditionalForwardingConfig}:/etc/dnsmasq.d/conditionalForwarding.conf"
         "${cnamesConfig}:/etc/dnsmasq.d/cnames.conf"
