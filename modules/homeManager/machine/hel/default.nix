@@ -21,6 +21,7 @@ with lib;
       jdk
       jetbrains.idea-community
       discord
+      unstable.localsend
     ];
 
     home.sessionVariables = {

@@ -9,6 +9,7 @@
     mixins-gnome
     mixins-libvirt
     mixins-containers
+    mixins-localsend
     users-henry
   ];
 
