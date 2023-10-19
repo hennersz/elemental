@@ -28,6 +28,5 @@ lib;
     programs.fish.enable = true;
 
     time.timeZone = "Europe/London";
-    nixpkgs.config.allowUnfree = true;
   };
 }

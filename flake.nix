@@ -14,27 +14,33 @@
   outputs = { self, nixpkgs, nixpkgs-unstable, nixos-hardware, home-manager, vscode-server, flake-utils, std-dev-env, ... }@inputs:
     let
       nixosModules = import ./modules/nixos { inherit (nixpkgs) lib; };
+
+      overlay-unstable = final: prev: {
+        unstable = nixpkgs-unstable.legacyPackages.${prev.system};
+      };
+
+      allSystemPkgs = (flake-utils.lib.eachDefaultSystem (system: {
+        pkgs = import nixpkgs {
+          inherit system;
+          overlays = [ overlay-unstable ];
+          config.allowUnfree = true;
+        };
+      })).pkgs;
+
       inherit (self) outputs;
     in
     flake-utils.lib.eachDefaultSystem
       (system:
-        let
-          pkgs = import nixpkgs {
-            inherit system;
-          };
-          pkgs-unstable = import nixpkgs-unstable {
-            inherit system;
-          };
-        in
         {
-          devShells.default = std-dev-env.lib.base {
-            inherit pkgs inputs;
+          devShells.default = std-dev-env.lib.base rec {
+            inherit inputs;
+            pkgs = allSystemPkgs.${system};
             packages = with pkgs; [
               nixVersions.stable
               statix
               nil
               nixpkgs-fmt
-              pkgs-unstable.act
+              unstable.act
             ];
             scripts.lint.exec = ''
               shopt -s globstar
@@ -53,8 +59,9 @@
       homeManagerModules.configs = import ./home-manager;
 
       nixosConfigurations = {
-        eir = nixpkgs.lib.nixosSystem {
+        eir = nixpkgs.lib.nixosSystem rec {
           system = "aarch64-linux";
+          pkgs = allSystemPkgs.${system};
           specialArgs = { inherit inputs; }; # Pass flake inputs to our config
           modules = [
             ./hosts/eir/configuration.nix
@@ -75,8 +82,9 @@
           ];
         };
 
-        hel = nixpkgs.lib.nixosSystem {
+        hel = nixpkgs.lib.nixosSystem rec {
           system = "x86_64-linux";
+          pkgs = allSystemPkgs.${system};
           specialArgs = { inherit inputs; }; # Pass flake inputs to our config
           modules = [
             ./hosts/hel/configuration.nix
@@ -89,7 +97,7 @@
       };
 
       homeConfigurations."henry@hel" = home-manager.lib.homeManagerConfiguration {
-        pkgs = nixpkgs.legacyPackages.x86_64-linux;
+        pkgs = allSystemPkgs.x86_64-linux;
         extraSpecialArgs = { inherit inputs outputs; };
         modules = [
           ./home-manager/henry-hel.nix
@@ -97,7 +105,7 @@
       };
 
       homeConfigurations."henry@tyr" = home-manager.lib.homeManagerConfiguration {
-        pkgs = nixpkgs.legacyPackages.x86_64-linux;
+        pkgs = allSystemPkgs.x86_64-linux;
         extraSpecialArgs = { inherit inputs outputs; };
         modules = [
           ./home-manager/henry-tyr.nix
