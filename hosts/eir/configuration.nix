@@ -31,6 +31,9 @@ in
   networking = {
     inherit hostName;
     networkmanager.enable = true;
+    networkmanager.appendNameservers = [
+      "9.9.9.9"
+    ];
     defaultGateway = {
       address = "192.168.1.1";
       interface = "end0";
