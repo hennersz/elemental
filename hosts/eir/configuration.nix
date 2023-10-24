@@ -30,16 +30,13 @@ in
 
   networking = {
     inherit hostName;
-    networkmanager.enable = true;
-    networkmanager.appendNameservers = [
-      "9.9.9.9"
-    ];
     defaultGateway = {
       address = "192.168.1.1";
       interface = "end0";
     };
     nameservers = [
       "127.0.0.1"
+      "100.100.100.100"
       "9.9.9.9"
     ];
     interfaces.end0 = {
@@ -52,6 +49,8 @@ in
       ];
     };
   };
+
+  services.resolved.enable = true;
 
   services.openssh.enable = true;
   elemental.pi-hole = {
