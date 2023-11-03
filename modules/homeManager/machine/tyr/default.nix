@@ -13,12 +13,8 @@ with lib;
     };
 
     home.packages = with pkgs; [
-      spotify
-      slack
       vagrant
       neofetch
-      chromium
-      firefox-devedition
       nerdfonts
       podman
       dive
