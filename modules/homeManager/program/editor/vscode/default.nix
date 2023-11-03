@@ -20,9 +20,9 @@ in
     xdg.configFile."Code/User/keybindings.json".source = ./keybindings.json;
     xdg.configFile."Code/User/settings.json".source = ./settings.json;
 
-    home.packages = with pkgs; [
-      vscode
-    ];
+    # home.packages = with pkgs; [
+    #   vscode
+    # ];
   };
 
 }

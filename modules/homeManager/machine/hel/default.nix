@@ -22,6 +22,7 @@ with lib;
       jetbrains.idea-community
       discord
       unstable.localsend
+      vscode
     ];
 
     home.sessionVariables = {
