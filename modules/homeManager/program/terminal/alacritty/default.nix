@@ -28,6 +28,7 @@ in
         {
           env = {
             "TERM" = "xterm-256color";
+            "LC_ALL" = "";
           };
 
           import = [

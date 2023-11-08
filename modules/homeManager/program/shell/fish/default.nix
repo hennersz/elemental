@@ -9,7 +9,7 @@ let
     rev = "f8f09064f84df4c5dc274b2d5c8ac024106ecb52";
     sha256 = "1fsvf9h7mzamhxxflk2dp6lvgsj5xhd5scpvygjjhkdqfj3ddsb5";
   };
-
+  
 
 in
 {
@@ -59,9 +59,6 @@ in
 
       shellInit = cfg.preShellInit + ''
         set -g fish_greeting
-        if test -f $HOME/.nix-profile/etc/profile.d/nix.sh
-          bass source $HOME/.nix-profile/etc/profile.d/nix.sh
-        end
         direnv hook fish | source
         set fish_complete_path $HOME/.nix-profile/etc/fish/completions /nix/var/nix/profiles/default/etc/fish/completions $HOME/.nix-profile/share/fish/vendor_completions.d /nix/var/nix/profiles/default/share/fish/vendor_completions.d  $fish_complete_path
       '';
@@ -77,7 +74,6 @@ in
           };
         }
       ];
-
     };
 
     xdg.configFile = (
@@ -99,13 +95,12 @@ in
     );
 
     home.emptyActivationPath = false;
-    # home.activation = { 
-    #   linkFish = lib.hm.dag.entryAfter ["writeBoundary"] ''
-    #     $DRY_RUN_CMD bash -c 'if [[ "$(readlink -f /usr/local/bin/fish)" != "${pkgs.fish}/bin/fish" ]];
-    #       then
-    #         sudo ln -sf $VERBOSE_ARG ${pkgs.fish}/bin/fish /usr/local/bin/fish
-    #     fi'
-    #   '';
-    # };
+     home.activation = { 
+        linkFish = lib.hm.dag.entryAfter ["writeBoundary"] ''
+          $DRY_RUN_CMD bash -c 'if [[ "$(readlink -f /usr/local/bin/fish)" != "${pkgs.fish}/bin/fish" ]]; then
+            sudo ln -sf $VERBOSE_ARG ${pkgs.fish}/bin/fish /usr/local/bin/fish
+          fi'
+        '';
+     };
   };
 }

@@ -112,6 +112,14 @@
         ];
       };
 
+      homeConfigurations."henry@garmr" = home-manager.lib.homeManagerConfiguration {
+        pkgs = allSystemPkgs.x86_64-linux;
+        extraSpecialArgs = { inherit inputs outputs; };
+        modules = [
+          ./home-manager/henry-garmr.nix
+        ];
+      };
+
       templates = {
         vagrant = {
           description = "Starter for vagrant boxes";
