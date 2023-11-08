@@ -10,7 +10,14 @@ let
     sha256 = "1fsvf9h7mzamhxxflk2dp6lvgsj5xhd5scpvygjjhkdqfj3ddsb5";
   };
   
-
+  gpgSSH = ''
+    if set -q $gnupg_SSH_AUTH_SOCK_by; set gpg_pid $$gnupg_SSH_AUTH_SOCK_by ; else ; set gpg_pid 0 ; end
+    if [ $gpg_pid -ne $fish_pid ];
+      set -gx SSH_AUTH_SOCK (gpgconf --list-dirs agent-ssh-socket)
+    end
+    set -gx GPG_TTY (tty)
+    gpg-connect-agent updatestartuptty /bye >/dev/null
+  '';
 in
 {
   options.elemental.home.program.shell.fish = {
@@ -26,6 +33,12 @@ in
       type = types.attrs;
       default = { };
       description = "Extra aliases for fish";
+    };
+
+    gpgSSHAuthSock = mkOption {
+      type = types.bool;
+      default = false;
+      description = "Enable using gpg for ssh auth";
     };
   };
 
@@ -61,7 +74,7 @@ in
         set -g fish_greeting
         direnv hook fish | source
         set fish_complete_path $HOME/.nix-profile/etc/fish/completions /nix/var/nix/profiles/default/etc/fish/completions $HOME/.nix-profile/share/fish/vendor_completions.d /nix/var/nix/profiles/default/share/fish/vendor_completions.d  $fish_complete_path
-      '';
+      '' + lib.strings.optionalString cfg.gpgSSHAuthSock gpgSSH;
 
       plugins = [
         {

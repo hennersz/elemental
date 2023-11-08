@@ -12,6 +12,8 @@ with lib;
       docker-compose = "sudo docker-compose";
     };
 
+    elemental.home.program.shell.fish.gpgSSHAuthSock = true;
+
     home.packages = with pkgs; [
       vagrant
       neofetch
