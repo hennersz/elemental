@@ -34,7 +34,8 @@ in
       address = "192.168.1.1";
       interface = "end0";
     };
-    nameservers = [
+    networkmanager.enable = true;
+    networkmanager.insertNameservers = [
       "127.0.0.1"
       "100.100.100.100"
       "9.9.9.9"
@@ -49,8 +50,6 @@ in
       ];
     };
   };
-
-  services.resolved.enable = true;
 
   services.openssh.enable = true;
   elemental.pi-hole = {
