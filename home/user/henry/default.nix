@@ -30,7 +30,7 @@ with lib;
 
       # Rust CLI Tools
       bat
-      exa
+      eza
 
       # Utils
       asciinema
