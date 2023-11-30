@@ -41,10 +41,10 @@ in
       shellAliases = mkMerge [{
         cat = "bat";
         dig = "dog";
-        ls = "exa";
-        l = "exa -l";
-        ll = "exa -laaguUmh";
-        lt = "exa -lRT";
+        ls = "eza";
+        l = "eza -l";
+        ll = "eza -laaguUmh";
+        lt = "eza -lRT";
       }
         cfg.extraAliases];
 
