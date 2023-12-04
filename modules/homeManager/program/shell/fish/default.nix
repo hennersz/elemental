@@ -108,12 +108,12 @@ in
     );
 
     home.emptyActivationPath = false;
-    home.activation = {
-      linkFish = lib.hm.dag.entryAfter [ "writeBoundary" ] ''
-        $DRY_RUN_CMD bash -c 'if [[ "$(readlink -f /usr/local/bin/fish)" != "${pkgs.fish}/bin/fish" ]]; then
-          sudo ln -sf $VERBOSE_ARG ${pkgs.fish}/bin/fish /usr/local/bin/fish
-        fi'
-      '';
-    };
+    # home.activation = {
+    #   linkFish = lib.hm.dag.entryAfter [ "writeBoundary" ] ''
+    #     $DRY_RUN_CMD bash -c 'if [[ "$(readlink -f /usr/local/bin/fish)" != "${pkgs.fish}/bin/fish" ]]; then
+    #       sudo ln -sf $VERBOSE_ARG ${pkgs.fish}/bin/fish /usr/local/bin/fish
+    #     fi'
+    #   '';
+    # };
   };
 }

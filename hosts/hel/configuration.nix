@@ -11,6 +11,7 @@
     mixins-containers
     mixins-localsend
     users-henry
+    users-builder
   ];
 
   networking.hostName = "hel"; # Define your hostname.
@@ -39,4 +40,6 @@
     enableSSHSupport = true;
   };
   system.stateVersion = "22.05";
+
+  services.openssh.enable = true;
 }

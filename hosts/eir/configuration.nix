@@ -85,4 +85,23 @@ in
   };
 
   elemental.grafana.domain = "grafana.morti.net";
+
+  nix.distributedBuilds = true;
+  nix.buildMachines = [
+    {
+      hostName = "hel";
+      systems = [ "x86_64-linux" "aarch64-linux" ];
+      maxJobs = 12;
+      speedFactor = 2;
+      supportedFeatures = [ "nixos-test" "benchmark" "big-parallel" "kvm" ];
+    }
+  ];
+  programs.ssh.extraConfig = ''
+Host hel 
+  HostName hel
+  Port 22
+  User builder
+  IdentitiesOnly yes
+  IdentityFile /root/.ssh/id_builder
+  '';
 }
