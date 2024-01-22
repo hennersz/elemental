@@ -1,7 +1,7 @@
 { config, lib, ... }:
 {
   config = lib.mkIf (config.elemental.machine == "thor") {
-    elemental.home.program.credentials.gpg.home = "/Users/henry/Credentials/gpg";
+    elemental.home.program.credentials.gpg.homedir = "/Users/henry/Credentials/gpg";
     home.sessionVariables = {
       ELEMENTAL_SOURCE_DIR = "/Users/henry/.config/nixpkgs";
     };

@@ -2,31 +2,16 @@
 with lib;
 let
   cfg = config.elemental.home.program.credentials.gpg;
-
-  mkKeyValue = key: value:
-    if isString value
-    then "${key} ${value}"
-    else optionalString value key;
-
-  cfgText = generators.toKeyValue
-    {
-      inherit mkKeyValue;
-      listsAsDuplicateKeys = true;
-    }
-    cfg.settings;
-
   primitiveType = types.oneOf [ types.str types.bool ];
-
-  optionsFile = if cfg.home != "" then cfg.home + "/gpg.conf" else ".gnupg/gpg.conf";
 in
 {
   options.elemental.home.program.credentials.gpg = {
     enable = mkEnableOption "Enable GPG";
 
-    home = mkOption {
-      type = types.str;
+    homedir = mkOption {
+      type = types.path;
       description = "The gpg home directory";
-      default = "";
+      default = "${config.home.homeDirectory}/.gnupg";
     };
 
     settings = mkOption {
@@ -46,29 +31,25 @@ in
   };
 
   config = lib.mkIf cfg.enable {
-    elemental.home.program.credentials.gpg.settings = {
-      personal-cipher-preferences = mkDefault "AES256 AES192 AES";
-      personal-digest-preferences = mkDefault "SHA512 SHA384 SHA256";
-      personal-compress-preferences = mkDefault "ZLIB BZIP2 ZIP Uncompressed";
-      default-preference-list = mkDefault "SHA512 SHA384 SHA256 AES256 AES192 AES ZLIB BZIP2 ZIP Uncompressed";
-      cert-digest-algo = mkDefault "SHA512";
-      s2k-digest-algo = mkDefault "SHA512";
-      s2k-cipher-algo = mkDefault "AES256";
-      charset = mkDefault "utf-8";
-      fixed-list-mode = mkDefault true;
-      no-comments = mkDefault true;
-      no-emit-version = mkDefault true;
-      keyid-format = mkDefault "0xlong";
-      list-options = mkDefault "show-uid-validity";
-      verify-options = mkDefault "show-uid-validity";
-      with-fingerprint = mkDefault true;
-      require-cross-certification = mkDefault true;
-      no-symkey-cache = mkDefault true;
-      use-agent = mkDefault true;
+    programs.gpg = {
+      inherit (cfg) settings homedir;
+      enable = true;
+
+      publicKeys = [
+        { source = ./publicKeys/personal.asc; }
+        { source = ./publicKeys/controlPlane.asc; }
+      ];
     };
 
-    home.packages = [ pkgs.gnupg ];
-    home.file."${optionsFile}".text = cfgText;
-    home.sessionVariables.GNUPGHOME = if cfg.home != "" then cfg.home else "~/.gnupg";
+    services.gpg-agent = {
+      enable = true;
+      enableSshSupport = true;
+      pinentryFlavor = lib.mkDefault null;
+    };
+
+    # forcibly overwrite SSH_AUTH_SOCK
+    programs.fish.interactiveShellInit = ''
+      set -gx SSH_AUTH_SOCK (${config.programs.gpg.package}/bin/gpgconf --list-dirs agent-ssh-socket)
+    '';
   };
 }

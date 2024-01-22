@@ -29,6 +29,8 @@ with lib;
       JAVA_HOME = "${pkgs.jdk}/lib/openjdk";
     };
 
+    services.gpg-agent.pinentryFlavor = "curses";
+
     gtk = {
       enable = true;
       theme = {

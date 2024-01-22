@@ -12,8 +12,6 @@ with lib;
       docker-compose = "sudo docker-compose";
     };
 
-    elemental.home.program.shell.fish.gpgSSHAuthSock = true;
-
     home.packages = with pkgs; [
       vagrant
       neofetch
@@ -32,5 +30,9 @@ with lib;
         PASSWORD_STORE_DIR = "/home/henry/Credentials/passwords";
       };
     };
+
+    services.gpg-agent.extraConfig = ''
+      pinentry-program /usr/bin/pinentry-gnome3
+    '';
   };
 }

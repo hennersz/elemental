@@ -2,7 +2,7 @@
 with lib;
 {
   config = mkIf (config.elemental.machine == "freyr") {
-    elemental.home.program.credentials.gpg.home = "/home/henry/Credentials/gpg";
+    elemental.home.program.credentials.gpg.homedir = "/home/henry/Credentials/gpg";
     home.sessionVariables = {
       VAGRANT_WSL_WINDOWS_ACCESS_USER_HOME_PATH = "/mnt/c/Users/Henry";
       VAGRANT_WSL_ENABLE_WINDOWS_ACCESS = "1";
