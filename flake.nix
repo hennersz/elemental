@@ -94,6 +94,19 @@
             })
           ];
         };
+
+        fenrir = nixpkgs.lib.nixosSystem rec {
+          system = "x86_64-linux";
+          pkgs = allSystemPkgs.${system};
+          specialArgs = { inherit inputs; }; # Pass flake inputs to our config
+          modules = [
+            ./hosts/fenrir/configuration.nix
+            vscode-server.nixosModules.default
+            ({ config, pkgs, ... }: {
+              services.vscode-server.enable = true;
+            })
+          ];
+        };
       };
 
       homeConfigurations."henry@hel" = home-manager.lib.homeManagerConfiguration {
@@ -101,6 +114,14 @@
         extraSpecialArgs = { inherit inputs outputs; };
         modules = [
           ./home-manager/henry-hel.nix
+        ];
+      };
+
+      homeConfigurations."henry@fenrir" = home-manager.lib.homeManagerConfiguration {
+        pkgs = allSystemPkgs.x86_64-linux;
+        extraSpecialArgs = { inherit inputs outputs; };
+        modules = [
+          ./home-manager/henry-fenrir.nix
         ];
       };
 

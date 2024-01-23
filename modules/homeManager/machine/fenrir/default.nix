@@ -1,7 +1,7 @@
 { config, lib, pkgs, ... }:
 with lib;
 {
-  config = lib.mkIf (config.elemental.machine == "hel") {
+  config = lib.mkIf (config.elemental.machine == "fenrir") {
     programs.password-store = {
       enable = true;
       settings = {
@@ -30,7 +30,7 @@ with lib;
     };
 
     services.gpg-agent.pinentryFlavor = "curses";
-    dconf.settings."org/gnome/desktop/wm/preferences".button-layout = "minimize,maximize,close";
+
     gtk = {
       enable = true;
       theme = {
