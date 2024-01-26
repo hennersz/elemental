@@ -52,7 +52,7 @@ in
   };
 
   config = mkIf cfg.enable {
-    home.packages = mkIf (config.elemental.role == "nixos-workstation") [ pkgs.alacritty ];
+    home.packages = mkIf (config.elemental.role == "nixos-workstation") [ pkgs.unstable.alacritty ];
 
     xdg.configFile."alacritty/${configFileName}" = {
       source =
