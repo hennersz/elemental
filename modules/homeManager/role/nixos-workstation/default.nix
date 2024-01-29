@@ -28,11 +28,12 @@ lib;
       unstable.localsend
       vscode
       wl-clipboard
+      gnomeExtensions.tailscale-qs
     ];
 
     services.gpg-agent.pinentryFlavor = "curses";
 
-    dconf.settings."org/gnome/desktop/wm/preferences".button-layout = "minimize,maximize,close";
+    dconf.settings."org/gnome/desktop/wm/preferences".button-layout = ":minimize,maximize,close";
 
     gtk = {
       enable = true;
