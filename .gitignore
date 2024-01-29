@@ -3,3 +3,4 @@ home.nix
 .DS_Store
 .devenv
 .direnv
+result
