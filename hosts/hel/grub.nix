@@ -13,6 +13,7 @@ in
     useOSProber = true;
     enable = true;
     efiSupport = true;
+    gfxmodEfi = "1920x1080";
     devices = [ "nodev" ];
     extraConfig = ''
       set theme=($drive1)//themes/virtuaverse/theme.txt
