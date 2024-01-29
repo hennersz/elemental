@@ -85,4 +85,9 @@ in
   };
 
   elemental.grafana.domain = "grafana.morti.net";
+
+  nix.settings = {
+    max-jobs = 1;
+    cores = 1;
+  };
 }
