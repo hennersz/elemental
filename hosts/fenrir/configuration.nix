@@ -22,7 +22,6 @@
   environment.systemPackages = with pkgs; [
     vim
     firefox
-    alacritty
     git
     gnupg
     pinentry-curses
