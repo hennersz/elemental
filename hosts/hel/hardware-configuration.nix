@@ -3,6 +3,11 @@
 # to /etc/nixos/configuration.nix instead.
 { config, lib, pkgs, modulesPath, ... }:
 
+let
+
+  monitorsXmlContent = builtins.readFile ./monitors.xml;
+  monitorsConfig = pkgs.writeText "gdm_monitors.xml" monitorsXmlContent;
+in
 {
   imports =
     [
@@ -42,4 +47,8 @@
       ExecStart = [ "" "${pkgs.networkmanager}/bin/nm-online -q" ];
     };
   };
+
+  systemd.tmpfiles.rules = [
+    "L+ /run/gdm/.config/monitors.xml - - - - ${monitorsConfig}"
+  ];
 }
