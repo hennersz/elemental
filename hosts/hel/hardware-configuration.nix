@@ -18,6 +18,24 @@ in
   boot.initrd.kernelModules = [ ];
   boot.kernelModules = [ "kvm-amd" ];
   boot.extraModulePackages = [ ];
+  boot.plymouth.enable = true;
+  boot.plymouth.theme = "deus_ex";
+  boot.plymouth.themePackages = [
+    (pkgs.adi1090x-plymouth-themes.override {
+      selected_themes = [ "deus_ex" ];
+    })
+  ];
+  boot.initrd.verbose = false;
+  boot.consoleLogLevel = 0;
+  boot.kernelParams = [
+    "quiet"
+    "splash"
+    "bgrt_disable"
+    "rd.systemd_show_status=false"
+    "rd.udev.log_level=3"
+    "udev.log_priority=3"
+    "boot.shell_on_fail"
+  ];
 
   fileSystems."/" =
     {
