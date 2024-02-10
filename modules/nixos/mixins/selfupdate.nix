@@ -42,7 +42,7 @@ in
         Type = "oneshot";
         User = "root";
       };
-      path = with pkgs; [ coreutils gnugrep nix nixos-rebuild git ssh ];
+      path = with pkgs; [ coreutils gnugrep nix nixos-rebuild git openssh ];
     };
   };
 }
