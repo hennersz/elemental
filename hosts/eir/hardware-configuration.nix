@@ -40,7 +40,15 @@
       fsType = "ext4";
       options = [ "noatime" ];
     };
+
+    "/tmp" = {
+      device = "/dev/disk/by-label/temp";
+      fsType = "ext4";
+      options = [ "noatime" ];
+    };
   };
+
+  swapDevices = [{ device = "/dev/disk/by-label/swap"; }];
 
   systemd.services.NetworkManager-wait-online = {
     serviceConfig = {
