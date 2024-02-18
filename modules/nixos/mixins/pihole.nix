@@ -64,6 +64,11 @@ in
       type = types.listOf types.attrs;
       default = [{ }];
     };
+
+    shared-memory = mkOption {
+      type = types.str;
+      default = "256m";
+    };
   };
 
   config = {
@@ -74,6 +79,7 @@ in
         "--dns=127.0.0.1"
         "--dns=9.9.9.9"
         "--hostname=${config.elemental.pi-hole.domain}"
+        "--shm-size=${config.elemental.pi-hole.shared-memory}"
       ];
       environment = {
         WEB_PORT = "${builtins.toString config.elemental.pi-hole.port}";
