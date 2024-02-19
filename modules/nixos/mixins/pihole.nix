@@ -117,5 +117,59 @@ in
         proxyWebsockets = true;
       };
     };
+
+    services.promtail.configuration.scrape_configs = [{
+      job_name = "pi-hole";
+      static_configs = [
+        {
+          targets = [ "localhost" ];
+          labels = {
+            job = "pi-hole-FTL";
+            host = config.networking.hostName;
+            __path__ = "${config.elemental.pi-hole.dataDir}/pi-hole/log/pihole/FTL.log";
+          };
+        }
+        {
+          targets = [ "localhost" ];
+          labels = {
+            job = "pi-hole";
+            host = config.networking.hostName;
+            __path__ = "${config.elemental.pi-hole.dataDir}/pi-hole/log/pihole/pihole.log";
+          };
+        }
+        {
+          targets = [ "localhost" ];
+          labels = {
+            job = "pi-hole-update-gravity";
+            host = config.networking.hostName;
+            __path__ = "${config.elemental.pi-hole.dataDir}/pi-hole/log/pihole/pihole_updateGravity.log";
+          };
+        }
+        {
+          targets = [ "localhost" ];
+          labels = {
+            job = "lighttpd-access";
+            host = config.networking.hostName;
+            __path__ = "${config.elemental.pi-hole.dataDir}/pi-hole/log/lighttpd/access.log";
+          };
+        }
+        {
+          targets = [ "localhost" ];
+          labels = {
+            job = "lighttpd-access-pi-hole";
+            host = config.networking.hostName;
+            __path__ = "${config.elemental.pi-hole.dataDir}/pi-hole/log/lighttpd/access-pihole.log";
+          };
+        }
+        {
+          targets = [ "localhost" ];
+          labels = {
+            job = "lighttpd-error-pi-hole";
+            host = config.networking.hostName;
+            __path__ = "${config.elemental.pi-hole.dataDir}/pi-hole/log/lighttpd/error-pihole.log";
+          };
+        }
+      ];
+    }];
   };
 }
