@@ -4,6 +4,7 @@
     enable = true;
     port = 9001;
     stateDir = "app-data/prometheus";
+    extraFlags = [ "--storage.tsdb.retention.time=90d" ];
     exporters = {
       node = {
         enable = true;
