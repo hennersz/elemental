@@ -23,7 +23,7 @@ in
   options.elemental.pi-hole = with lib; {
     image = mkOption {
       type = types.str;
-      default = "pihole/pihole:2024.02.2";
+      default = "pihole/pihole:2024.03.2";
     };
 
     domain = mkOption {
