@@ -29,6 +29,7 @@ lib;
       vscode
       wl-clipboard
       gnomeExtensions.tailscale-qs
+      zoom-us
     ];
 
     services.gpg-agent.pinentryFlavor = "curses";
