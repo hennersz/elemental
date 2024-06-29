@@ -27,14 +27,14 @@
     pinentry-curses
   ];
 
-  fonts.fonts = with pkgs; [
+  fonts.packages = with pkgs; [
     nerdfonts
   ];
 
   services.pcscd.enable = true;
   programs.gnupg.agent = {
     enable = true;
-    pinentryFlavor = "curses";
+    pinentryPackage= pkgs.pinentry-curses;
     enableSSHSupport = true;
   };
   system.stateVersion = "22.05";

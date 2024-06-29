@@ -44,7 +44,6 @@ in
     services.gpg-agent = {
       enable = true;
       enableSshSupport = true;
-      pinentryFlavor = lib.mkDefault null;
     };
 
     # forcibly overwrite SSH_AUTH_SOCK

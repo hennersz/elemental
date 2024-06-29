@@ -54,6 +54,7 @@ in
 
   hardware.cpu.amd.updateMicrocode = lib.mkDefault config.hardware.enableRedistributableFirmware;
   services.xserver.videoDrivers = [ "nvidia" ];
+  services.xserver.displayManager.gdm.wayland = false;
   hardware.opengl.enable = true;
   hardware.nvidia.package = config.boot.kernelPackages.nvidiaPackages.stable;
 
