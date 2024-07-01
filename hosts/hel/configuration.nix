@@ -34,7 +34,7 @@
   services.pcscd.enable = true;
   programs.gnupg.agent = {
     enable = true;
-    pinentryPackage= pkgs.pinentry-curses;
+    pinentryPackage = pkgs.pinentry-curses;
     enableSSHSupport = true;
   };
   system.stateVersion = "22.05";
