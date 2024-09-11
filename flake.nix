@@ -8,10 +8,12 @@
     home-manager.inputs.nixpkgs.follows = "nixpkgs";
     flake-utils.url = "github:numtide/flake-utils";
     std-dev-env.url = "github:hennersz/std-dev-env";
+    darwin.url = "github:lnl7/nix-darwin";
+    darwin.inputs.nixpkgs.follows = "nixpkgs";
   };
   description = "A flake defining the configuration for my systems";
 
-  outputs = { self, nixpkgs, nixpkgs-unstable, nixos-hardware, home-manager, vscode-server, flake-utils, std-dev-env, ... }@inputs:
+  outputs = { self, nixpkgs, nixpkgs-unstable, nixos-hardware, home-manager, vscode-server, flake-utils, std-dev-env, darwin, ... }@inputs:
     let
       nixosModules = import ./modules/nixos { inherit (nixpkgs) lib; };
 
@@ -139,6 +141,24 @@
         modules = [
           ./home-manager/henry-garmr.nix
         ];
+      };
+
+      darwinConfigurations = {
+        baldur = darwin.lib.darwinSystem {
+          system = "aarch64-darwin";
+          modules = [
+            ./hosts/baldur/configuration.nix
+            home-manager.darwinModules.home-manager
+            {
+              home-manager.useGlobalPkgs = true;
+              home-manager.useUserPackages = true;
+              home-manager.users.henry = self.homeManagerModules.configs.henry-baldur;
+              home-manager.extraSpecialArgs = {
+                inherit inputs outputs;
+              };
+            }
+          ];
+        };
       };
 
       templates = {

@@ -5,7 +5,7 @@ lib;
 
   config = mkIf (config.elemental.role == "darwin-laptop") {
     elemental.home.program = {
-      terminal.iterm2.enable = true;
+      terminal.iterm2.enable = false;
       editor.vscode.enable = true;
     };
 
@@ -23,7 +23,6 @@ lib;
     };
 
     home.packages = with pkgs; [
-      vagrant
     ];
   };
 }

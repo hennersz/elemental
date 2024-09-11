@@ -21,7 +21,7 @@ with lib;
 
     home = {
       username = "henry";
-      homeDirectory = "/home/henry";
+      homeDirectory = lib.mkDefault "/home/henry";
       packages = with pkgs; [
         # Rust CLI Tools
         bat

@@ -41,9 +41,11 @@ in
       ];
     };
 
-    services.gpg-agent = {
-      enable = true;
-      enableSshSupport = true;
+    services = mkIf ((strings.hasPrefix "linux" config.elemental.role) || (strings.hasPrefix "nix" config.elemental.role))  {
+      gpg-agent = {
+        enable = true;
+        enableSshSupport = true;
+      };
     };
 
     # forcibly overwrite SSH_AUTH_SOCK

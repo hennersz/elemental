@@ -23,7 +23,6 @@ lib;
     };
 
     home.packages = with pkgs; [
-      vagrant
     ];
   };
 }
