@@ -48,8 +48,17 @@ in
       };
     };
 
+    home.file."${cfg.homedir}/gpg-agent.conf" = mkIf (strings.hasPrefix "darwin" config.elemental.role) {
+      text = ''
+        enable-ssh-support
+        pinentry-program /opt/homebrew/bin/pinentry-mac
+      '';
+    };
+
     # forcibly overwrite SSH_AUTH_SOCK
     programs.fish.interactiveShellInit = ''
+      set -gx GPG_TTY (tty)
+      ${config.programs.gpg.package}/bin/gpg-connect-agent --quiet updatestartuptty /bye > /dev/null 2>&1
       set -gx SSH_AUTH_SOCK (${config.programs.gpg.package}/bin/gpgconf --list-dirs agent-ssh-socket)
     '';
   };
