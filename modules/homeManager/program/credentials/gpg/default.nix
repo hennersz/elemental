@@ -41,7 +41,7 @@ in
       ];
     };
 
-    services = mkIf ((strings.hasPrefix "linux" config.elemental.role) || (strings.hasPrefix "nix" config.elemental.role))  {
+    services = mkIf ((strings.hasPrefix "linux" config.elemental.role) || (strings.hasPrefix "nix" config.elemental.role)) {
       gpg-agent = {
         enable = true;
         enableSshSupport = true;

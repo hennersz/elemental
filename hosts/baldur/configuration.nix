@@ -57,7 +57,7 @@
       brewfile = true;
     };
     taps = [ "homebrew/bundle" ];
-    brews = [ 
+    brews = [
       "pinentry-mac"
     ];
     casks = [
