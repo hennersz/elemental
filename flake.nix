@@ -143,6 +143,14 @@
         ];
       };
 
+      homeConfigurations."henry@codespaces" = home-manager.lib.homeManagerConfiguration {
+        pkgs = allSystemPkgs.x86_64-linux;
+        extraSpecialArgs = { inherit inputs outputs; };
+        modules = [
+          ./home-manager/henry-codespaces.nix
+        ];
+      };
+
       darwinConfigurations = {
         baldur = darwin.lib.darwinSystem {
           system = "aarch64-darwin";
