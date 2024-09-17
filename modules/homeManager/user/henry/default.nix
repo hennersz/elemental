@@ -45,6 +45,9 @@ with lib;
 
         # Overview
         btop
+
+        dive
+        skopeo
       ];
     };
   };
