@@ -47,26 +47,26 @@
         systemName = name;
         hostSystem = currentSystem;
         vars = mergedVars;
-          };
-        modules = [
-          (import ./modules/nixos/qemu-guest.nix)
-          profile
-          ({ lib, options, ... }: {
-            networking.hostName = lib.mkDefault name;
-            nixpkgs.pkgs = mkPkgs { system = targetSystem; inherit nixpkgs; };
-            modules.qemuGuest.enable = true;
-            virtualisation = lib.vmHostAttrs options {
-              host.pkgs = hostPkgs;
-            };
-
-            system = {
-              inherit name;
-              stateVersion = lib.mkDefault mergedVars.nixos.stateVersion;
-              configurationRevision = mergedVars.rev;
-            };
-
-          })
-          configuration
-        ];
       };
+      modules = [
+        (import ./modules/nixos/qemu-guest.nix)
+        profile
+        ({ lib, options, ... }: {
+          networking.hostName = lib.mkDefault name;
+          nixpkgs.pkgs = mkPkgs { system = targetSystem; inherit nixpkgs; };
+          modules.qemuGuest.enable = true;
+          virtualisation = lib.vmHostAttrs options {
+            host.pkgs = hostPkgs;
+          };
+
+          system = {
+            inherit name;
+            stateVersion = lib.mkDefault mergedVars.nixos.stateVersion;
+            configurationRevision = mergedVars.rev;
+          };
+
+        })
+        configuration
+      ];
+    };
 }

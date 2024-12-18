@@ -108,7 +108,7 @@
       };
 
       homeConfigurations."henry@hel" = home-manager.lib.homeManagerConfiguration {
-        pkgs = utils.mkPkgs{ system = "x86_64-linux";};
+        pkgs = utils.mkPkgs { system = "x86_64-linux"; };
         extraSpecialArgs = { inherit inputs outputs; };
         modules = [
           ./home-manager/henry-hel.nix
@@ -116,7 +116,7 @@
       };
 
       homeConfigurations."henry@fenrir" = home-manager.lib.homeManagerConfiguration {
-        pkgs = utils.mkPkgs{ system = "x86_64-linux";};
+        pkgs = utils.mkPkgs { system = "x86_64-linux"; };
         extraSpecialArgs = { inherit inputs outputs; };
         modules = [
           ./home-manager/henry-fenrir.nix
@@ -124,7 +124,7 @@
       };
 
       homeConfigurations."henry@tyr" = home-manager.lib.homeManagerConfiguration {
-        pkgs = utils.mkPkgs{ system = "x86_64-linux";};
+        pkgs = utils.mkPkgs { system = "x86_64-linux"; };
         extraSpecialArgs = { inherit inputs outputs; };
         modules = [
           ./home-manager/henry-tyr.nix
@@ -132,7 +132,7 @@
       };
 
       homeConfigurations."henry@garmr" = home-manager.lib.homeManagerConfiguration {
-        pkgs = utils.mkPkgs{ system = "x86_64-linux";};
+        pkgs = utils.mkPkgs { system = "x86_64-linux"; };
         extraSpecialArgs = { inherit inputs outputs; };
         modules = [
           ./home-manager/henry-garmr.nix
@@ -140,7 +140,7 @@
       };
 
       homeConfigurations."henry@codespaces" = home-manager.lib.homeManagerConfiguration {
-        pkgs = utils.mkPkgs{ system = "x86_64-linux";};
+        pkgs = utils.mkPkgs { system = "x86_64-linux"; };
         extraSpecialArgs = { inherit inputs outputs; };
         modules = [
           ./home-manager/henry-codespaces.nix

@@ -57,12 +57,12 @@ in
 
     revServers = mkOption {
       type = types.listOf types.attrs;
-      default = [];
+      default = [ ];
     };
 
     cnames = mkOption {
       type = types.listOf types.attrs;
-      default = [];
+      default = [ ];
     };
 
     shared-memory = mkOption {

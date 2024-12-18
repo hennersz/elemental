@@ -91,7 +91,7 @@
     masApps = { };
   };
 
-  launchd.daemons.socket_vmnet= {
+  launchd.daemons.socket_vmnet = {
     script = ''
       /opt/homebrew/opt/socket_vmnet/bin/socket_vmnet --vmnet-gateway=192.168.105.1 --vmnet-dhcp-end=192.168.105.100 /opt/homebrew/var/run/socket_vmnet
     '';
