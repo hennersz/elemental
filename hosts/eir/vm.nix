@@ -23,6 +23,7 @@
     interfaces = [ "eth0" "tailscale0" ];
     domain = config.networking.hostName;
     hostIP = lib.mkIf (lib.strings.hasSuffix "darwin" hostSystem) "192.168.105.101";
+    hostIP = lib.mkIf !(lib.strings.hasSuffix "darwin" hostSystem) "10.0.0.2";
   };
   system.activationScripts.makeAppDataDir = lib.stringAfter [ "var" ] ''
     mkdir -p /var/lib/app-data
