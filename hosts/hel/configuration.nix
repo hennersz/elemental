@@ -13,6 +13,7 @@
     users-henry
   ];
 
+  documentation.man.generateCaches = false;
   networking.hostName = "hel"; # Define your hostname.
 
   programs.dconf.enable = true;

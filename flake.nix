@@ -10,15 +10,15 @@
     flake-utils.url = "github:numtide/flake-utils";
     std-dev-env.url = "github:hennersz/std-dev-env";
     darwin.url = "github:lnl7/nix-darwin";
-    darwin.inputs.nixpkgs.follows = "nixpkgs";
+    darwin.inputs.nixpkgs.follows = "nixpkgs-unstable";
     mrkuz.url = "github:mrkuz/macos-config";
     flake-compat.url = "https://flakehub.com/f/edolstra/flake-compat/1.tar.gz";
   };
   description = "A flake defining the configuration for my systems";
 
-  outputs = { self, nixpkgs, nixpkgs-unstable, nixos-hardware, home-manager, vscode-server, flake-utils, std-dev-env, darwin, mrkuz, ... }@inputs:
+  outputs = { self, nixpkgs-unstable, nixpkgs, nixos-hardware, home-manager, vscode-server, flake-utils, std-dev-env, darwin, mrkuz, ... }@inputs:
     let
-      nixosModules = import ./modules/nixos { inherit (nixpkgs) lib; };
+      nixosModules = import ./modules/nixos { inherit (nixpkgs-unstable) lib; };
 
       vars = {
         darwin.stateVersion = 4;
@@ -71,7 +71,7 @@
       homeManagerModules.configs = import ./home-manager;
 
       nixosConfigurations = {
-        eir = nixpkgs.lib.nixosSystem rec {
+        eir = nixpkgs-unstable.lib.nixosSystem rec {
           system = "aarch64-linux";
           pkgs = utils.mkPkgs { inherit system; };
           specialArgs = { inherit inputs outputs; }; # Pass flake inputs to our config
@@ -80,7 +80,7 @@
           ];
         };
 
-        hel = nixpkgs.lib.nixosSystem rec {
+        hel = nixpkgs-unstable.lib.nixosSystem rec {
           system = "x86_64-linux";
           pkgs = utils.mkPkgs { inherit system; };
           specialArgs = { inherit inputs; }; # Pass flake inputs to our config
@@ -93,7 +93,7 @@
           ];
         };
 
-        fenrir = nixpkgs.lib.nixosSystem rec {
+        fenrir = nixpkgs-unstable.lib.nixosSystem rec {
           system = "x86_64-linux";
           pkgs = utils.mkPkgs { inherit system; };
           specialArgs = { inherit inputs; }; # Pass flake inputs to our config
