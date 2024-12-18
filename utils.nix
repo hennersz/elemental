@@ -17,16 +17,17 @@
   mkPkgs = { system, nixpkgs ? inputs.nixpkgs-unstable }: import nixpkgs {
     inherit system;
     config.allowUnfree = true;
-    overlays = if (system == "aarch64-darwin") then [
-      inputs.apple-silicon.overlays.apple-silicon-overlay
-      inputs.nix-alien.overlays.default
-      overlay-stable
-      (_: super: inputs.mrkuz.packages."${system}")
-    ] else [
-      inputs.apple-silicon.overlays.apple-silicon-overlay
-      inputs.nix-alien.overlays.default
-      overlay-stable
-    ];
+    overlays =
+      if (system == "aarch64-darwin") then [
+        inputs.apple-silicon.overlays.apple-silicon-overlay
+        inputs.nix-alien.overlays.default
+        overlay-stable
+        (_: super: inputs.mrkuz.packages."${system}")
+      ] else [
+        inputs.apple-silicon.overlays.apple-silicon-overlay
+        inputs.nix-alien.overlays.default
+        overlay-stable
+      ];
   };
 
   mkVm =
