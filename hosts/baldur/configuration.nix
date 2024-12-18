@@ -1,4 +1,4 @@
-{ pkgs, ... }: {
+{ pkgs, lib, ... }: {
   # List packages installed in system profile. To search by name, run:
   # $ nix-env -qaP | grep wget
   environment.systemPackages = with pkgs; [
@@ -7,7 +7,7 @@
     vscode
     alacritty
     gh
-    localsend
+    devpod
   ];
 
   # Auto upgrade nix package and the daemon service.
@@ -15,8 +15,29 @@
   # nix.package = pkgs.nix;
 
   # Necessary for using flakes on this system.
-  nix.settings.experimental-features = "nix-command flakes";
 
+  nix = {
+    linux-builder = {
+      enable = true;
+      ephemeral = true;
+      maxJobs = 16;
+      config = {
+        virtualisation = {
+          darwin-builder = {
+            diskSize = 128 * 1024;
+            memorySize = 16 * 1024;
+          };
+          cores = 8;
+        };
+      };
+    };
+
+    # This line is a prerequisite
+    settings = {
+      trusted-users = [ "@admin" ];
+      experimental-features = "nix-command flakes";
+    };
+  };
   # Create /etc/zshrc that loads the nix-darwin environment.
   programs.zsh.enable = true; # default shell on catalina
   programs.fish.enable = true;
@@ -56,20 +77,35 @@
     global = {
       brewfile = true;
     };
-    taps = [ "homebrew/bundle" ];
+    taps = [ "homebrew/bundle" "homebrew/homebrew-services" ];
     brews = [
       "pinentry-mac"
+      "socket_vmnet"
     ];
     casks = [
       "google-drive"
       "scroll-reverser"
+      "logseq"
+      "devpod"
     ];
     masApps = { };
   };
 
+  launchd.daemons.socket_vmnet= {
+    script = ''
+      /opt/homebrew/opt/socket_vmnet/bin/socket_vmnet --vmnet-gateway=192.168.105.1 --vmnet-dhcp-end=192.168.105.100 /opt/homebrew/var/run/socket_vmnet
+    '';
+    serviceConfig = {
+      KeepAlive = true;
+      RunAtLoad = true;
+      StandardOutPath = "/opt/homebrew/var/log/socket_vmnet/stdout";
+      StandardErrorPath = "/opt/homebrew/var/log/socket_vmnet/stderr";
+    };
+  };
+
   fonts = {
     packages = [
-      pkgs.nerdfonts
+      pkgs.nerd-fonts.space-mono
     ];
   };
 

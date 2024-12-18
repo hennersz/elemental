@@ -4,3 +4,5 @@ home.nix
 .devenv
 .direnv
 result
+
+nixos.qcow2

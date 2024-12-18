@@ -15,7 +15,7 @@
     outputs.homeManagerModules.modules
   ];
 
-  elemental.role = "linux-server";
+  elemental.role = "nixos-server";
   elemental.user = "henry";
   elemental.machine = "eir";
   elemental.identity = "none";

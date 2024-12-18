@@ -23,7 +23,7 @@ in
   options.elemental.pi-hole = with lib; {
     image = mkOption {
       type = types.str;
-      default = "pihole/pihole:2024.03.2";
+      default = "pihole/pihole:2024.07.0";
     };
 
     domain = mkOption {
@@ -57,12 +57,12 @@ in
 
     revServers = mkOption {
       type = types.listOf types.attrs;
-      default = [{ }];
+      default = [];
     };
 
     cnames = mkOption {
       type = types.listOf types.attrs;
-      default = [{ }];
+      default = [];
     };
 
     shared-memory = mkOption {

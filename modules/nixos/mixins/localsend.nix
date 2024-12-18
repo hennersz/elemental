@@ -1,7 +1,7 @@
 { pkgs, ... }:
 {
   environment.systemPackages = with pkgs; [
-    unstable.localsend
+    localsend
   ];
 
   networking.firewall.allowedTCPPorts = [ 53317 ];

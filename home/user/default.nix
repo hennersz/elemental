@@ -1,5 +1,0 @@
-{
-  imports = [
-    ./henry/default.nix
-  ];
-}

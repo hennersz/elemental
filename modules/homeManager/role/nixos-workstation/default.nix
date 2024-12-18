@@ -25,7 +25,7 @@ lib;
       jdk
       jetbrains.idea-community
       discord
-      unstable.localsend
+      localsend
       vscode
       wl-clipboard
       gnomeExtensions.tailscale-qs

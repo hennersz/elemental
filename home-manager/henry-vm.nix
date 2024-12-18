@@ -15,11 +15,11 @@
     outputs.homeManagerModules.modules
   ];
 
-  elemental.role = "linux-server";
+  elemental.role = "nixos-server";
   elemental.user = "henry";
   elemental.machine = "vm";
-  elemental.identity = "none";
+  elemental.identity = "personal";
 
   # https://nixos.wiki/wiki/FAQ/When_do_I_update_stateVersion
-  home.stateVersion = "22.11";
+  home.stateVersion = "24.05";
 }

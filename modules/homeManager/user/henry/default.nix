@@ -48,6 +48,10 @@ with lib;
 
         dive
         skopeo
+
+        go
+        golangci-lint
+        google-cloud-sdk
       ];
     };
   };

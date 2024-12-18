@@ -20,7 +20,7 @@ in
         };
       };
       port = 2342;
-      addr = "127.0.0.1";
+      addr = "0.0.0.0";
       dataDir = "/var/lib/app-data/grafana";
     };
 
@@ -30,5 +30,6 @@ in
         proxyWebsockets = true;
       };
     };
+    networking.firewall.allowedTCPPorts = [ 2342 ];
   };
 }
