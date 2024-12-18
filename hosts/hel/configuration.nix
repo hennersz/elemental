@@ -28,7 +28,7 @@
   ];
 
   fonts.packages = with pkgs; [
-    nerdfonts
+    pkgs.nerd-fonts.space-mono
   ];
 
   services.pcscd.enable = true;

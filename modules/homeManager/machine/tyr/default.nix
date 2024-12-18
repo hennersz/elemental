@@ -15,7 +15,7 @@ with lib;
     home.packages = with pkgs; [
       vagrant
       neofetch
-      nerdfonts
+      pkgs.nerd-fonts.space-mono
       podman
       dive
       kind
