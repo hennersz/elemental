@@ -5,7 +5,7 @@
   ];
 
   elemental.role = "codespaces";
-  elemental.user = "henry";
+  elemental.user = "codespaces";
   elemental.machine = "codespaces";
   elemental.identity = "none";
   home.homeDirectory = lib.mkForce "/home/codespace";
