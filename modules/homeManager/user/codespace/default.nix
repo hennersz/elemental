@@ -31,7 +31,7 @@ with lib;
         asciinema
         neovim
         jq
-        yq-go
+        yq
         tldr
 
         # Common CLI tools
