@@ -18,7 +18,7 @@ let
       "LC_ALL" = "";
     };
 
-    import = [
+    general.import = [
       "${themes}/themes/solarized_light.toml"
     ];
 
