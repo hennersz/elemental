@@ -30,6 +30,7 @@ lib;
       wl-clipboard
       gnomeExtensions.tailscale-qs
       zoom-us
+      logseq
     ];
 
     services.gpg-agent.pinentryPackage = pkgs.pinentry-curses;
