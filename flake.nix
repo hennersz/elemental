@@ -140,7 +140,7 @@
       };
 
       homeConfigurations."henry@codespaces" = home-manager.lib.homeManagerConfiguration {
-        pkgs = utils.mkPkgs { system = "x86_64-linux"; };
+        pkgs = utils.mkPkgs { system = "aarch64-linux"; };
         extraSpecialArgs = { inherit inputs outputs; };
         modules = [
           ./home-manager/henry-codespaces.nix
