@@ -16,7 +16,7 @@
 
   mkPkgs = { system, nixpkgs ? inputs.nixpkgs-unstable }: import nixpkgs {
     inherit system;
-    config.allowUnfree = true;    
+    config.allowUnfree = true;
     config.permittedInsecurePackages = [
       "electron-27.3.11"
     ];
