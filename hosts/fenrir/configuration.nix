@@ -38,4 +38,6 @@
     enableSSHSupport = true;
   };
   system.stateVersion = "23.11";
+
+  services.ntp.enable = true;
 }
