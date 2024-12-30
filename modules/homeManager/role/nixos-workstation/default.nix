@@ -22,6 +22,7 @@ lib;
       chromium
       firefox-devedition
       jdk
+      stable.vagrant
       stable.jetbrains.idea-community
       discord
       localsend
