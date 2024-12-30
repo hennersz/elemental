@@ -22,7 +22,7 @@ lib;
       chromium
       firefox-devedition
       jdk
-      jetbrains.idea-community
+      stable.jetbrains.idea-community
       discord
       localsend
       vscode
