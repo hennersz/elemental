@@ -13,7 +13,6 @@ with lib;
     };
 
     home.packages = with pkgs; [
-      vagrant
       neofetch
       pkgs.nerd-fonts.space-mono
       podman

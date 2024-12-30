@@ -17,7 +17,6 @@ lib;
     home.packages = with pkgs; [
       spotify
       slack
-      vagrant
       vlc
       neofetch
       chromium
