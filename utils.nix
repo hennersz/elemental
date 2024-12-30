@@ -11,7 +11,7 @@
   });
 
   overlay-stable = final: prev: {
-    stable = inputs.nixpkgs.legacyPackages.${prev.system};
+    stable = import inputs.nixpkgs { inherit (prev) system; config.allowUnfree = true; };
   };
 
   mkPkgs = { system, nixpkgs ? inputs.nixpkgs-unstable }: import nixpkgs {

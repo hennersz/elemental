@@ -17,13 +17,13 @@ lib;
     home.packages = with pkgs; [
       spotify
       slack
-      vagrant
       vlc
       neofetch
       chromium
       firefox-devedition
       jdk
-      jetbrains.idea-community
+      stable.vagrant
+      stable.jetbrains.idea-community
       discord
       localsend
       vscode
