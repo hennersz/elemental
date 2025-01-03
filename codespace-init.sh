@@ -14,4 +14,4 @@ cat > ~/.config/home-manager/flake.nix << EOF
 }
 EOF
 
-nix run home-manager#home-manager -- --flake ~/.config/home-manager
+nix run home-manager#home-manager -- switch --flake ~/.config/home-manager
