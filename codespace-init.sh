@@ -5,7 +5,7 @@ cat > ~/.config/home-manager/flake.nix << EOF
   description = "Home Manager configuration for codespaces";
 
   inputs = {
-    elemental.url = "github:hennersz/elemental";
+    elemental.url = "git+file:///home/codespace/dotfiles";
   };
 
   outputs = { self, elemental, ... }@inputs: {
