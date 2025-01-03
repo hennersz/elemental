@@ -25,6 +25,8 @@ in
       default = { };
       description = "Extra aliases for fish";
     };
+
+    linkFish = mkEnableOption "Link fish to /usr/local/bin on non nixos systems";
   };
 
   config = mkIf cfg.enable {
@@ -94,7 +96,7 @@ in
 
     home.emptyActivationPath = false;
     home.activation = {
-      linkFish = lib.mkIf (!(lib.strings.hasPrefix "nixos" config.elemental.role)) (lib.hm.dag.entryAfter [ "writeBoundary" ] ''
+      linkFish = lib.mkIf (config.elemental.home.program.shell.fish.linkFish) (lib.hm.dag.entryAfter [ "writeBoundary" ] ''
         $DRY_RUN_CMD bash -c 'if [[ "$(readlink -f /usr/local/bin/fish)" != "${pkgs.fish}/bin/fish" ]]; then
           sudo ln -sf $VERBOSE_ARG ${pkgs.fish}/bin/fish /usr/local/bin/fish
         fi'
