@@ -54,6 +54,11 @@ with lib;
         golangci-lint
         google-cloud-sdk
       ];
+
+      sessionVariables = {
+        BULLETTRAIN_IS_SSH_CLIENT = "true";
+        BULLETTRAIN_CONTEXT_DEFAULT_USER = "codespace";
+      };
     };
   };
 }

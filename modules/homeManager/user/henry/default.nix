@@ -53,6 +53,10 @@ with lib;
         golangci-lint
         google-cloud-sdk
       ];
+
+      sessionVariables = {
+        BULLETTRAIN_CONTEXT_DEFAULT_USER = "henry";
+      };
     };
   };
 }
