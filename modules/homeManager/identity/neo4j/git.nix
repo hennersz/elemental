@@ -5,7 +5,7 @@ with lib;
     elemental.home.program.dev.git = {
       enable = true;
 
-      userEmail = "henry@morti.net";
+      userEmail = "henry.mortimer@neo4j.com";
       gpgKey = "0xE80F01751AE0A7CE";
       signByDefault = true;
       extraConfig = {

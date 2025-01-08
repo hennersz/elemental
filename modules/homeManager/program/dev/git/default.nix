@@ -50,6 +50,11 @@ in
         pull.rebase = true;
         init.defaultBranch = "main";
         push.autoSetupRemote = true;
+        url = {
+          "git@github.com:" = {
+            insteadOf = "https://github.com/";
+          };
+        };
       } // cfg.extraConfig;
       # Aliases
       aliases = {
