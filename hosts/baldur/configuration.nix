@@ -87,6 +87,7 @@
       "scroll-reverser"
       "logseq"
       "devpod"
+      "cursor"
     ];
     masApps = { };
   };
