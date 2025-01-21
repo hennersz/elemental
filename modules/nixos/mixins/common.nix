@@ -1,4 +1,4 @@
-{ config, pkgs, lib, ... }:
+{ lib, ... }:
 with
 lib;
 {
@@ -22,6 +22,8 @@ lib;
       extraOptions = ''
         min-free = ${toString (100 * 1024 * 1024)}
         max-free = ${toString (1024 * 1024 * 1024)}
+        keep-outputs = true
+        keep-derivations = true
       '';
     };
 
