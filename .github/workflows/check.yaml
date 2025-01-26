@@ -1,17 +1,23 @@
 name: CI
 on: push
 jobs:
-  flake-test:
+  flake-test-x86:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
       - uses: DeterminateSystems/nix-installer-action@main
       - uses: DeterminateSystems/magic-nix-cache-action@main
-      - run: |
-          sudo apt-get update -q -y && sudo apt-get install -q -y qemu-system-aarch64 qemu-efi binfmt-support qemu-user-static
-          sudo update-binfmts --display
       - name: check flake
-        run: nix --extra-platforms aarch64-linux flake check --impure
+        run: nix flake check --impure
+
+  flake-test-arm:
+    runs-on: ubuntu-24.04-arm
+    steps:
+      - uses: actions/checkout@v4
+      - uses: DeterminateSystems/nix-installer-action@main
+      - uses: DeterminateSystems/magic-nix-cache-action@main
+      - name: check flake
+        run: nix flake check --impure
 
   lock-test:
     runs-on: ubuntu-latest
@@ -34,17 +40,14 @@ jobs:
           nix develop --impure --command lint
 
   build-test-arm:
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-24.04-arm
     steps:
       - uses: actions/checkout@v4
       - uses: DeterminateSystems/nix-installer-action@main
       - uses: DeterminateSystems/magic-nix-cache-action@main
-      - run: |
-          sudo apt-get update -q -y && sudo apt-get install -q -y qemu-system-aarch64 qemu-efi binfmt-support qemu-user-static
-          sudo update-binfmts --display
       - name: check config builds
         run: |
-          nix build .#nixosConfigurations.eir.config.system.build.toplevel -j4 --option system aarch64-linux --option sandbox false --extra-platforms aarch64-linux
+          nix build .#nixosConfigurations.eir.config.system.build.toplevel -j4
 
   build-test:
     runs-on: ubuntu-latest
