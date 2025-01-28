@@ -1,5 +1,8 @@
 #! /usr/bin/env bash
 
+mkdir -p ~/.config/nix
+echo "experimental-features = nix-command flakes" >> ~/.config/nix/nix.conf
+mkdir -p ~/.config/home-manager
 cat > ~/.config/home-manager/flake.nix << EOF
 {
   description = "Home Manager configuration for codespaces";
