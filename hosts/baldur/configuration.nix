@@ -88,6 +88,7 @@
       "logseq"
       "devpod"
       "cursor"
+      "1password"
     ];
     masApps = { };
   };
