@@ -6,5 +6,6 @@
     ./hel/default.nix
     ./garmr/default.nix
     ./fenrir/default.nix
+    ./baldur/default.nix
   ];
 }

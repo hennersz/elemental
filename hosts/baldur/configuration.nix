@@ -88,6 +88,7 @@
       "logseq"
       "devpod"
       "cursor"
+      "1password"
     ];
     masApps = { };
   };
@@ -97,8 +98,6 @@
       /opt/homebrew/opt/socket_vmnet/bin/socket_vmnet --vmnet-gateway=192.168.105.1 --vmnet-dhcp-end=192.168.105.100 /opt/homebrew/var/run/socket_vmnet
     '';
     serviceConfig = {
-      KeepAlive = true;
-      RunAtLoad = true;
       StandardOutPath = "/opt/homebrew/var/log/socket_vmnet/stdout";
       StandardErrorPath = "/opt/homebrew/var/log/socket_vmnet/stderr";
     };
