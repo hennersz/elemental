@@ -87,6 +87,7 @@
       "cursor"
       "1password"
       "burp-suite"
+      "ghidra"
     ];
     masApps = { };
   };
