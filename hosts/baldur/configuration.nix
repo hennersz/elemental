@@ -77,6 +77,7 @@
     brews = [
       "pinentry-mac"
       "socket_vmnet"
+      "snyk-cli"
     ];
     casks = [
       "google-drive"
@@ -85,6 +86,7 @@
       "devpod"
       "cursor"
       "1password"
+      "burp-suite"
     ];
     masApps = { };
   };
