@@ -88,6 +88,8 @@
       "1password"
       "burp-suite"
       "ghidra"
+      "temurin"
+      "spotify"
     ];
     masApps = { };
   };
