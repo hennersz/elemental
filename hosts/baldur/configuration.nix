@@ -90,6 +90,7 @@
       "ghidra"
       "temurin"
       "spotify"
+      "jabra-direct"
     ];
     masApps = { };
   };
