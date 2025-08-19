@@ -4,7 +4,7 @@ jobs:
   flake-test-x86:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v5
       - uses: DeterminateSystems/nix-installer-action@main
       - uses: DeterminateSystems/magic-nix-cache-action@main
       - name: check flake
@@ -13,7 +13,7 @@ jobs:
   flake-test-arm:
     runs-on: ubuntu-24.04-arm
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v5
       - uses: DeterminateSystems/nix-installer-action@main
       - uses: DeterminateSystems/magic-nix-cache-action@main
       - name: check flake
@@ -22,7 +22,7 @@ jobs:
   lock-test:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v5
       - uses: DeterminateSystems/nix-installer-action@main
       - uses: DeterminateSystems/magic-nix-cache-action@main
       - name: check lock file
@@ -32,7 +32,7 @@ jobs:
   lint:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v5
       - uses: DeterminateSystems/nix-installer-action@main
       - uses: DeterminateSystems/magic-nix-cache-action@main
       - name: Lint code
@@ -42,7 +42,7 @@ jobs:
   build-test-arm:
     runs-on: ubuntu-24.04-arm
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v5
       - uses: DeterminateSystems/nix-installer-action@main
       - uses: DeterminateSystems/magic-nix-cache-action@main
       - name: check config builds
@@ -56,7 +56,7 @@ jobs:
         module:
           - hel
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v5
       - uses: DeterminateSystems/nix-installer-action@main
       - uses: DeterminateSystems/magic-nix-cache-action@main
       - name: check config builds
@@ -71,7 +71,7 @@ jobs:
           - henry@hel
           - henry@tyr
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v5
       - uses: DeterminateSystems/nix-installer-action@main
       - uses: DeterminateSystems/magic-nix-cache-action@main
       - name: check config builds
