@@ -31,6 +31,7 @@ lib;
       gnomeExtensions.tailscale-qs
       zoom-us
       logseq
+      regctl
     ];
 
     services.gpg-agent.pinentryPackage = pkgs.pinentry-curses;

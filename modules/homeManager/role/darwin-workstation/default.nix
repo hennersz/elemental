@@ -23,6 +23,7 @@ lib;
     };
 
     home.packages = with pkgs; [
+      regctl
     ];
   };
 }

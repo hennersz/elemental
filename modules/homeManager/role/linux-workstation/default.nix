@@ -12,5 +12,9 @@ lib;
     home.sessionVariables = {
       EDITOR = "code --wait";
     };
+
+    home.packages = with pkgs; [
+      regctl
+    ];
   };
 }
