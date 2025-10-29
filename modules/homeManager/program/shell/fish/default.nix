@@ -32,7 +32,7 @@ in
   config = mkIf cfg.enable {
     home.packages = with pkgs; [
       direnv
-      python3Full
+      python314
       eza
       bat
     ];
