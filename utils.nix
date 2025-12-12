@@ -27,7 +27,6 @@
         overlay-stable
         (_: super: inputs.mrkuz.packages."${system}")
       ] else [
-        inputs.apple-silicon.overlays.apple-silicon-overlay
         inputs.nix-alien.overlays.default
         overlay-stable
       ];
