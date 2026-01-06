@@ -92,6 +92,7 @@
       "temurin"
       "spotify"
       "jabra-direct"
+      "docker-desktop"
     ];
     masApps = { };
   };
