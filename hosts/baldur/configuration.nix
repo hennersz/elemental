@@ -8,6 +8,7 @@
     alacritty
     gh
     devpod
+    claude-code
   ];
 
 
