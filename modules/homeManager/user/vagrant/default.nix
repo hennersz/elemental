@@ -41,7 +41,7 @@ with lib;
         git
         unzip
         whois
-        dogdns
+        doggo
 
         # Overview
         btop
