@@ -23,7 +23,42 @@ in
 
   hardware.enableRedistributableFirmware = true;
 
-  elemental.domainName = "eir.lan.morti.net";
+  elemental = {
+    domainName = "eir.lan.morti.net";
+    pi-hole = {
+      interfaces = [ "end0" "tailscale0" ];
+      domain = config.networking.hostName;
+      hostIP = ip;
+      revServers = [
+        {
+          localNetworkCIDR = "192.168.1.0/24";
+          dnsServer = "192.168.1.1";
+          localDomain = "lan.morti.net";
+        }
+        {
+          localNetworkCIDR = "100.64.0.0/10";
+          dnsServer = "100.100.100.100";
+          localDomain = "koi-boa.ts.net";
+        }
+      ];
+      cnames = [
+        {
+          domain = "grafana.morti.net";
+          target = "pi.hole";
+        }
+        {
+          domain = "pihole.morti.net";
+          target = "pi.hole";
+        }
+        {
+          domain = "eir.lan.morti.net";
+          target = "pi.hole";
+        }
+      ];
+    };
+    grafana.domain = "grafana.morti.net";
+  };
+
   fileSystems = {
     "/" = {
       device = "/dev/disk/by-label/NIXOS_SD";
@@ -84,38 +119,4 @@ in
       ];
     };
   };
-
-  elemental.pi-hole = {
-    interfaces = [ "end0" "tailscale0" ];
-    domain = config.networking.hostName;
-    hostIP = ip;
-    revServers = [
-      {
-        localNetworkCIDR = "192.168.1.0/24";
-        dnsServer = "192.168.1.1";
-        localDomain = "lan.morti.net";
-      }
-      {
-        localNetworkCIDR = "100.64.0.0/10";
-        dnsServer = "100.100.100.100";
-        localDomain = "koi-boa.ts.net";
-      }
-    ];
-    cnames = [
-      {
-        domain = "grafana.morti.net";
-        target = "pi.hole";
-      }
-      {
-        domain = "pihole.morti.net";
-        target = "pi.hole";
-      }
-      {
-        domain = "eir.lan.morti.net";
-        target = "pi.hole";
-      }
-    ];
-  };
-
-  elemental.grafana.domain = "grafana.morti.net";
 }

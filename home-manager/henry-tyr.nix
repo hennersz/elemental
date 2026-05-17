@@ -15,10 +15,12 @@
     outputs.homeManagerModules.modules
   ];
 
-  elemental.role = "linux-workstation";
-  elemental.user = "henry";
-  elemental.machine = "tyr";
-  elemental.identity = "controlPlane";
+  elemental = {
+    role = "linux-workstation";
+    user = "henry";
+    machine = "tyr";
+    identity = "controlPlane";
+  };
 
   # https://nixos.wiki/wiki/FAQ/When_do_I_update_stateVersion
   home.stateVersion = "22.11";

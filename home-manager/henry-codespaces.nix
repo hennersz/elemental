@@ -4,10 +4,12 @@
     outputs.homeManagerModules.modules
   ];
 
-  elemental.role = "codespace";
-  elemental.user = "codespace";
-  elemental.machine = "codespace";
-  elemental.identity = "none";
+  elemental = {
+    role = "codespace";
+    user = "codespace";
+    machine = "codespace";
+    identity = "none";
+  };
   home.homeDirectory = lib.mkForce "/home/codespace";
 
   home.stateVersion = "25.05";

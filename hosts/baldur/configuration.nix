@@ -36,8 +36,14 @@
     };
   };
   # Create /etc/zshrc that loads the nix-darwin environment.
-  programs.zsh.enable = true; # default shell on catalina
-  programs.fish.enable = true;
+  programs = {
+    zsh.enable = true; # default shell on catalina
+    fish.enable = true;
+    gnupg.agent = {
+      enable = true;
+      enableSSHSupport = true;
+    };
+  };
   environment.shells = [ pkgs.fish ];
 
   nix.gc = {
@@ -62,8 +68,15 @@
 
   # Used for backwards compatibility, please read the changelog before changing.
   # $ darwin-rebuild changelog
-  system.stateVersion = 4;
-  system.primaryUser = "henry";
+  system = {
+    stateVersion = 4;
+    primaryUser = "henry";
+    defaults.NSGlobalDomain = {
+      ApplePressAndHoldEnabled = false;
+      AppleShowAllFiles = true;
+      NSNavPanelExpandedStateForSaveMode = true;
+    };
+  };
 
   # The platform the configuration will be used on.
   nixpkgs.hostPlatform = "aarch64-darwin";
@@ -114,14 +127,4 @@
     ];
   };
 
-  system.defaults.NSGlobalDomain = {
-    ApplePressAndHoldEnabled = false;
-    AppleShowAllFiles = true;
-    NSNavPanelExpandedStateForSaveMode = true;
-  };
-
-  programs.gnupg.agent = {
-    enable = true;
-    enableSSHSupport = true;
-  };
 }

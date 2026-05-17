@@ -4,11 +4,13 @@
     outputs.homeManagerModules.modules
   ];
 
-  elemental.role = "darwin-laptop";
-  elemental.user = "henry";
-  elemental.machine = "baldur";
-  elemental.identity = "neo4j";
-  elemental.home.program.terminal.alacritty.enable = true;
+  elemental = {
+    role = "darwin-laptop";
+    user = "henry";
+    machine = "baldur";
+    identity = "neo4j";
+    home.program.terminal.alacritty.enable = true;
+  };
   home.homeDirectory = lib.mkForce "/Users/henry";
 
   home.stateVersion = "24.05";

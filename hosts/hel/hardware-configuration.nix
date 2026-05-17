@@ -14,28 +14,34 @@ in
       (modulesPath + "/installer/scan/not-detected.nix")
     ];
 
-  boot.initrd.availableKernelModules = [ "nvme" "xhci_pci" "ahci" "usb_storage" "usbhid" "sd_mod" ];
-  boot.initrd.kernelModules = [ ];
-  boot.kernelModules = [ "kvm-amd" ];
-  boot.extraModulePackages = [ ];
-  boot.plymouth.enable = true;
-  boot.plymouth.theme = "deus_ex";
-  boot.plymouth.themePackages = [
-    (pkgs.adi1090x-plymouth-themes.override {
-      selected_themes = [ "deus_ex" ];
-    })
-  ];
-  boot.initrd.verbose = false;
-  boot.consoleLogLevel = 0;
-  boot.kernelParams = [
-    "quiet"
-    "splash"
-    "bgrt_disable"
-    "rd.systemd_show_status=false"
-    "rd.udev.log_level=3"
-    "udev.log_priority=3"
-    "boot.shell_on_fail"
-  ];
+  boot = {
+    initrd = {
+      availableKernelModules = [ "nvme" "xhci_pci" "ahci" "usb_storage" "usbhid" "sd_mod" ];
+      kernelModules = [ ];
+      verbose = false;
+    };
+    kernelModules = [ "kvm-amd" ];
+    extraModulePackages = [ ];
+    plymouth = {
+      enable = true;
+      theme = "deus_ex";
+      themePackages = [
+        (pkgs.adi1090x-plymouth-themes.override {
+          selected_themes = [ "deus_ex" ];
+        })
+      ];
+    };
+    consoleLogLevel = 0;
+    kernelParams = [
+      "quiet"
+      "splash"
+      "bgrt_disable"
+      "rd.systemd_show_status=false"
+      "rd.udev.log_level=3"
+      "udev.log_priority=3"
+      "boot.shell_on_fail"
+    ];
+  };
 
   fileSystems."/" =
     {
@@ -52,44 +58,45 @@ in
   swapDevices =
     [{ device = "/dev/disk/by-label/swap"; }];
 
-  hardware.cpu.amd.updateMicrocode = lib.mkDefault config.hardware.enableRedistributableFirmware;
-  services.xserver.videoDrivers = [ "nvidia" ];
-  services.xserver.displayManager.gdm.wayland = false;
-
-  hardware.graphics = {
-    enable = true;
+  services.xserver = {
+    videoDrivers = [ "nvidia" ];
+    displayManager.gdm.wayland = false;
   };
 
-  hardware.nvidia = {
+  hardware = {
+    cpu.amd.updateMicrocode = lib.mkDefault config.hardware.enableRedistributableFirmware;
+    graphics.enable = true;
+    nvidia = {
+      # Modesetting is required.
+      modesetting.enable = true;
 
-    # Modesetting is required.
-    modesetting.enable = true;
+      # Nvidia power management. Experimental, and can cause sleep/suspend to fail.
+      # Enable this if you have graphical corruption issues or application crashes after waking
+      # up from sleep. This fixes it by saving the entire VRAM memory to /tmp/ instead
+      # of just the bare essentials.
+      powerManagement = {
+        enable = false;
+        # Fine-grained power management. Turns off GPU when not in use.
+        # Experimental and only works on modern Nvidia GPUs (Turing or newer).
+        finegrained = false;
+      };
 
-    # Nvidia power management. Experimental, and can cause sleep/suspend to fail.
-    # Enable this if you have graphical corruption issues or application crashes after waking
-    # up from sleep. This fixes it by saving the entire VRAM memory to /tmp/ instead 
-    # of just the bare essentials.
-    powerManagement.enable = false;
+      # Use the NVidia open source kernel module (not to be confused with the
+      # independent third-party "nouveau" open source driver).
+      # Support is limited to the Turing and later architectures. Full list of
+      # supported GPUs is at:
+      # https://github.com/NVIDIA/open-gpu-kernel-modules#compatible-gpus
+      # Only available from driver 515.43.04+
+      # Currently alpha-quality/buggy, so false is currently the recommended setting.
+      open = false;
 
-    # Fine-grained power management. Turns off GPU when not in use.
-    # Experimental and only works on modern Nvidia GPUs (Turing or newer).
-    powerManagement.finegrained = false;
+      # Enable the Nvidia settings menu,
+      # accessible via `nvidia-settings`.
+      nvidiaSettings = true;
 
-    # Use the NVidia open source kernel module (not to be confused with the
-    # independent third-party "nouveau" open source driver).
-    # Support is limited to the Turing and later architectures. Full list of 
-    # supported GPUs is at: 
-    # https://github.com/NVIDIA/open-gpu-kernel-modules#compatible-gpus 
-    # Only available from driver 515.43.04+
-    # Currently alpha-quality/buggy, so false is currently the recommended setting.
-    open = false;
-
-    # Enable the Nvidia settings menu,
-    # accessible via `nvidia-settings`.
-    nvidiaSettings = true;
-
-    # Optionally, you may need to select the appropriate driver version for your specific GPU.
-    package = config.boot.kernelPackages.nvidiaPackages.stable;
+      # Optionally, you may need to select the appropriate driver version for your specific GPU.
+      package = config.boot.kernelPackages.nvidiaPackages.stable;
+    };
   };
 
   networking.interfaces.enp6s0.useDHCP = true;

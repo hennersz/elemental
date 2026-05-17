@@ -30,12 +30,22 @@ in
   };
 
   config = mkIf cfg.enable {
-    home.packages = with pkgs; [
-      direnv
-      python314
-      eza
-      bat
-    ];
+    home = {
+      packages = with pkgs; [
+        direnv
+        python314
+        eza
+        bat
+      ];
+      emptyActivationPath = false;
+      activation = {
+        linkFish = lib.mkIf config.elemental.home.program.shell.fish.linkFish (lib.hm.dag.entryAfter [ "writeBoundary" ] ''
+          $DRY_RUN_CMD bash -c 'if [[ "$(readlink -f /usr/local/bin/fish)" != "${pkgs.fish}/bin/fish" ]]; then
+            sudo ln -sf $VERBOSE_ARG ${pkgs.fish}/bin/fish /usr/local/bin/fish
+          fi'
+        '');
+      };
+    };
     programs.fish = {
       enable = true;
 
@@ -93,14 +103,5 @@ in
         )
         (builtins.readDir ./functions)
     );
-
-    home.emptyActivationPath = false;
-    home.activation = {
-      linkFish = lib.mkIf (config.elemental.home.program.shell.fish.linkFish) (lib.hm.dag.entryAfter [ "writeBoundary" ] ''
-        $DRY_RUN_CMD bash -c 'if [[ "$(readlink -f /usr/local/bin/fish)" != "${pkgs.fish}/bin/fish" ]]; then
-          sudo ln -sf $VERBOSE_ARG ${pkgs.fish}/bin/fish /usr/local/bin/fish
-        fi'
-      '');
-    };
   };
 }

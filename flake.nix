@@ -33,7 +33,7 @@
     flake-utils.lib.eachDefaultSystem
       (system:
         let
-          lib = nixpkgs-unstable.lib;
+          inherit (nixpkgs-unstable) lib;
           arch = builtins.elemAt (lib.strings.splitString "-" system) 0;
         in
         {
@@ -98,44 +98,46 @@
         };
       };
 
-      homeConfigurations."henry@hel" = home-manager.lib.homeManagerConfiguration {
-        pkgs = utils.mkPkgs { system = "x86_64-linux"; };
-        extraSpecialArgs = { inherit inputs outputs; };
-        modules = [
-          ./home-manager/henry-hel.nix
-        ];
-      };
+      homeConfigurations = {
+        "henry@hel" = home-manager.lib.homeManagerConfiguration {
+          pkgs = utils.mkPkgs { system = "x86_64-linux"; };
+          extraSpecialArgs = { inherit inputs outputs; };
+          modules = [
+            ./home-manager/henry-hel.nix
+          ];
+        };
 
-      homeConfigurations."henry@fenrir" = home-manager.lib.homeManagerConfiguration {
-        pkgs = utils.mkPkgs { system = "x86_64-linux"; };
-        extraSpecialArgs = { inherit inputs outputs; };
-        modules = [
-          ./home-manager/henry-fenrir.nix
-        ];
-      };
+        "henry@fenrir" = home-manager.lib.homeManagerConfiguration {
+          pkgs = utils.mkPkgs { system = "x86_64-linux"; };
+          extraSpecialArgs = { inherit inputs outputs; };
+          modules = [
+            ./home-manager/henry-fenrir.nix
+          ];
+        };
 
-      homeConfigurations."henry@tyr" = home-manager.lib.homeManagerConfiguration {
-        pkgs = utils.mkPkgs { system = "x86_64-linux"; };
-        extraSpecialArgs = { inherit inputs outputs; };
-        modules = [
-          ./home-manager/henry-tyr.nix
-        ];
-      };
+        "henry@tyr" = home-manager.lib.homeManagerConfiguration {
+          pkgs = utils.mkPkgs { system = "x86_64-linux"; };
+          extraSpecialArgs = { inherit inputs outputs; };
+          modules = [
+            ./home-manager/henry-tyr.nix
+          ];
+        };
 
-      homeConfigurations."henry@garmr" = home-manager.lib.homeManagerConfiguration {
-        pkgs = utils.mkPkgs { system = "x86_64-linux"; };
-        extraSpecialArgs = { inherit inputs outputs; };
-        modules = [
-          ./home-manager/henry-garmr.nix
-        ];
-      };
+        "henry@garmr" = home-manager.lib.homeManagerConfiguration {
+          pkgs = utils.mkPkgs { system = "x86_64-linux"; };
+          extraSpecialArgs = { inherit inputs outputs; };
+          modules = [
+            ./home-manager/henry-garmr.nix
+          ];
+        };
 
-      homeConfigurations."henry@codespaces" = home-manager.lib.homeManagerConfiguration {
-        pkgs = utils.mkPkgs { system = "aarch64-linux"; };
-        extraSpecialArgs = { inherit inputs outputs; };
-        modules = [
-          ./home-manager/henry-codespaces.nix
-        ];
+        "henry@codespaces" = home-manager.lib.homeManagerConfiguration {
+          pkgs = utils.mkPkgs { system = "aarch64-linux"; };
+          extraSpecialArgs = { inherit inputs outputs; };
+          modules = [
+            ./home-manager/henry-codespaces.nix
+          ];
+        };
       };
 
       darwinConfigurations = {
@@ -146,11 +148,13 @@
             ./hosts/baldur/configuration.nix
             home-manager.darwinModules.home-manager
             {
-              home-manager.useGlobalPkgs = true;
-              home-manager.useUserPackages = true;
-              home-manager.users.henry = self.homeManagerModules.configs.henry-baldur;
-              home-manager.extraSpecialArgs = {
-                inherit inputs outputs;
+              home-manager = {
+                useGlobalPkgs = true;
+                useUserPackages = true;
+                users.henry = self.homeManagerModules.configs.henry-baldur;
+                extraSpecialArgs = {
+                  inherit inputs outputs;
+                };
               };
             }
           ];

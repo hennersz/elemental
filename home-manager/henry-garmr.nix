@@ -15,11 +15,13 @@
     outputs.homeManagerModules.modules
   ];
 
-  elemental.role = "linux-workstation";
-  elemental.user = "henry";
-  elemental.machine = "garmr";
-  elemental.identity = "controlPlane";
-  elemental.home.program.terminal.alacritty.enable = true;
+  elemental = {
+    role = "linux-workstation";
+    user = "henry";
+    machine = "garmr";
+    identity = "controlPlane";
+    home.program.terminal.alacritty.enable = true;
+  };
 
 
   # https://nixos.wiki/wiki/FAQ/When_do_I_update_stateVersion

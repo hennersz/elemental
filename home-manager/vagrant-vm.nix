@@ -15,10 +15,12 @@
     outputs.homeManagerModules.modules
   ];
 
-  elemental.role = "linux-server";
-  elemental.user = "vagrant";
-  elemental.machine = "vm";
-  elemental.identity = identity;
+  elemental = {
+    role = "linux-server";
+    user = "vagrant";
+    machine = "vm";
+    inherit identity;
+  };
 
   # https://nixos.wiki/wiki/FAQ/When_do_I_update_stateVersion
   home.stateVersion = "22.11";

@@ -75,19 +75,19 @@ in
         };
       };
     }
-    (mkIf (cfg.dhcp) {
+    (mkIf cfg.dhcp {
       networking = {
         dhcpcd.enable = mkDefault true;
         useDHCP = mkDefault true;
       };
     })
     (mkIf (!cfg.dhcp) {
-      networking = (mkMerge [
+      networking = mkMerge [
         {
           dhcpcd.enable = mkDefault false;
           useDHCP = mkDefault false;
         }
-        (mkIf (cfg.socketVmnet.enable) {
+        (mkIf cfg.socketVmnet.enable {
           defaultGateway = "192.168.105.1";
           nameservers = [ "192.168.105.1" ];
         })
@@ -105,9 +105,9 @@ in
             }
           ];
         })
-      ]);
+      ];
     })
-    (mkIf (cfg.skipLogin) {
+    (mkIf cfg.skipLogin {
       services.getty = {
         loginProgram = "${pkgs.coreutils-full}/bin/sleep";
         loginOptions = "infinity";
@@ -118,7 +118,7 @@ in
       services.getty.autologinUser = mkIf cfg.autoLogin cfg.user;
       services.displayManager.autoLogin.user = mkIf cfg.autoLogin cfg.user;
     })
-    (mkIf (cfg.graphics) {
+    (mkIf cfg.graphics {
       hardware.graphics.enable = mkDefault true;
     })
     (mkIf (!cfg.graphics) {

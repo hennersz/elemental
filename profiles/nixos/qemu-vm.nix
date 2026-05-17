@@ -21,15 +21,15 @@ in
         substituteInPlace $out/bin/start-${config.system.name}-vm --replace "-display default" "-display default,gl=es"
         substituteInPlace $out/bin/start-${config.system.name}-vm --replace "-device virtio-gpu-pci" "-device virtio-gpu-gl-pci"
       '' else ""}
-      ${if (cfg.socketVmnet.enable) then ''
+      ${if cfg.socketVmnet.enable then ''
         substituteInPlace $out/bin/start-${config.system.name}-vm --replace "exec " "exec ${hostPkgs.macos.socket_vmnet}/bin/socket_vmnet_client ${cfg.socketVmnet.socketPath} "
       '' else ""}
-      ${if (cfg.vmnet) then ''
+      ${if cfg.vmnet then ''
         substituteInPlace $out/bin/start-${config.system.name}-vm --replace "exec " "exec sudo "
       '' else ""}
     '';
 
-  virtualisation = (mkMerge [
+  virtualisation = mkMerge [
     {
       qemu.package = mkIf hostPkgs.stdenv.isDarwin hostPkgs.macos.qemu;
       resolution = mkDefault { x = 1920; y = 1200; };
@@ -38,7 +38,7 @@ in
       cores = mkDefault 2;
       memorySize = mkDefault 4096;
     }
-    (mkIf (cfg.socketVmnet.enable) {
+    (mkIf cfg.socketVmnet.enable {
       qemu.networkingOptions = [
         "-device virtio-net-device,netdev=net.0"
         "-netdev socket,id=net.0,fd=3,\${QEMU_NET_OPTS:+,$QEMU_NET_OPTS}"
@@ -50,7 +50,7 @@ in
         "-netdev vmnet-shared,id=net.0,\${QEMU_NET_OPTS:+,$QEMU_NET_OPTS}"
       ];
     })
-    (mkIf (cfg.graphics) {
+    (mkIf cfg.graphics {
       graphics = true;
       qemu = {
         options = [ "-display default" ];
@@ -63,5 +63,5 @@ in
         consoles = [ "ttyAMA0,115200n8" ];
       };
     })
-  ]);
+  ];
 }

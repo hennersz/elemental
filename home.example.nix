@@ -12,8 +12,10 @@
   # Allow unfree
   nixpkgs.config.allowUnfree = true;
 
-  elemental.role = "linux-vm";
-  elemental.user = "henry";
-  elemental.machine = "thor";
-  elemental.identity = "personal";
+  elemental = {
+    role = "linux-vm";
+    user = "henry";
+    machine = "thor";
+    identity = "personal";
+  };
 }

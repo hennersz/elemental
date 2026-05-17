@@ -14,12 +14,14 @@
           elemental.nixosModules.archetypes.vagrant
           home-manager.nixosModules.home-manager
           {
-            home-manager.useGlobalPkgs = true;
-            home-manager.useUserPackages = true;
-            home-manager.users.vagrant = elemental.homeManagerModules.configs.vagrant-vm;
-            home-manager.extraSpecialArgs = {
-              inherit (elemental) inputs outputs;
-              identity = "personal";
+            home-manager = {
+              useGlobalPkgs = true;
+              useUserPackages = true;
+              users.vagrant = elemental.homeManagerModules.configs.vagrant-vm;
+              extraSpecialArgs = {
+                inherit (elemental) inputs outputs;
+                identity = "personal";
+              };
             };
           }
         ];

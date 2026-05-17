@@ -22,11 +22,13 @@ in
   system.stateVersion = "22.11";
 
   services.vscode-server.enable = true;
-  home-manager.useGlobalPkgs = true;
-  home-manager.useUserPackages = true;
-  home-manager.users.henry = inputs.self.homeManagerModules.configs.henry-eir;
-  home-manager.extraSpecialArgs = {
-    inherit inputs outputs;
+  home-manager = {
+    useGlobalPkgs = true;
+    useUserPackages = true;
+    users.henry = inputs.self.homeManagerModules.configs.henry-eir;
+    extraSpecialArgs = {
+      inherit inputs outputs;
+    };
   };
 
   mixins.selfupdate = {

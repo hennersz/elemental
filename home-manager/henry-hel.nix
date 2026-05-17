@@ -15,11 +15,13 @@
     outputs.homeManagerModules.modules
   ];
 
-  elemental.role = "nixos-workstation";
-  elemental.user = "henry";
-  elemental.machine = "hel";
-  elemental.identity = "personal";
-  elemental.home.program.terminal.alacritty.enable = true;
+  elemental = {
+    role = "nixos-workstation";
+    user = "henry";
+    machine = "hel";
+    identity = "personal";
+    home.program.terminal.alacritty.enable = true;
+  };
 
   # https://nixos.wiki/wiki/FAQ/When_do_I_update_stateVersion
   home.stateVersion = "22.11";
