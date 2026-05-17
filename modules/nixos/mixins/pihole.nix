@@ -118,58 +118,57 @@ in
       };
     };
 
-    services.promtail.configuration.scrape_configs = [{
-      job_name = "pi-hole";
-      static_configs = [
-        {
-          targets = [ "localhost" ];
-          labels = {
-            job = "pi-hole-FTL";
-            host = config.networking.hostName;
-            __path__ = "${config.elemental.pi-hole.dataDir}/pi-hole/log/pihole/FTL.log";
-          };
+    environment.etc."alloy/pihole.alloy".text =
+      let
+        logDir = "${config.elemental.pi-hole.dataDir}/pi-hole/log";
+        host = config.networking.hostName;
+      in
+      ''
+        local.file_match "pihole" {
+          path_targets = [
+            {
+              __address__ = "localhost",
+              __path__    = "${logDir}/pihole/FTL.log",
+              job         = "pi-hole-FTL",
+              host        = "${host}",
+            },
+            {
+              __address__ = "localhost",
+              __path__    = "${logDir}/pihole/pihole.log",
+              job         = "pi-hole",
+              host        = "${host}",
+            },
+            {
+              __address__ = "localhost",
+              __path__    = "${logDir}/pihole/pihole_updateGravity.log",
+              job         = "pi-hole-update-gravity",
+              host        = "${host}",
+            },
+            {
+              __address__ = "localhost",
+              __path__    = "${logDir}/lighttpd/access.log",
+              job         = "lighttpd-access",
+              host        = "${host}",
+            },
+            {
+              __address__ = "localhost",
+              __path__    = "${logDir}/lighttpd/access-pihole.log",
+              job         = "lighttpd-access-pi-hole",
+              host        = "${host}",
+            },
+            {
+              __address__ = "localhost",
+              __path__    = "${logDir}/lighttpd/error-pihole.log",
+              job         = "lighttpd-error-pi-hole",
+              host        = "${host}",
+            },
+          ]
         }
-        {
-          targets = [ "localhost" ];
-          labels = {
-            job = "pi-hole";
-            host = config.networking.hostName;
-            __path__ = "${config.elemental.pi-hole.dataDir}/pi-hole/log/pihole/pihole.log";
-          };
+
+        loki.source.file "pihole" {
+          targets    = local.file_match.pihole.targets
+          forward_to = [loki.write.default.receiver]
         }
-        {
-          targets = [ "localhost" ];
-          labels = {
-            job = "pi-hole-update-gravity";
-            host = config.networking.hostName;
-            __path__ = "${config.elemental.pi-hole.dataDir}/pi-hole/log/pihole/pihole_updateGravity.log";
-          };
-        }
-        {
-          targets = [ "localhost" ];
-          labels = {
-            job = "lighttpd-access";
-            host = config.networking.hostName;
-            __path__ = "${config.elemental.pi-hole.dataDir}/pi-hole/log/lighttpd/access.log";
-          };
-        }
-        {
-          targets = [ "localhost" ];
-          labels = {
-            job = "lighttpd-access-pi-hole";
-            host = config.networking.hostName;
-            __path__ = "${config.elemental.pi-hole.dataDir}/pi-hole/log/lighttpd/access-pihole.log";
-          };
-        }
-        {
-          targets = [ "localhost" ];
-          labels = {
-            job = "lighttpd-error-pi-hole";
-            host = config.networking.hostName;
-            __path__ = "${config.elemental.pi-hole.dataDir}/pi-hole/log/lighttpd/error-pihole.log";
-          };
-        }
-      ];
-    }];
+      '';
   };
 }

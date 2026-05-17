@@ -71,36 +71,39 @@
     # user, group, dataDir, extraFlags, (configFile)
   };
 
-  # promtail: port 3031 (8031)
-  #
-  services.promtail = {
+  # alloy: HTTP listen on port 3031 (8031)
+  services.alloy = {
     enable = true;
-    configuration = {
-      server = {
-        http_listen_port = 3031;
-        grpc_listen_port = 0;
-      };
-      positions = {
-        filename = "/tmp/positions.yaml";
-      };
-      clients = [{
-        url = "http://127.0.0.1:${toString config.services.loki.configuration.server.http_listen_port}/loki/api/v1/push";
-      }];
-      scrape_configs = [{
-        job_name = "journal";
-        journal = {
-          max_age = "12h";
-          labels = {
-            job = "systemd-journal";
-            host = config.networking.hostName;
-          };
-        };
-        relabel_configs = [{
-          source_labels = [ "__journal__systemd_unit" ];
-          target_label = "unit";
-        }];
-      }];
-    };
-    # extraFlags
+    extraFlags = [
+      "--server.http.listen-addr=127.0.0.1:3031"
+      "--disable-reporting"
+    ];
   };
+
+  environment.etc."alloy/logging.alloy".text = ''
+    loki.write "default" {
+      endpoint {
+        url = "http://127.0.0.1:${toString config.services.loki.configuration.server.http_listen_port}/loki/api/v1/push"
+      }
+    }
+
+    loki.relabel "journal" {
+      forward_to = []
+
+      rule {
+        source_labels = ["__journal__systemd_unit"]
+        target_label  = "unit"
+      }
+    }
+
+    loki.source.journal "journal" {
+      forward_to    = [loki.write.default.receiver]
+      relabel_rules = loki.relabel.journal.rules
+      max_age       = "12h"
+      labels = {
+        job  = "systemd-journal",
+        host = "${config.networking.hostName}",
+      }
+    }
+  '';
 }
