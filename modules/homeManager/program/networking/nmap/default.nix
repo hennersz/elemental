@@ -11,6 +11,6 @@ in
 
   config = mkIf cfg.enable {
     home.packages = [ pkgs.nmap ];
-    xdg.configFile."nmap/scripts/vulners.nse".source = ./scripts/vulners.nse;
+    xdg.configFile."nmap/scripts/vulners.nse".source = ./nmap-scripts/vulners.nse;
   };
 }

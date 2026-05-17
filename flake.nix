@@ -37,7 +37,7 @@
           arch = builtins.elemAt (lib.strings.splitString "-" system) 0;
         in
         {
-          devShells.default = std-dev-env.lib.base rec {
+          devShells.default = std-dev-env.lib.nix.devenv rec {
             inherit inputs;
             pkgs = utils.mkPkgs { inherit system; };
             packages = with pkgs; [
@@ -47,15 +47,6 @@
               nixpkgs-fmt
               act
             ];
-            scripts.lint.exec = ''
-              shopt -s globstar
-              statix check "$DEVENV_ROOT"
-              nixpkgs-fmt --check "$DEVENV_ROOT"/**/*.nix
-            '';
-            scripts.format.exec = ''
-              shopt -s globstar
-              nixpkgs-fmt "$DEVENV_ROOT"/**/*.nix
-            '';
           };
 
           packages.eir-vm = (utils.mkVm {
