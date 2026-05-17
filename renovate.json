@@ -2,5 +2,31 @@
   "$schema": "https://docs.renovatebot.com/renovate-schema.json",
   "extends": [
     "config:recommended"
-  ]
+  ],
+  "lockFileMaintenance": {
+    "enabled": true,
+    "extends": ["schedule:weekly"],
+    "minimumReleaseAge": null,
+    "minimumReleaseAgeBehaviour": "timestamp-optional"
+  },
+  "nix": {
+    "enabled": true
+  },
+  "minimumReleaseAge": "7 days",
+  "prCreation": "not-pending",
+  "internalChecksFilter": "strict",
+  "packageRules": [
+    {
+      "matchUpdateTypes": ["minor", "patch", "pin", "digest"],
+      "automerge": true
+    },
+    {
+      "description": "minimumReleaseAge for direct deps only, not lockfile-only changes",
+      "matchUpdateTypes": ["lockFileMaintenance", "lockFileUpdate"],
+      "minimumReleaseAge": null,
+      "minimumReleaseAgeBehaviour": "timestamp-optional"
+    }
+  ],
+  "rebaseWhen": "behind-base-branch",
+  "prHourlyLimit": 0
 }
