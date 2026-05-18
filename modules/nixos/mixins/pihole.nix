@@ -71,7 +71,9 @@ in
     };
   };
 
-  config = {
+  config = let
+    piholeDir = "${config.elemental.pi-hole.dataDir}/pi-hole";
+  in {
     virtualisation.oci-containers.containers.pi-hole = {
       inherit (config.elemental.pi-hole) image;
       extraOptions = [
@@ -101,12 +103,30 @@ in
       ];
     };
 
-    system.activationScripts.pi-hole = ''
-      mkdir -p ${config.elemental.pi-hole.dataDir}/pi-hole/etc
-      mkdir -p ${config.elemental.pi-hole.dataDir}/pi-hole/dnsmasq
-      mkdir -p ${config.elemental.pi-hole.dataDir}/pi-hole/log/pihole
-      mkdir -p ${config.elemental.pi-hole.dataDir}/pi-hole/log/lighttpd
-    '';
+    systemd.services.pi-hole-prepare = {
+      description = "Prepare Pi-hole container volume directories";
+      before = [ "podman-pi-hole.service" ];
+      after = [
+        "local-fs.target"
+        "elemental-app-data-prepare.service"
+      ];
+      requiredBy = [ "podman-pi-hole.service" ];
+      serviceConfig = {
+        Type = "oneshot";
+        RemainAfterExit = true;
+      };
+      script = ''
+        ${pkgs.coreutils}/bin/mkdir -p \
+          "${piholeDir}/etc" \
+          "${piholeDir}/dnsmasq" \
+          "${piholeDir}/log/pihole" \
+          "${piholeDir}/log/lighttpd"
+        ${pkgs.coreutils}/bin/chown -R root:root "${piholeDir}"
+        ${pkgs.coreutils}/bin/chmod -R u=rwX,g=rX,o=rX "${piholeDir}"
+      '';
+    };
+
+    systemd.services.podman-pi-hole.after = lib.mkAfter [ "pi-hole-prepare.service" ];
 
     networking.firewall.allowedTCPPorts = [ 53 ];
     networking.firewall.allowedUDPPorts = [ 53 ];

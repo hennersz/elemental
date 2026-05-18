@@ -1,7 +1,11 @@
-{ config, pkgs, ... }:
+{ config, pkgs, lib, ... }:
+let
+  lokiDataDir = "/var/lib/app-data/loki";
+in
 {
   services.loki = {
     enable = true;
+    dataDir = lokiDataDir;
     configuration = {
       server.http_listen_port = 3030;
       auth_enabled = false;
@@ -37,13 +41,13 @@
 
       storage_config = {
         boltdb_shipper = {
-          active_index_directory = "/var/lib/app-data/loki/boltdb-shipper-active";
-          cache_location = "/var/lib/app-data/loki/boltdb-shipper-cache";
+          active_index_directory = "${lokiDataDir}/boltdb-shipper-active";
+          cache_location = "${lokiDataDir}/boltdb-shipper-cache";
           cache_ttl = "24h";
         };
 
         filesystem = {
-          directory = "/var/lib/app-data/loki/chunks";
+          directory = "${lokiDataDir}/chunks";
         };
       };
 
@@ -60,7 +64,7 @@
       };
 
       compactor = {
-        working_directory = "/var/lib/app-data/loki";
+        working_directory = lokiDataDir;
         compactor_ring = {
           kvstore = {
             store = "inmemory";
@@ -70,6 +74,33 @@
     };
     # user, group, dataDir, extraFlags, (configFile)
   };
+
+  users.users.loki.createHome = lib.mkForce false;
+
+  systemd.services.loki-prepare = {
+    description = "Prepare Loki data directories";
+    before = [ "loki.service" ];
+    after = [
+      "local-fs.target"
+      "elemental-app-data-prepare.service"
+    ];
+    requiredBy = [ "loki.service" ];
+    serviceConfig = {
+      Type = "oneshot";
+      RemainAfterExit = true;
+    };
+    script = ''
+      ${pkgs.coreutils}/bin/mkdir -p "${lokiDataDir}"
+      ${pkgs.coreutils}/bin/mkdir -p \
+        "${lokiDataDir}/boltdb-shipper-active" \
+        "${lokiDataDir}/boltdb-shipper-cache" \
+        "${lokiDataDir}/chunks"
+      ${pkgs.coreutils}/bin/chown -R loki:loki "${lokiDataDir}"
+      ${pkgs.coreutils}/bin/chmod 0750 "${lokiDataDir}"
+    '';
+  };
+
+  systemd.services.loki.after = lib.mkAfter [ "loki-prepare.service" ];
 
   # alloy: HTTP listen on port 3031 (8031)
   services.alloy = {

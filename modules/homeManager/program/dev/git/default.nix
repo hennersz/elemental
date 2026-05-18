@@ -39,38 +39,37 @@ in
   };
 
   config = lib.mkIf cfg.enable {
+    programs.delta = {
+      enable = true; # Use Delta for diff viewing
+      enableGitIntegration = true;
+    };
     programs.git = {
-      inherit (cfg) userEmail userName;
       enable = true;
       signing.key = cfg.gpgKey;
       signing.signByDefault = cfg.signByDefault;
-      delta.enable = true; # Use Delta for diff viewing
-      extraConfig = {
+      settings = {
+        user.email = cfg.userEmail;
+        user.name = cfg.userName;
         # Pull behaviour
         pull.rebase = true;
         init.defaultBranch = "main";
         push.autoSetupRemote = true;
-        url = {
-          "git@github.com:" = {
-            insteadOf = "https://github.com/";
-          };
+        url."git@github.com:".insteadOf = "https://github.com/";
+        alias = {
+          s = "status";
+          co = "checkout";
+          br = "branch";
+          # Commits, additions, and modifications
+          cm = "commit -m";
+          aa = "add .";
+          rh = "reset --hard";
+          # Logging
+          lgo = "log --oneline --graph";
+          lo = "log --oneline";
+          ln = "log -n"; # follow with a number to show n logs
+          lon = "log --oneline -n"; # follow with a number to show n logs
         };
       } // cfg.extraConfig;
-      # Aliases
-      aliases = {
-        "s" = "status";
-        "co" = "checkout";
-        "br" = "branch";
-        # Commits, additions, and modifications
-        "cm" = "commit -m";
-        "aa" = "add .";
-        "rh" = "reset --hard";
-        # Logging
-        "lgo" = "log --oneline --graph";
-        "lo" = "log --oneline";
-        "ln" = "log -n"; # follow with a number to show n logs
-        "lon" = "log --oneline -n"; # follow with a number to show n logs
-      };
     };
   };
 }

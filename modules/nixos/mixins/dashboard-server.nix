@@ -13,53 +13,79 @@ in
       type = lib.types.path;
       default = "/var/lib/app-data/grafana/secret_key";
       description = ''
-        Path to a host-local file containing Grafana's `secret_key`.
-        The file is read at runtime via Grafana's file provider and must not
-        live in the Nix store.
+        Path to a file containing Grafana's `secret_key`. The file is read at
+        runtime via Grafana's file provider and must not live in the Nix store.
 
-        On first deploy, create it before switching. If Grafana already has a
-        database, reuse the same secret_key you used previously:
-
-        ```
-        sudo install -d -m 0750 -o grafana -g grafana /var/lib/app-data/grafana
-        sudo openssl rand -hex 32 | sudo tee /var/lib/app-data/grafana/secret_key
-        sudo chmod 600 /var/lib/app-data/grafana/secret_key
-        sudo chown grafana:grafana /var/lib/app-data/grafana/secret_key
-        ```
+        Created automatically on first start if missing. If Grafana already has a
+        database, keep the same `secret_key` across rebuilds or sessions will be
+        invalidated.
       '';
     };
   };
 
-  config = {
+  config = let
+    grafanaPort = 2342;
+    grafanaDataDir = "/var/lib/app-data/grafana";
+  in {
     services.grafana = {
       enable = true;
       settings = {
         server = {
           inherit (cfg) domain;
           root_url = "http://${cfg.domain}";
+          http_port = grafanaPort;
+          http_addr = "0.0.0.0";
         };
         security.secret_key = "$__file{${cfg.secretKeyFile}}";
       };
-      port = 2342;
-      addr = "0.0.0.0";
-      dataDir = "/var/lib/app-data/grafana";
+      dataDir = grafanaDataDir;
     };
+
+    users.users.grafana.createHome = lib.mkForce false;
 
     services.nginx.virtualHosts.${cfg.domain} = {
       locations."/" = {
-        proxyPass = "http://127.0.0.1:${toString config.services.grafana.port}";
+        proxyPass = "http://127.0.0.1:${toString grafanaPort}";
         proxyWebsockets = true;
       };
     };
-    networking.firewall.allowedTCPPorts = [ 2342 ];
+    networking.firewall.allowedTCPPorts = [ grafanaPort ];
 
-    systemd.services.grafana.preStart = lib.mkAfter ''
-      if [ ! -s "${cfg.secretKeyFile}" ]; then
-        ${pkgs.coreutils}/bin/mkdir -p "$(${pkgs.coreutils}/bin/dirname "${cfg.secretKeyFile}")"
-        ${pkgs.openssl}/bin/openssl rand -hex 32 > "${cfg.secretKeyFile}"
+    # grafana.service is sandboxed (SystemCallFilter blocks chown); setup runs here instead.
+    systemd.services.grafana-prepare = {
+      description = "Prepare Grafana data directory and secret key";
+      before = [ "grafana.service" ];
+      after = [
+        "local-fs.target"
+        "elemental-app-data-prepare.service"
+      ];
+      requiredBy = [ "grafana.service" ];
+      serviceConfig = {
+        Type = "oneshot";
+        RemainAfterExit = true;
+      };
+      script = ''
+        ${pkgs.coreutils}/bin/mkdir -p "${grafanaDataDir}"
+        ${pkgs.coreutils}/bin/chown grafana:grafana "${grafanaDataDir}"
+        ${pkgs.coreutils}/bin/chmod 0750 "${grafanaDataDir}"
+        if [ ! -s "${cfg.secretKeyFile}" ]; then
+          ${pkgs.openssl}/bin/openssl rand -hex 32 > "${cfg.secretKeyFile}"
+        fi
         ${pkgs.coreutils}/bin/chmod 600 "${cfg.secretKeyFile}"
         ${pkgs.coreutils}/bin/chown grafana:grafana "${cfg.secretKeyFile}"
-      fi
-    '';
+      '';
+    };
+
+    systemd.services.grafana = {
+      after = [
+        "grafana-prepare.service"
+        "network-online.target"
+      ];
+      wants = [ "network-online.target" ];
+      serviceConfig = {
+        Restart = lib.mkDefault "on-failure";
+        TimeoutStartSec = lib.mkDefault "120";
+      };
+    };
   };
 }

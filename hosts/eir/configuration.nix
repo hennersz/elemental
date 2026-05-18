@@ -1,6 +1,7 @@
-{ config, inputs, outputs, ... }:
+{ config, pkgs, inputs, outputs, ... }:
 let
   hostName = "eir";
+  appDataRoot = "/var/lib/app-data";
 in
 {
   imports = with inputs.self.nixosModules.modules; [
@@ -17,9 +18,30 @@ in
     inputs.home-manager.nixosModules.home-manager
   ];
 
-  documentation.man.generateCaches = false;
+  documentation.man.cache.enable = false;
 
   system.stateVersion = "22.11";
+
+  # Shared parent for grafana, loki, prometheus, pi-hole, … (subdirs owned by each service).
+  systemd.services.elemental-app-data-prepare = {
+    description = "Ensure ${appDataRoot} exists with safe permissions";
+    before = [
+      "grafana-prepare.service"
+      "loki-prepare.service"
+      "pi-hole-prepare.service"
+    ];
+    after = [ "local-fs.target" ];
+    wantedBy = [ "multi-user.target" ];
+    serviceConfig = {
+      Type = "oneshot";
+      RemainAfterExit = true;
+    };
+    script = ''
+      ${pkgs.coreutils}/bin/mkdir -p "${appDataRoot}"
+      ${pkgs.coreutils}/bin/chown root:root "${appDataRoot}"
+      ${pkgs.coreutils}/bin/chmod 0755 "${appDataRoot}"
+    '';
+  };
 
   services.vscode-server.enable = true;
   home-manager = {
