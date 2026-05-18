@@ -1,29 +1,25 @@
 { pkgs, lib, config, ... }:
 let
-  conditionalForwardingConfig = pkgs.writeText "conditionalForwarding.conf" (
-    lib.strings.concatStringsSep "" (
-      map
-        (revServer:
-          lib.generators.toKeyValue { listsAsDuplicateKeys = true; } {
-            rev-server = "${revServer.localNetworkCIDR},${revServer.dnsServer}";
-            server = [ "/${revServer.localDomain}/${revServer.dnsServer}" "//${revServer.dnsServer}" ];
-          }
-        )
-        config.elemental.pi-hole.revServers
-    )
-  );
+  cfg = config.elemental.pi-hole;
 
-  cnamesConfig = pkgs.writeText "cnamesConfig.conf" (
-    lib.generators.toKeyValue { listsAsDuplicateKeys = true; } {
-      cname = map (cname: "${cname.domain},${cname.target}") config.elemental.pi-hole.cnames;
-    }
-  );
+  dnsRevServers =
+    lib.concatStringsSep ";" (
+      map
+        (rs: "true,${rs.localNetworkCIDR},${rs.dnsServer}#53,${rs.localDomain}")
+        cfg.revServers
+    );
+
+  cnameDnsmasqLines =
+    lib.concatStringsSep ";" (
+      map (c: "cname=${c.domain},${c.target}") cfg.cnames
+    );
 in
 {
   options.elemental.pi-hole = with lib; {
     image = mkOption {
       type = types.str;
-      default = "pihole/pihole:2024.07.0";
+      # Last v5 image was 2024.07.0; 2026.04.x is v6 — see https://docs.pi-hole.net/docker/upgrading/v5-v6/
+      default = "pihole/pihole:2026.05.0";
     };
 
     domain = mkOption {
@@ -72,34 +68,36 @@ in
   };
 
   config = let
-    piholeDir = "${config.elemental.pi-hole.dataDir}/pi-hole";
+    piholeDir = "${cfg.dataDir}/pi-hole";
+    piholeEnv = {
+      TZ = config.time.timeZone;
+      FTLCONF_webserver_port = builtins.toString cfg.port;
+      FTLCONF_webserver_api_password = "";
+      FTLCONF_dns_listeningMode = "ALL";
+      FTLCONF_dns_interface = builtins.head cfg.interfaces;
+      FTLCONF_dns_upstreams = lib.concatStringsSep ";" cfg.upstreams;
+      FTLCONF_dns_reply_host_IPv4 = cfg.hostIP;
+    }
+    // lib.optionalAttrs (cfg.revServers != [ ]) {
+      FTLCONF_dns_revServers = dnsRevServers;
+    }
+    // lib.optionalAttrs (cfg.cnames != [ ]) {
+      FTLCONF_misc_dnsmasq_lines = cnameDnsmasqLines;
+    };
   in {
     virtualisation.oci-containers.containers.pi-hole = {
-      inherit (config.elemental.pi-hole) image;
+      inherit (cfg) image;
       extraOptions = [
         "--network=host"
         "--dns=127.0.0.1"
         "--dns=9.9.9.9"
-        "--hostname=${config.elemental.pi-hole.domain}"
-        "--shm-size=${config.elemental.pi-hole.shared-memory}"
+        "--hostname=${cfg.domain}"
+        "--shm-size=${cfg.shared-memory}"
       ];
-      environment = {
-        WEB_PORT = "${builtins.toString config.elemental.pi-hole.port}";
-        VIRTUAL_HOST = config.elemental.pi-hole.domain;
-        PROXY_LOCATION = config.elemental.pi-hole.domain;
-        FTLCONF_LOCAL_IPV4 = config.elemental.pi-hole.hostIP;
-        PIHOLE_DNS_ = lib.strings.concatStringsSep ";" config.elemental.pi-hole.upstreams;
-        TZ = config.time.timeZone;
-        INTERFACE = builtins.head config.elemental.pi-hole.interfaces;
-        WEBPASSWORD = "";
-        DNSMASQ_LISTENING = "all";
-      };
+      environment = piholeEnv;
       volumes = [
-        "${config.elemental.pi-hole.dataDir}/pi-hole/etc:/etc/pihole"
-        "${config.elemental.pi-hole.dataDir}/pi-hole/dnsmasq:/etc/dnsmasq.d"
-        "${config.elemental.pi-hole.dataDir}/pi-hole/log:/var/log"
-        "${conditionalForwardingConfig}:/etc/dnsmasq.d/conditionalForwarding.conf"
-        "${cnamesConfig}:/etc/dnsmasq.d/cnames.conf"
+        "${cfg.dataDir}/pi-hole/etc:/etc/pihole"
+        "${cfg.dataDir}/pi-hole/log:/var/log"
       ];
     };
 
@@ -118,9 +116,7 @@ in
       script = ''
         ${pkgs.coreutils}/bin/mkdir -p \
           "${piholeDir}/etc" \
-          "${piholeDir}/dnsmasq" \
-          "${piholeDir}/log/pihole" \
-          "${piholeDir}/log/lighttpd"
+          "${piholeDir}/log/pihole"
         ${pkgs.coreutils}/bin/chown -R root:root "${piholeDir}"
         ${pkgs.coreutils}/bin/chmod -R u=rwX,g=rX,o=rX "${piholeDir}"
       '';
@@ -131,16 +127,16 @@ in
     networking.firewall.allowedTCPPorts = [ 53 ];
     networking.firewall.allowedUDPPorts = [ 53 ];
 
-    services.nginx.virtualHosts."${config.elemental.pi-hole.domain}" = {
+    services.nginx.virtualHosts."${cfg.domain}" = {
       locations."/" = {
-        proxyPass = "http://127.0.0.1:${builtins.toString config.elemental.pi-hole.port}";
+        proxyPass = "http://127.0.0.1:${toString cfg.port}";
         proxyWebsockets = true;
       };
     };
 
     environment.etc."alloy/pihole.alloy".text =
       let
-        logDir = "${config.elemental.pi-hole.dataDir}/pi-hole/log";
+        logDir = "${cfg.dataDir}/pi-hole/log";
         host = config.networking.hostName;
       in
       ''
@@ -166,20 +162,8 @@ in
             },
             {
               __address__ = "localhost",
-              __path__    = "${logDir}/lighttpd/access.log",
-              job         = "lighttpd-access",
-              host        = "${host}",
-            },
-            {
-              __address__ = "localhost",
-              __path__    = "${logDir}/lighttpd/access-pihole.log",
-              job         = "lighttpd-access-pi-hole",
-              host        = "${host}",
-            },
-            {
-              __address__ = "localhost",
-              __path__    = "${logDir}/lighttpd/error-pihole.log",
-              job         = "lighttpd-error-pi-hole",
+              __path__    = "${logDir}/pihole/webserver.log",
+              job         = "pi-hole-webserver",
               host        = "${host}",
             },
           ]

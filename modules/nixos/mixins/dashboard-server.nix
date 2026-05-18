@@ -49,7 +49,6 @@ in
         proxyWebsockets = true;
       };
     };
-    networking.firewall.allowedTCPPorts = [ grafanaPort ];
 
     # grafana.service is sandboxed (SystemCallFilter blocks chown); setup runs here instead.
     systemd.services.grafana-prepare = {
