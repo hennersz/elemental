@@ -131,11 +131,11 @@
           ];
         };
 
-        "henry@ubuntus" = home-manager.lib.homeManagerConfiguration {
+        "henry@ubuntu" = home-manager.lib.homeManagerConfiguration {
           pkgs = utils.mkPkgs { system = "aarch64-linux"; };
           extraSpecialArgs = { inherit inputs outputs; };
           modules = [
-            ./home-manager/henry-ubuntus.nix
+            ./home-manager/henry-ubuntu.nix
           ];
         };
       };
