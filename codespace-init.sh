@@ -8,11 +8,11 @@ cat >~/.config/home-manager/flake.nix <<EOF
   description = "Home Manager configuration for codespaces";
 
   inputs = {
-    elemental.url = "git+file:///home/codespace/dotfiles";
+    elemental.url = "git+file:///home/ubuntu/dotfiles";
   };
 
   outputs = { self, elemental, ... }@inputs: {
-    homeConfigurations.codespace = elemental.homeConfigurations."henry@codespaces";
+    homeConfigurations.ubuntu = elemental.homeConfigurations."henry@codespaces";
   };
 }
 EOF
