@@ -17,4 +17,6 @@ cat >~/.config/home-manager/flake.nix <<EOF
 }
 EOF
 
+mkdir -p ~/.local/state/nix/profiles
+
 nix run home-manager#home-manager -- switch --flake ~/.config/home-manager
