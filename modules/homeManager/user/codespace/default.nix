@@ -1,7 +1,7 @@
 { config, lib, pkgs, ... }:
 with lib;
 {
-  config = mkIf (config.elemental.user == "codespace") {
+  config = mkIf (config.elemental.user == "ubuntu") {
     elemental.home = {
       program = {
         shell.fish.enable = true;
@@ -20,8 +20,8 @@ with lib;
     };
 
     home = {
-      username = "codespace";
-      homeDirectory = lib.mkDefault "/home/codespace";
+      username = "ubuntu";
+      homeDirectory = lib.mkDefault "/home/ubuntu";
       packages = with pkgs; [
         # Rust CLI Tools
         bat
@@ -57,7 +57,7 @@ with lib;
 
       sessionVariables = {
         BULLETTRAIN_IS_SSH_CLIENT = "true";
-        BULLETTRAIN_CONTEXT_DEFAULT_USER = "codespace";
+        BULLETTRAIN_CONTEXT_DEFAULT_USER = "ubuntu";
       };
     };
   };

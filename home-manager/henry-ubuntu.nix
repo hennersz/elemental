@@ -5,9 +5,9 @@
   ];
 
   elemental = {
-    role = "codespace";
+    role = "ubuntu";
     user = "ubuntu";
-    machine = "codespace";
+    machine = "ubuntu";
     identity = "none";
   };
   home.homeDirectory = lib.mkForce "/home/ubuntu";

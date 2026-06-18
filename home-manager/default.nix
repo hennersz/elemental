@@ -4,6 +4,6 @@
   henry-hel = import ./henry-hel.nix;
   henry-tyr = import ./henry-tyr.nix;
   henry-baldur = import ./henry-baldur.nix;
-  henry-codespaces = import ./henry-codespaces.nix;
+  henry-ubuntu = import ./henry-ubuntu.nix;
   vagrant-vm = import ./vagrant-vm.nix;
 }
