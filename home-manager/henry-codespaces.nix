@@ -6,11 +6,11 @@
 
   elemental = {
     role = "codespace";
-    user = "codespace";
+    user = "ubuntu";
     machine = "codespace";
     identity = "none";
   };
-  home.homeDirectory = lib.mkForce "/home/codespace";
+  home.homeDirectory = lib.mkForce "/home/ubuntu";
 
   home.stateVersion = "25.05";
 }
