@@ -13,7 +13,7 @@ with lib;
     };
 
     home.packages = with pkgs; [
-      neofetch
+      fastfetch
       pkgs.nerd-fonts.space-mono
       podman
       dive
