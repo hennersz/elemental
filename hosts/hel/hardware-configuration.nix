@@ -60,7 +60,6 @@ in
 
   services.xserver = {
     videoDrivers = [ "nvidia" ];
-    displayManager.gdm.wayland = false;
   };
 
   hardware = {
