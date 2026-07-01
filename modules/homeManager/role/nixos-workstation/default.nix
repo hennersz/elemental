@@ -18,7 +18,7 @@ lib;
       spotify
       slack
       vlc
-      neofetch
+      fastfetch
       chromium
       firefox-devedition
       jdk

@@ -19,6 +19,7 @@
     config.allowUnfree = true;
     config.permittedInsecurePackages = [
       "electron-27.3.11"
+      "electron-39.8.10"
     ];
     overlays =
       if (system == "aarch64-darwin") then [
