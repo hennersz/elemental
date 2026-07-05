@@ -25,7 +25,7 @@ mkdir -p ~/.local/state/home-manager/gcroots
 # ~/.nix-profile pointing at /home/codespace/... Remove it so Nix recreates
 # the symlink against the real $HOME on first profile install.
 if [ -L ~/.nix-profile ] && [[ "$(readlink ~/.nix-profile)" != "$HOME/"* ]]; then
-  rm ~/.nix-profile
+	rm ~/.nix-profile
 fi
 
 nix run home-manager#home-manager -- switch --flake ~/.config/home-manager
