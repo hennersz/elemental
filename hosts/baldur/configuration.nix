@@ -9,6 +9,7 @@
     gh
     devpod
     claude-code
+    _1password-cli
   ];
 
 

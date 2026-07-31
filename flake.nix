@@ -43,9 +43,13 @@
             packages = with pkgs; [
               nixVersions.stable
               statix
-              nil
               nixpkgs-fmt
               act
+
+              # Shell script linting/formatting (not LSPs -- those live in
+              # the neovim module's extraPackages now).
+              shellcheck
+              shfmt
             ];
           };
 

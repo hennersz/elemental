@@ -7,6 +7,7 @@ lib;
     elemental.home.program = {
       terminal.iterm2.enable = false;
       editor.vscode.enable = true;
+      editor.neovim.enable = true;
     };
 
     home = {

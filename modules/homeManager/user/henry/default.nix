@@ -29,7 +29,6 @@ with lib;
 
         # Utils
         asciinema
-        neovim
         jq
         yq-go
         tldr

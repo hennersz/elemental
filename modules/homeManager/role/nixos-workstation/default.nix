@@ -6,6 +6,7 @@ lib;
   config = mkIf (config.elemental.role == "nixos-workstation") {
     elemental.home.program = {
       editor.vscode.enable = true;
+      editor.neovim.enable = true;
     };
 
     # Environment
