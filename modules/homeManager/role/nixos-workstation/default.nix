@@ -41,8 +41,8 @@ lib;
     gtk = {
       enable = true;
       theme = {
-        name = "Nordic";
-        package = pkgs.nordic;
+        name = "adw-gtk3-dark";
+        package = pkgs.adw-gtk3;
       };
       iconTheme = {
         name = "Tela";
