@@ -57,7 +57,7 @@ in
         '')
 
         # Move between windows (e.g. Neo-tree <-> file buffer <-> Trouble)
-	# with the same hjkl direction keys used for normal movement.
+        # with the same hjkl direction keys used for normal movement.
         (mkOrder 50 ''
           vim.keymap.set('n', '<C-h>', '<C-w>h', { desc = 'Move to window left' })
           vim.keymap.set('n', '<C-j>', '<C-w>j', { desc = 'Move to window below' })

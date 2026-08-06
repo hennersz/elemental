@@ -10,6 +10,7 @@
     machine = "ubuntu";
     identity = "none";
   };
+  elemental.home.program.editor.neovim.enable = true;
   home.homeDirectory = lib.mkForce "/home/ubuntu";
 
   home.stateVersion = "25.05";
