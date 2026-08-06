@@ -372,6 +372,7 @@ in
           config = ''
             require('neo-tree').setup({
               filesystem = {
+                use_libuv_file_watcher = true,
                 filtered_items = {
                   hide_dotfiles = false,
                   hide_gitignored = false,
@@ -568,9 +569,7 @@ in
 
     xdg.configFile."fish/conf.d/anthropicApiKey.fish" = mkIf (cfg.anthropicApiKeyRef != "") {
       text = ''
-        if status is-interactive
-          set -gx ANTHROPIC_API_KEY (op read "${cfg.anthropicApiKeyRef}")
-        end
+        set -gx ANTHROPIC_API_KEY (op read "${cfg.anthropicApiKeyRef}")
       '';
     };
   };
