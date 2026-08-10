@@ -569,7 +569,9 @@ in
 
     xdg.configFile."fish/conf.d/anthropicApiKey.fish" = mkIf (cfg.anthropicApiKeyRef != "") {
       text = ''
-        set -gx ANTHROPIC_API_KEY (op read "${cfg.anthropicApiKeyRef}")
+        if not set -q ANTHROPIC_API_KEY
+          set -Ux ANTHROPIC_API_KEY (op read "${cfg.anthropicApiKeyRef}")
+        end
       '';
     };
   };
