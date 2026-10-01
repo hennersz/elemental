@@ -8,7 +8,6 @@ in
     inputs.nixos-hardware.nixosModules.raspberry-pi-4
   ];
   boot = {
-    kernelPackages = pkgs.linuxPackages_rpi4;
     tmpOnTmpfs = false;
     initrd.availableKernelModules = [ "usbhid" "usb_storage" ];
     # ttyAMA0 is the serial console broken out to the GPIO
