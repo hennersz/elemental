@@ -16,7 +16,7 @@
   nix = {
     enable = true;
     linux-builder = {
-      enable = false;
+      enable = true;
       ephemeral = true;
       maxJobs = 16;
       config = {
