@@ -666,18 +666,20 @@ in
 
         # ── Minimap & outline ─────────────────────────────────────────────────
         {
-          plugin = codewindow-nvim;
+          plugin = mini-map;
           type = "lua";
           config = ''
-            require('codewindow').setup({
-              auto_enable = false,
-              minimap_width = 14,
-              width_multiplier = 4,
-              show_cursor = true,
-              screen_bounds = 'background',
-              window_border = 'none',
+            local map = require('mini.map')
+            map.setup({
+              integrations = {
+                map.gen_integration.builtin_search(),
+                map.gen_integration.gitsigns(),
+                map.gen_integration.diagnostic(),
+              },
+              symbols = { encode = map.gen_encode_symbols.dot('4x2') },
+              window = { width = 12, winblend = 0, show_integration_count = false },
             })
-            vim.keymap.set('n', '<leader>tm', require('codewindow').toggle_minimap, { desc = 'Toggle minimap' })
+            vim.keymap.set('n', '<leader>tm', map.toggle, { desc = 'Toggle minimap' })
           '';
         }
 
