@@ -666,15 +666,18 @@ in
 
         # ── Minimap & outline ─────────────────────────────────────────────────
         {
-          plugin = neominimap-nvim;
+          plugin = codewindow-nvim;
           type = "lua";
           config = ''
-            vim.g.neominimap = {
+            require('codewindow').setup({
               auto_enable = false,
-              layout = 'float',
-              float = { window_border = 'none' },
-            }
-            vim.keymap.set('n', '<leader>tm', ':Neominimap Toggle<CR>', { desc = 'Toggle minimap' })
+              minimap_width = 14,
+              width_multiplier = 4,
+              show_cursor = true,
+              screen_bounds = 'background',
+              window_border = 'none',
+            })
+            vim.keymap.set('n', '<leader>tm', require('codewindow').toggle_minimap, { desc = 'Toggle minimap' })
           '';
         }
 
