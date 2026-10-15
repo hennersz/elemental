@@ -73,6 +73,8 @@ in
           vim.opt.tabstop = 2
           vim.opt.shiftwidth = 2
           vim.opt.expandtab = true
+          vim.opt.winborder = 'rounded'
+          vim.opt.updatetime = 250
         '')
 
         # Mirror VSCode's "render whitespace" defaults: a middle dot for spaces,
@@ -189,7 +191,34 @@ in
                   model = '${claudeModel}',
                 },
               },
+              virtualtext = {
+                auto_trigger_ft = { '*' },
+                keymap = {
+                  accept = '<A-a>',
+                  accept_line = '<A-l>',
+                  prev = '<A-[>',
+                  next = '<A-]>',
+                  dismiss = '<A-e>',
+                },
+              },
             })
+          '';
+        }
+
+        # ── AI: Claude Code ───────────────────────────────────────────────────
+        {
+          plugin = claudecode-nvim;
+          type = "lua";
+          config = ''
+            require('claudecode').setup({
+              terminal = { split_side = 'right', split_width_percentage = 0.35 },
+            })
+            vim.keymap.set('n', '<leader>kk', ':ClaudeCode<CR>',            { desc = 'Toggle Claude Code' })
+            vim.keymap.set('n', '<leader>kf', ':ClaudeCodeFocus<CR>',       { desc = 'Focus Claude Code' })
+            vim.keymap.set('n', '<leader>kb', ':ClaudeCodeAdd %<CR>',       { desc = 'Add buffer to context' })
+            vim.keymap.set('v', '<leader>ks', ':ClaudeCodeSend<CR>',        { desc = 'Send selection to Claude' })
+            vim.keymap.set('n', '<leader>ka', ':ClaudeCodeDiffAccept<CR>',  { desc = 'Accept Claude diff' })
+            vim.keymap.set('n', '<leader>kd', ':ClaudeCodeDiffDeny<CR>',    { desc = 'Deny Claude diff' })
           '';
         }
 
@@ -230,7 +259,21 @@ in
               },
               completion = {
                 trigger = { prefetch_on_insert = false },
+                documentation = {
+                  auto_show = true,
+                  auto_show_delay_ms = 200,
+                },
+                menu = {
+                  draw = {
+                    columns = {
+                      { 'kind_icon' },
+                      { 'label', 'label_description', gap = 1 },
+                      { 'kind' },
+                    },
+                  },
+                },
               },
+              signature = { enabled = true },
             })
           '';
         }
@@ -254,12 +297,12 @@ in
             -- Common on_attach: set keymaps when an LSP attaches to a buffer
             local on_attach = function(_, bufnr)
               local opts = { buffer = bufnr }
+              vim.lsp.inlay_hint.enable(true, { bufnr = bufnr })
               vim.keymap.set('n', 'gd',         vim.lsp.buf.definition,     vim.tbl_extend('force', opts, { desc = 'Go to definition' }))
               vim.keymap.set('n', 'gD',         vim.lsp.buf.declaration,    vim.tbl_extend('force', opts, { desc = 'Go to declaration' }))
               vim.keymap.set('n', 'gr',         vim.lsp.buf.references,     vim.tbl_extend('force', opts, { desc = 'Go to references' }))
               vim.keymap.set('n', 'gi',         vim.lsp.buf.implementation, vim.tbl_extend('force', opts, { desc = 'Go to implementation' }))
               vim.keymap.set('n', 'K',          vim.lsp.buf.hover,          vim.tbl_extend('force', opts, { desc = 'Hover documentation' }))
-              vim.keymap.set('i', '<C-k>',      vim.lsp.buf.signature_help, vim.tbl_extend('force', opts, { desc = 'Signature help' }))
               vim.keymap.set('n', '<leader>rn', vim.lsp.buf.rename,         vim.tbl_extend('force', opts, { desc = 'Rename symbol' }))
               vim.keymap.set('n', '<leader>ca', vim.lsp.buf.code_action,    vim.tbl_extend('force', opts, { desc = 'Code action' }))
               vim.keymap.set('n', '<leader>d',  vim.diagnostic.open_float,  vim.tbl_extend('force', opts, { desc = 'Show diagnostics' }))
@@ -282,6 +325,27 @@ in
               },
             })
 
+            vim.lsp.config('gopls', {
+              settings = {
+                gopls = {
+                  hints = {
+                    parameterNames = true,
+                    assignVariableTypes = true,
+                    compositeLiteralFields = true,
+                    constantValues = true,
+                    functionTypeParameters = true,
+                    rangeVariableTypes = true,
+                  },
+                },
+              },
+            })
+
+            vim.api.nvim_create_autocmd('CursorHold', {
+              callback = function()
+                vim.diagnostic.open_float(nil, { focusable = false, scope = 'cursor' })
+              end,
+            })
+
             -- terraformls is deliberately not installed via extraPackages:
             -- terraform-ls/tofu track a specific project's IaC toolchain, so
             -- that one should come from the project's own nix devShell/direnv
@@ -290,6 +354,28 @@ in
             -- resolves servers by plain command name against $PATH once a
             -- matching buffer opens.
             vim.lsp.enable({ 'terraformls', 'yamlls', 'fish_lsp', 'bashls', 'jsonls', 'marksman', 'gopls', 'nil_ls' })
+
+            -- goimports-on-save equivalent (what VS Code's Go extension does):
+            -- gopls's plain textDocument/formatting only runs gofmt, it doesn't
+            -- add/remove imports. Run the source.organizeImports code action on
+            -- every Go save too. Registered before conform's format_on_save
+            -- autocmd (below, in the Formatting section) so imports get sorted
+            -- first and gofmt runs after.
+            vim.api.nvim_create_autocmd('BufWritePre', {
+              pattern = '*.go',
+              callback = function()
+                local params = vim.lsp.util.make_range_params()
+                params.context = { only = { 'source.organizeImports' } }
+                local results = vim.lsp.buf_request_sync(0, 'textDocument/codeAction', params, 1000)
+                for _, res in pairs(results or {}) do
+                  for _, action in pairs(res.result or {}) do
+                    if action.edit then
+                      vim.lsp.util.apply_workspace_edit(action.edit, 'utf-8')
+                    end
+                  end
+                end
+              end,
+            })
           '';
         }
 
@@ -492,6 +578,30 @@ in
           '';
         }
 
+        # ── Diff review ───────────────────────────────────────────────────────
+        {
+          plugin = diffview-nvim;
+          type = "lua";
+          config = ''
+            require('diffview').setup({})
+            vim.keymap.set('n', '<leader>gv', ':DiffviewOpen<CR>',          { desc = 'Open diff view' })
+            vim.keymap.set('n', '<leader>gh', ':DiffviewFileHistory %<CR>', { desc = 'File history' })
+            vim.keymap.set('n', '<leader>gq', ':DiffviewClose<CR>',         { desc = 'Close diff view' })
+          '';
+        }
+
+        # ── Project-wide search & replace ─────────────────────────────────────
+        {
+          plugin = grug-far-nvim;
+          type = "lua";
+          config = ''
+            require('grug-far').setup({})
+            vim.keymap.set('n', '<leader>sr', function() require('grug-far').open() end, { desc = 'Search and replace' })
+            vim.keymap.set('n', '<leader>sw', function() require('grug-far').open({ prefills = { search = vim.fn.expand('<cword>') } }) end, { desc = 'Replace word under cursor' })
+            vim.keymap.set('v', '<leader>sr', function() require('grug-far').with_visual_selection() end, { desc = 'Replace selection' })
+          '';
+        }
+
         # ── Which-key (keybinding popup) ──────────────────────────────────────
         {
           plugin = which-key-nvim;
@@ -504,8 +614,10 @@ in
               { '<leader>c', group = 'Code' },
               { '<leader>f', group = 'Find (Telescope)' },
               { '<leader>g', group = 'Git' },
+              { '<leader>k', group = 'Claude Code' },
               { '<leader>q', group = 'Quit' },
               { '<leader>r', group = 'Rename' },
+              { '<leader>s', group = 'Search and replace' },
               { '<leader>t', group = 'Toggle' },
               { '<leader>x', group = 'Diagnostics (Trouble)' },
             })
@@ -550,6 +662,39 @@ in
             })
             vim.keymap.set('n', '<leader>ti', ':IBLToggle<CR>', { desc = 'Toggle indent guides' })
           '';
+        }
+
+        # ── Minimap & outline ─────────────────────────────────────────────────
+        {
+          plugin = neominimap-nvim;
+          type = "lua";
+          config = ''
+            vim.g.neominimap = {
+              auto_enable = false,
+              layout = 'float',
+              float = { window_border = 'none' },
+            }
+            vim.keymap.set('n', '<leader>tm', ':Neominimap Toggle<CR>', { desc = 'Toggle minimap' })
+          '';
+        }
+
+        {
+          plugin = aerial-nvim;
+          type = "lua";
+          config = ''
+            require('aerial').setup({
+              backends = { 'lsp', 'treesitter' },
+              layout = { default_direction = 'right', min_width = 30 },
+              show_guides = true,
+            })
+            vim.keymap.set('n', '<leader>to', ':AerialToggle!<CR>', { desc = 'Toggle outline' })
+          '';
+        }
+
+        {
+          plugin = nvim-treesitter-context;
+          type = "lua";
+          config = "require('treesitter-context').setup({ max_lines = 3 })";
         }
 
         # ── Integrated terminal ───────────────────────────────────────────────
