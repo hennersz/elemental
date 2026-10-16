@@ -666,20 +666,27 @@ in
 
         # ── Minimap & outline ─────────────────────────────────────────────────
         {
-          plugin = mini-map;
+          plugin = pkgs.vimUtils.buildVimPlugin {
+            pname = "neominimap-nvim";
+            version = "3.16.0";
+            src = pkgs.fetchFromGitHub {
+              owner = "Isrothy";
+              repo = "neominimap.nvim";
+              rev = "v3.16.0";
+              hash = "sha256-EcV/mdleyopQsJ/t/Whl6Yf/2ORb9rnhHuc2Ue1E1Bw=";
+            };
+            doCheck = false;
+          };
           type = "lua";
           config = ''
-            local map = require('mini.map')
-            map.setup({
-              integrations = {
-                map.gen_integration.builtin_search(),
-                map.gen_integration.gitsigns(),
-                map.gen_integration.diagnostic(),
-              },
-              symbols = { encode = map.gen_encode_symbols.dot('4x2') },
-              window = { width = 12, winblend = 0, show_integration_count = false },
-            })
-            vim.keymap.set('n', '<leader>tm', map.toggle, { desc = 'Toggle minimap' })
+            vim.g.neominimap = {
+              auto_enable = false,
+              layout = 'float',
+              float = { minimap_width = 14, window_border = 'none' },
+              treesitter = { enabled = true },
+              click = { enabled = true },
+            }
+            vim.keymap.set('n', '<leader>tm', ':Neominimap Toggle<CR>', { desc = 'Toggle minimap' })
           '';
         }
 
