@@ -35,7 +35,7 @@ lib;
       regctl
     ];
 
-    services.gpg-agent.pinentryPackage = pkgs.pinentry-curses;
+    services.gpg-agent.pinentry.package = pkgs.pinentry-curses;
 
     dconf.settings."org/gnome/desktop/wm/preferences".button-layout = ":minimize,maximize,close";
 
