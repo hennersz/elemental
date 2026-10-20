@@ -11,7 +11,7 @@ jobs:
         run: nix flake check --impure
 
   flake-test-arm:
-    runs-on: ubuntu-24.04-arm
+    runs-on: ubuntu-26.04-arm
     steps:
       - uses: actions/checkout@v7
       - uses: DeterminateSystems/nix-installer-action@main
@@ -40,7 +40,7 @@ jobs:
           nix develop --impure --command lint
 
   build-test-arm:
-    runs-on: ubuntu-24.04-arm
+    runs-on: ubuntu-26.04-arm
     steps:
       - uses: actions/checkout@v7
       - uses: DeterminateSystems/nix-installer-action@main
