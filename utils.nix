@@ -18,15 +18,8 @@
     let
       avante = prev.vimPlugins.avante-nvim;
       avanteLib = avante.passthru.avante-nvim-lib;
-      awsLcSystem = final.symlinkJoin {
-        name = "aws-lc-system";
-        paths = [ final.aws-lc.out final.aws-lc.dev ];
-      };
       patchedAvanteLib = avanteLib.overrideAttrs (old: {
-        buildInputs = (old.buildInputs or [ ]) ++ [ final.aws-lc ];
-        env = (old.env or { }) // {
-          AWS_LC_SYS_SYSTEM_DIR = "${awsLcSystem}";
-        };
+        dontCargoUseSystemLibs = true;
       });
     in
     {
