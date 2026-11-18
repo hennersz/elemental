@@ -14,6 +14,28 @@
     stable = import inputs.nixpkgs { inherit (prev) system; config.allowUnfree = true; };
   };
 
+  overlay-avante = final: prev:
+    let
+      avante = prev.vimPlugins.avante-nvim;
+      avanteLib = avante.passthru.avante-nvim-lib;
+      patchedAvanteLib = avanteLib.overrideAttrs (old: {
+        dontCargoUseSystemLibs = true;
+      });
+    in
+    {
+      vimPlugins = prev.vimPlugins // {
+        avante-nvim = avante.overrideAttrs (old: {
+          postInstall = builtins.replaceStrings
+            [ "${avanteLib}" ]
+            [ "${patchedAvanteLib}" ]
+            old.postInstall;
+          passthru = old.passthru // {
+            avante-nvim-lib = patchedAvanteLib;
+          };
+        });
+      };
+    };
+
   mkPkgs = { system, nixpkgs ? inputs.nixpkgs-unstable }: import nixpkgs {
     inherit system;
     config.allowUnfree = true;
@@ -23,11 +45,13 @@
     ];
     overlays =
       if (system == "aarch64-darwin") then [
+        overlay-avante
         inputs.apple-silicon.overlays.apple-silicon-overlay
         inputs.nix-alien.overlays.default
         overlay-stable
         (_: super: inputs.mrkuz.packages."${system}")
       ] else [
+        overlay-avante
         inputs.nix-alien.overlays.default
         overlay-stable
       ];
